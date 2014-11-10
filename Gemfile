@@ -22,6 +22,7 @@ group :development, :test do
   gem 'guard-rubocop', require: false
   gem 'guard-rspec', require: false
   gem 'guard-bundler', require: false
-  gem 'guard-brakeman', require: false
+  gem 'guard-brakeman',
+      require: false, github: 'guard/guard-brakeman', ref: '0587b74'
   gem 'terminal-notifier-guard', require: false
 end
