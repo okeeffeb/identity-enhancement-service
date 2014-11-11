@@ -1,7 +1,7 @@
 class CreateRoles < ActiveRecord::Migration
   def change
     create_table :roles do |t|
-      t.references :provider, null: true, default: nil
+      t.belongs_to :provider, null: true, default: nil
       t.string :name, null: false, default: nil
       t.timestamps
 

@@ -1,8 +1,8 @@
 class CreateInvitations < ActiveRecord::Migration
   def change
     create_table :invitations do |t|
-      t.references :provider, null: false, default: nil
-      t.references :subject, null: false, default: nil
+      t.belongs_to :provider, null: false, default: nil
+      t.belongs_to :subject, null: false, default: nil
       t.string :identifier, null: false, default: nil
       t.string :email, null: false, default: nil
       t.boolean :used, null: false, default: false

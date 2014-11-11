@@ -1,7 +1,7 @@
 class CreatePermissions < ActiveRecord::Migration
   def change
     create_table :permissions do |t|
-      t.references :role, null: false, default: nil
+      t.belongs_to :role, null: false, default: nil
       t.string :value, null: false, default: nil
       t.timestamps
 
