@@ -4,7 +4,6 @@ gem 'rails', '4.1.7'
 gem 'mysql2'
 gem 'redis'
 gem 'redis-rails'
-gem 'mysql2'
 gem 'audited-activerecord'
 
 gem 'unicorn', require: false
