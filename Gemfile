@@ -5,6 +5,7 @@ gem 'mysql2'
 gem 'redis'
 gem 'redis-rails'
 gem 'audited-activerecord'
+gem 'rapid-rack'
 
 gem 'unicorn', require: false
 gem 'god', require: false
