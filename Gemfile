@@ -6,6 +6,7 @@ gem 'redis'
 gem 'redis-rails'
 gem 'audited-activerecord'
 gem 'rapid-rack'
+gem 'accession'
 
 gem 'unicorn', require: false
 gem 'god', require: false

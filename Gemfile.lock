@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    accession (0.0.2)
     actionmailer (4.1.8)
       actionpack (= 4.1.8)
       actionview (= 4.1.8)
@@ -237,6 +238,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  accession
   audited-activerecord
   brakeman (~> 2.6)
   factory_girl_rails
