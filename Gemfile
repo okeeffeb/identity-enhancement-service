@@ -32,5 +32,7 @@ group :development, :test do
   gem 'guard-rspec', require: false
   gem 'guard-bundler', require: false
   gem 'guard-brakeman', require: false
+  gem 'guard-unicorn', require: false, ref: 'ca5177dd',
+                       github: 'andreimaxim/guard-unicorn'
   gem 'terminal-notifier-guard', require: false
 end

@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/andreimaxim/guard-unicorn.git
+  revision: ca5177ddf5e067237fc57470b78bf4dd0189495a
+  ref: ca5177dd
+  specs:
+    guard-unicorn (0.1.2)
+      guard (>= 1.1)
+
+GIT
   remote: https://github.com/ausaccessfed/aaf-service-base
   revision: bd22e5ae7dcda9d8a351cab3fc68a15a16ac4a29
   branch: feature/semantic-ui-1.0
@@ -267,6 +275,7 @@ DEPENDENCIES
   guard-bundler
   guard-rspec
   guard-rubocop
+  guard-unicorn!
   mysql2
   pry
   rails (~> 4.1.8)
