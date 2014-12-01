@@ -1,3 +1,5 @@
+require 'simplecov'
+
 require 'factory_girl_rails'
 require 'faker'
 
