@@ -6,5 +6,14 @@ FactoryGirl.define do
     targeted_id do
       "https://rapid.example.com!https://ide.example.com!#{SecureRandom.hex}"
     end
+
+    trait :authorized do
+      transient { permission '*' }
+
+      after(:create) do |subject, attrs|
+        perm = create(:permission, value: attrs.permission)
+        subject.subject_role_assignments.create(role: perm.role)
+      end
+    end
   end
 end
