@@ -5,7 +5,12 @@ class ApplicationController < ActionController::Base
   private_constant :Forbidden
   rescue_from Forbidden, with: :forbidden
 
-  after_action { fail('No access control performed') unless @access_checked }
+  after_action do
+    unless @access_checked
+      method = "#{self.class.name}##{params[:action]}"
+      fail("No access control performed by #{method}")
+    end
+  end
 
   protected
 

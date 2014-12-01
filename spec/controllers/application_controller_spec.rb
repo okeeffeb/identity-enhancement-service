@@ -35,7 +35,8 @@ RSpec.describe ApplicationController, type: :controller do
     end
 
     it 'fails without access control' do
-      expect { get :bad }.to raise_error(/No access control performed/)
+      msg = 'No access control performed by AnonymousController#bad'
+      expect { get :bad }.to raise_error(msg)
     end
 
     it 'allows a public action' do
