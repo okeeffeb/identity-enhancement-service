@@ -1,12 +1,18 @@
 source 'https://rubygems.org'
+source 'https://rails-assets.org'
 
 gem 'rails', '~> 4.1.8'
+gem 'sass-rails', '~> 4.0.3'
 gem 'mysql2'
 gem 'redis'
 gem 'redis-rails'
 gem 'audited-activerecord'
 gem 'rapid-rack'
 gem 'accession'
+gem 'aaf-service-base', git: 'https://github.com/ausaccessfed/aaf-service-base',
+                        branch: 'feature/semantic-ui-1.0'
+gem 'rails-assets-semantic-ui', '~> 1.0'
+gem 'rails-assets-jquery', '~> 1.11'
 
 gem 'unicorn', require: false
 gem 'god', require: false
