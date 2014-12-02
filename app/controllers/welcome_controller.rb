@@ -4,5 +4,6 @@ class WelcomeController < ApplicationController
   end
 
   def index
+    public_action
   end
 end
