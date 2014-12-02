@@ -1,9 +1,10 @@
 source 'https://rubygems.org'
 
-gem 'rails', '4.1.7'
+gem 'rails', '~> 4.1.8'
 gem 'mysql2'
 gem 'redis'
 gem 'redis-rails'
+gem 'audited-activerecord'
 
 gem 'unicorn', require: false
 gem 'god', require: false
