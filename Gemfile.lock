@@ -1,6 +1,24 @@
+GIT
+  remote: git://github.com/andreimaxim/guard-unicorn.git
+  revision: ca5177ddf5e067237fc57470b78bf4dd0189495a
+  ref: ca5177dd
+  specs:
+    guard-unicorn (0.1.2)
+      guard (>= 1.1)
+
+GIT
+  remote: https://github.com/ausaccessfed/aaf-service-base
+  revision: bd22e5ae7dcda9d8a351cab3fc68a15a16ac4a29
+  branch: feature/semantic-ui-1.0
+  specs:
+    aaf-service-base (0.0.1)
+      actionview (~> 4.1.8)
+
 GEM
   remote: https://rubygems.org/
+  remote: https://rails-assets.org/
   specs:
+    accession (0.0.2)
     actionmailer (4.1.8)
       actionpack (= 4.1.8)
       actionview (= 4.1.8)
@@ -36,6 +54,7 @@ GEM
     audited-activerecord (4.0.0)
       activerecord (~> 4.0)
       audited (= 4.0.0)
+    bindata (2.1.0)
     brakeman (2.6.3)
       erubis (~> 2.6)
       fastercsv (~> 1.5)
@@ -65,7 +84,7 @@ GEM
     ffi (1.9.6)
     formatador (0.2.5)
     god (0.13.4)
-    guard (2.8.2)
+    guard (2.10.0)
       formatador (>= 0.2.4)
       listen (~> 2.7)
       lumberjack (~> 1.0)
@@ -90,8 +109,14 @@ GEM
     hitimes (1.2.2)
     i18n (0.6.11)
     json (1.8.1)
+    json-jwt (0.7.0)
+      activesupport
+      bindata
+      multi_json (>= 1.3)
+      securecompare
+      url_safe_base64
     kgio (2.9.2)
-    listen (2.8.0)
+    listen (2.8.3)
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
@@ -102,8 +127,8 @@ GEM
     mime-types (2.4.3)
     minitest (5.4.3)
     multi_json (1.10.1)
-    mysql2 (0.3.16)
-    parser (2.2.0.pre.7)
+    mysql2 (0.3.17)
+    parser (2.2.0.pre.8)
       ast (>= 1.1, < 3.0)
       slop (~> 3.4, >= 3.4.5)
     powerpack (0.0.9)
@@ -124,6 +149,9 @@ GEM
       bundler (>= 1.3.0, < 2.0)
       railties (= 4.1.8)
       sprockets-rails (~> 2.0)
+    rails-assets-jquery (1.11.1)
+    rails-assets-semantic-ui (1.0.1)
+      rails-assets-jquery (>= 1.8)
     rails-observers (0.1.2)
       activemodel (~> 4.0)
     railties (4.1.8)
@@ -133,7 +161,9 @@ GEM
       thor (>= 0.18.1, < 2.0)
     rainbow (2.0.0)
     raindrops (0.13.0)
-    rake (10.3.2)
+    rake (10.4.0)
+    rapid-rack (0.0.1)
+      json-jwt
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
@@ -186,7 +216,13 @@ GEM
       sexp_processor (~> 4.0)
     ruby_parser (3.5.0)
       sexp_processor (~> 4.1)
-    sass (3.4.8)
+    sass (3.2.19)
+    sass-rails (4.0.5)
+      railties (>= 4.0.0, < 5.0)
+      sass (~> 3.2.2)
+      sprockets (~> 2.8, < 3.0)
+      sprockets-rails (~> 2.0)
+    securecompare (1.0.0)
     sexp_processor (4.4.4)
     simplecov (0.9.1)
       docile (~> 1.1.0)
@@ -202,7 +238,7 @@ GEM
       multi_json (~> 1.0)
       rack (~> 1.0)
       tilt (~> 1.1, != 1.3.0)
-    sprockets-rails (2.2.0)
+    sprockets-rails (2.2.1)
       actionpack (>= 3.0)
       activesupport (>= 3.0)
       sprockets (>= 2.8, < 4.0)
@@ -221,11 +257,14 @@ GEM
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
+    url_safe_base64 (0.2.2)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  aaf-service-base!
+  accession
   audited-activerecord
   brakeman (~> 2.6)
   factory_girl_rails
@@ -236,12 +275,17 @@ DEPENDENCIES
   guard-bundler
   guard-rspec
   guard-rubocop
+  guard-unicorn!
   mysql2
   pry
   rails (~> 4.1.8)
+  rails-assets-jquery (~> 1.11)
+  rails-assets-semantic-ui (~> 1.0)
+  rapid-rack
   redis
   redis-rails
   rspec-rails (~> 3.1)
+  sass-rails (~> 4.0.3)
   simplecov
   terminal-notifier-guard
   timecop

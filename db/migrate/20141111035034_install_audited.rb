@@ -1,4 +1,4 @@
-# rubocop:disable Metrics/LineLength, Metrics/MethodLength, Metrics/AbcSize
+# rubocop:disable Metrics/LineLength
 class InstallAudited < ActiveRecord::Migration
   def self.up
     create_table :audits, force: true do |t|

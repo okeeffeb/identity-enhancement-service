@@ -1,13 +1,61 @@
 <!DOCTYPE html>
-<html>
-<head>
-  <title>IdentityEnhancementService</title>
-  <%= stylesheet_link_tag    'application', media: 'all' %>
-  <%= csrf_meta_tags %>
-</head>
-<body>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= content_for?(:title) ? yield(:title) : 'AAF Identity Enhancement' %></title>
+    <%= csrf_meta_tags %>
 
-<%= yield %>
+    <%= javascript_include_tag 'application' %>
 
-</body>
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/3.6.1/html5shiv.js" type="text/javascript"></script>
+    <![endif]-->
+
+    <%= stylesheet_link_tag "application", :media => "all" %>
+  </head>
+  <body>
+    <%= aaf_header(title: 'AAF Identity Enhancement', environment: environment_string) do -%>
+      <%= nav_bar do -%>
+        <%= nav_item('Dashboard', root_path) %>
+
+        <%= nav_collapsing_items do -%>
+          <%- Faker::Lorem.words(4).each do |word| -%>
+            <%= nav_item(word.titleize, "/#{word}") %>
+          <%- end -%>
+
+          <%= nav_items_right do -%>
+            <%- if @subject -%>
+              <%= nav_item('Logout', '/auth/logout') %>
+            <%- else -%>
+              <%= nav_item('Login', '/auth/login') %>
+            <%- end -%>
+          <%- end -%>
+        <%- end -%>
+      <%- end -%>
+    <%- end -%>
+
+    <section class="content">
+      <main><%= yield %></main>
+    </section>
+
+    <%= aaf_footer do -%>
+      <%- if @subject -%>
+        <p>
+          Logged in as: <strong><%= @subject.name %></strong>
+          (<%= @subject.targeted_id %>)
+        </p>
+      <%- end -%>
+
+      <p>
+        AAF Identity Enhancement Service
+        <strong>MVP</strong>
+        <br/>
+        Developed for the <a href="http://www.aaf.edu.au">Australian Access Federation</a>
+        by Shaun Mangelsdorf
+      </p>
+    <%- end -%>
+  </body>
 </html>
