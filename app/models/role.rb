@@ -1,5 +1,6 @@
 class Role < ActiveRecord::Base
-  # audited under provider
+  audited comment_required: true, associated_with: :provider
+  has_associated_audits
 
   belongs_to :provider
 

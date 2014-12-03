@@ -1,5 +1,5 @@
 class APISubjectRoleAssignment < ActiveRecord::Base
-  # audited under api_subject
+  audited comment_required: true, associated_with: :api_subject
 
   belongs_to :api_subject
   belongs_to :role

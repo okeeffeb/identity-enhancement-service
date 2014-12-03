@@ -12,7 +12,7 @@ FactoryGirl.define do
 
       after(:create) do |subject, attrs|
         perm = create(:permission, value: attrs.permission)
-        subject.subject_role_assignments.create(role: perm.role)
+        create(:subject_role_assignment, role: perm.role, subject: subject)
       end
     end
   end

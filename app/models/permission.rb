@@ -1,5 +1,5 @@
 class Permission < ActiveRecord::Base
-  # audited under provider
+  audited comment_required: true, associated_with: :role
 
   belongs_to :role
 
