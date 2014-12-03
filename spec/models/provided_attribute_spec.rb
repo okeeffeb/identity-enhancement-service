@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe ProvidedAttribute do
+RSpec.describe ProvidedAttribute, type: :model do
   context 'validations' do
     let(:attr) { subject.permitted_attribute.available_attribute }
     subject { build(:provided_attribute) }

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Invitation do
+RSpec.describe Invitation, type: :model do
   context 'validations' do
     subject { build(:invitation) }
 

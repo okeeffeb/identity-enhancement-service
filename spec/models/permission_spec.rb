@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Permission do
+RSpec.describe Permission, type: :model do
   context 'validations' do
     subject { build(:permission) }
 

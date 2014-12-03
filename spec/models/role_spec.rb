@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Role do
+RSpec.describe Role, type: :model do
   context 'validations' do
     subject { build(:role) }
 

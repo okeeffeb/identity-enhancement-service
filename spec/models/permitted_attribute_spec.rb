@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe PermittedAttribute do
+RSpec.describe PermittedAttribute, type: :model do
   context 'validations' do
     subject { build(:permitted_attribute) }
 

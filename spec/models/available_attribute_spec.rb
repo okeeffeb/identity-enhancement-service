@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe AvailableAttribute do
+RSpec.describe AvailableAttribute, type: :model do
   context 'validations' do
     subject { build(:available_attribute) }
 

@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe SubjectRoleAssignment do
+RSpec.describe SubjectRoleAssignment, type: :model do
   context 'validations' do
     subject { create(:subject, :authorized).subject_role_assignments.first! }
 

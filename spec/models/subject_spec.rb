@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Subject do
+RSpec.describe Subject, type: :model do
   context 'validations' do
     subject { build(:subject, complete: false) }
 

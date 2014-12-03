@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe APISubject do
+RSpec.describe APISubject, type: :model do
   context 'validations' do
     subject { build(:api_subject) }
 

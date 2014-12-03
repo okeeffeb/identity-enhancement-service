@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Provider do
+RSpec.describe Provider, type: :model do
   context 'validations' do
     subject { build(:provider) }
     it { is_expected.to validate_presence_of(:name) }
