@@ -14,7 +14,8 @@ module Authentication
 
     def subject(attrs)
       Subject.find_or_initialize_by(attrs.slice(:targeted_id)).tap do |subject|
-        subject.update_attributes!(attrs)
+        subject.update_attributes!(
+          attrs.merge(audit_comment: 'Provisioned account for initial login'))
       end
     end
   end

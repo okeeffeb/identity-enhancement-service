@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :subject do
+  factory :subject, traits: %i(audited) do
     name { Faker::Name.name }
     mail { Faker::Internet.email(name) }
     shared_token { SecureRandom.urlsafe_base64(16) }

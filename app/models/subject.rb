@@ -1,5 +1,5 @@
 class Subject < ActiveRecord::Base
-  audited comment_required: false
+  audited comment_required: true
   has_associated_audits
 
   include Accession::Principal

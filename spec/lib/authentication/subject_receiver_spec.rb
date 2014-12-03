@@ -29,14 +29,14 @@ module Authentication
       it 'returns the new subject' do
         obj = subject.subject(attrs)
         expect(obj).to be_a(Subject)
-        expect(obj).to have_attributes(attrs)
+        expect(obj).to have_attributes(attrs.except(:audit_comment))
       end
 
       it 'updates an existing subject' do
         obj = subject.subject(attrs.merge(name: 'Wrong',
                                           mail: 'wrong.address@example.com'))
         subject.subject(attrs)
-        expect(obj.reload).to have_attributes(attrs)
+        expect(obj.reload).to have_attributes(attrs.except(:audit_comment))
       end
 
       it 'returns the existing subject' do
