@@ -1,4 +1,6 @@
 class ProvidedAttribute < ActiveRecord::Base
+  # audited under subject
+
   belongs_to :permitted_attribute
   belongs_to :subject
 

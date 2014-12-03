@@ -1,6 +1,10 @@
 require 'rails_helper'
 
 RSpec.describe Subject, type: :model do
+  xcontext do
+    it_behaves_like 'an audited model'
+  end
+
   context 'validations' do
     subject { build(:subject, complete: false) }
 

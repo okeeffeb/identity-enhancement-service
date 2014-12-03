@@ -1,4 +1,6 @@
 class APISubject < ActiveRecord::Base
+  audited comment_required: true
+
   belongs_to :provider
 
   has_many :api_subject_role_assignments

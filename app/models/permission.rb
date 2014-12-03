@@ -1,4 +1,6 @@
 class Permission < ActiveRecord::Base
+  # audited under provider
+
   belongs_to :role
 
   validates :role, presence: true
