@@ -3,7 +3,7 @@ module Authentication
     include RapidRack::DefaultReceiver
     include RapidRack::RedisRegistry
 
-    def map_attributes(attrs)
+    def map_attributes(_env, attrs)
       {
         targeted_id: attrs['edupersontargetedid'],
         shared_token: attrs['auedupersonsharedtoken'],
@@ -12,8 +12,9 @@ module Authentication
       }
     end
 
-    def subject(attrs)
-      return accept_invitation(attrs.dup) if attrs.key?(:invite)
+    def subject(env, attrs)
+      session = env['rack.session']
+      return accept_invitation(session, attrs) if session.try(:key?, :invite)
 
       Subject.find_or_initialize_by(attrs.slice(:targeted_id)).tap do |subject|
         subject.update_attributes!(
@@ -23,10 +24,9 @@ module Authentication
 
     private
 
-    def accept_invitation(attrs)
-      invitation = Invitation.where(identifier: attrs.delete(:invite))
+    def accept_invitation(session, attrs)
+      invitation = Invitation.where(identifier: session[:invite])
                    .available.first!
-
       invitation.subject.accept(invitation, attrs)
       invitation.subject
     end

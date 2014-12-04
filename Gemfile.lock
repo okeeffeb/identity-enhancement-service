@@ -162,7 +162,7 @@ GEM
     rainbow (2.0.0)
     raindrops (0.13.0)
     rake (10.4.0)
-    rapid-rack (0.0.1)
+    rapid-rack (0.1.0)
       json-jwt
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
