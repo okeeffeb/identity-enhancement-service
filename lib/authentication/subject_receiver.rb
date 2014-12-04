@@ -27,12 +27,8 @@ module Authentication
       invitation = Invitation.where(identifier: attrs.delete(:invite))
                    .available.first!
 
-      Invitation.transaction do
-        invitation.subject.tap do |subject|
-          subject.update_attributes!(attrs.merge(complete: true))
-          invitation.update_attributes!(used: true)
-        end
-      end
+      invitation.subject.accept(invitation, attrs)
+      invitation.subject
     end
   end
 end

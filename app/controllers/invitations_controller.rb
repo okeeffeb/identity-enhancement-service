@@ -9,7 +9,10 @@ class InvitationsController < ApplicationController
   def create
     check_access!('admin:invitations:create')
 
-    subject = Subject.create(params.require(:invitation).permit(:name, :mail))
+    attrs = params.require(:invitation).permit(:name, :mail)
+            .merge(audit_comment: 'Created incomplete Subject for invitation')
+
+    subject = Subject.create!(attrs)
     Provider.find(params[:invitation][:provider_id]).invite(subject)
 
     redirect_to(:invitations)

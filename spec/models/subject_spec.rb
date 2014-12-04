@@ -38,4 +38,29 @@ RSpec.describe Subject, type: :model do
       expect(subject.permits?('a:b:c')).to be_falsey
     end
   end
+
+  context '#accept' do
+    let(:attrs) do
+      attributes_for(:subject).slice(:name, :mail, :targeted_id, :shared_token)
+    end
+
+    let(:invitation) { create(:invitation, subject: subject) }
+
+    def run
+      subject.accept(invitation, attrs)
+    end
+
+    it 'updates the attributes' do
+      run
+      expect(subject.reload).to have_attributes(attrs)
+    end
+
+    it 'marks the invitation as used' do
+      expect { run }.to change { invitation.reload.used? }.to be_truthy
+    end
+
+    it 'marks the subject as complete' do
+      expect { run }.to change { subject.reload.complete? }.to be_truthy
+    end
+  end
 end
