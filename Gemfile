@@ -10,7 +10,7 @@ gem 'audited-activerecord'
 gem 'rapid-rack'
 gem 'accession'
 gem 'aaf-service-base', git: 'https://github.com/ausaccessfed/aaf-service-base',
-                        branch: 'feature/semantic-ui-1.0'
+                        branch: 'feature/email-message'
 gem 'rails-assets-semantic-ui', '~> 1.0'
 gem 'rails-assets-jquery', '~> 1.11'
 

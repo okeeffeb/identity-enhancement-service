@@ -17,4 +17,20 @@ RSpec.describe Provider, type: :model do
       it { is_expected.not_to allow_value(identifier).for(:identifier) }
     end
   end
+
+  context '#invite' do
+    let(:user) { create(:subject) }
+    let(:provider) { create(:provider) }
+
+    def run
+      provider.invite(user)
+    end
+
+    it 'creates the invitation' do
+      expect { run }.to change(Invitation, :count).by(1)
+    end
+
+    it 'sets the attributes' do
+    end
+  end
 end
