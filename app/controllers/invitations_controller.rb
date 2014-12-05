@@ -39,7 +39,7 @@ class InvitationsController < ApplicationController
 
   def deliver(invitation)
     Mail.deliver(to: invitation.mail,
-                 from: Rails.application.config.ide_service.mail.from,
+                 from: Rails.application.config.ide_service.mail[:from],
                  subject: 'Invitation to AAF Identity Enhancement',
                  body: email_message(invitation).render)
 
