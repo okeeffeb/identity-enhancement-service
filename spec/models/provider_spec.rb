@@ -30,7 +30,22 @@ RSpec.describe Provider, type: :model do
       expect { run }.to change(Invitation, :count).by(1)
     end
 
-    it 'sets the attributes' do
+    it 'sets the user attributes' do
+      run
+      expect(user.invitations.last)
+        .to have_attributes(name: user.name, mail: user.mail,
+                            subject_id: user.id)
+    end
+
+    it 'sets the expiry' do
+      Timecop.freeze do
+        run
+        expect(user.invitations.last.expires.to_i).to eq(1.month.from_now.to_i)
+      end
+    end
+
+    it 'returns the invitation' do
+      expect(run).to be_an(Invitation)
     end
   end
 end

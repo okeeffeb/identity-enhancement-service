@@ -59,6 +59,13 @@ RSpec.describe InvitationsController, type: :controller do
         run
         expect(response).to redirect_to(invitations_path)
       end
+
+      context 'email delivery' do
+        before { run }
+        let(:text) { 'You have been invited to AAF Identity Enhancement' }
+        it { is_expected.to have_sent_email.to(attrs[:mail]) }
+        it { is_expected.to have_sent_email.matching_body(/#{text}/) }
+      end
     end
   end
 

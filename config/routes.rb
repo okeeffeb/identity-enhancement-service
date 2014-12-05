@@ -4,7 +4,7 @@ Rails.application.routes.draw do
 
   resources :invitations, only: %i(index create) do
     collection do
-      get ':identifier' => 'invitations#accept'
+      get ':identifier' => 'invitations#accept', as: 'accept'
     end
   end
 end
