@@ -19,6 +19,14 @@ class InvitationsController < ApplicationController
     redirect_to(:invitations)
   end
 
+  def show
+    public_action
+    @invitation = Invitation.where(identifier: params[:identifier]).first!
+
+    render('used') && return if @invitation.used?
+    render('expired') && return if @invitation.expired?
+  end
+
   def accept
     public_action
 

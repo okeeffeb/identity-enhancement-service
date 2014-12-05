@@ -9,4 +9,8 @@ class Invitation < ActiveRecord::Base
 
   scope :current, -> { where(arel_table[:expires].gt(Time.now)) }
   scope :available, -> { current.where(used: false) }
+
+  def expired?
+    expires < Time.now
+  end
 end
