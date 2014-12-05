@@ -54,7 +54,7 @@ class InvitationsController < ApplicationController
 
   EMAIL_BODY = <<-EOF.gsub(/^\s+\|/, '')
     |You have been invited to AAF Identity Enhancement, so that your identity
-    |can be verified for access to research services.
+    |can be verified to provide access to more research services.
     |
     |Please visit the following link to accept the invite and get started:
     |
