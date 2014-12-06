@@ -23,6 +23,8 @@ group :development, :test do
   gem 'faker'
   gem 'shoulda-matchers'
   gem 'timecop'
+  gem 'capybara'
+  gem 'capybara-webkit'
 
   gem 'pry', require: false
   gem 'brakeman', '~> 2.6', require: false
