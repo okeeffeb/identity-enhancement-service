@@ -4,17 +4,20 @@ class InvitationsController < ApplicationController
   def index
     check_access!('admin:invitations:list')
     @invitations = Invitation.all
+    @providers = Provider.all
   end
 
   def create
     check_access!('admin:invitations:create')
 
-    attrs = params.require(:invitation).permit(:name, :mail)
-            .merge(audit_comment: 'Created incomplete Subject for Invitation')
+    Invitation.transaction do
+      attrs = params.require(:invitation).permit(:name, :mail)
+              .merge(audit_comment: 'Created incomplete Subject for Invitation')
 
-    provider = Provider.find(params[:invitation][:provider_id])
-    invitation = provider.invite(Subject.create!(attrs))
-    deliver(invitation)
+      provider = Provider.find(params[:invitation][:provider_id])
+      invitation = provider.invite(Subject.create!(attrs))
+      deliver(invitation)
+    end
 
     redirect_to(:invitations)
   end

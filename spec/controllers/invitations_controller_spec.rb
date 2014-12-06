@@ -9,23 +9,27 @@ RSpec.describe InvitationsController, type: :controller do
       get :index
     end
 
+    let!(:invitation) { create(:invitation) }
+    let!(:provider) { create(:provider) }
     let(:permission) { 'admin:invitations:list' }
     it_behaves_like 'a restricted action'
 
     context 'as a permitted user' do
       let(:user) { create(:subject, :authorized) }
-      before { session[:subject_id] = user.id }
+      before do
+        session[:subject_id] = user.id
+        run
+      end
 
       it 'lists the invitations' do
-        invitation
-        run
         expect(assigns[:invitations]).to include(invitation)
       end
 
-      it do
-        run
-        is_expected.to render_template('invitations/index')
+      it 'lists the providers' do
+        expect(assigns[:providers]).to include(provider)
       end
+
+      it { is_expected.to render_template('invitations/index') }
     end
   end
 
@@ -65,6 +69,18 @@ RSpec.describe InvitationsController, type: :controller do
         let(:text) { 'You have been invited to AAF Identity Enhancement' }
         it { is_expected.to have_sent_email.to(attrs[:mail]) }
         it { is_expected.to have_sent_email.matching_body(/#{text}/) }
+      end
+
+      context 'email failure' do
+        before { expect(Mail).to receive(:deliver) { fail('Nope') } }
+
+        it 'does not create a subject' do
+          expect { run }.to raise_error.and not_change(Subject, :count)
+        end
+
+        it 'does not create a invitation' do
+          expect { run }.to raise_error.and not_change(Invitation, :count)
+        end
       end
     end
   end

@@ -1,0 +1,43 @@
+<%= page_header('Invitations', 'All Invitations') %>
+
+<table class="ui basic padded small table">
+  <thead>
+    <tr>
+      <th>Identifier</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Used</th>
+      <th>Expires</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%- @invitations.each do |invitation| -%>
+      <tr>
+        <td><%= invitation.identifier %></td>
+        <td><%= invitation.name %></td>
+        <td><%= invitation.mail %></td>
+        <td><%= yes_no_string invitation.used? %></td>
+        <%- time_string = invitation.expires.strftime('%d/%m/%Y') -%>
+        <%- if invitation.expired? -%>
+          <td class="negative"><%= time_string %></td>
+        <%- else -%>
+          <td class="positive"><%= time_string %></td>
+        <%- end -%>
+      </tr>
+    <%- end -%>
+  </tbody>
+</table>
+
+<%= form_tag(invitations_path, method: 'post') do -%>
+  <input type="text" placeholder="Name" name="invitation[name]"/>
+  <input type="text" placeholder="Email" name="invitation[mail]"/>
+
+  <select name="invitation[provider_id]">
+    <%- @providers.sort_by(&:name).each do |provider| -%>
+      <option value="<%= provider.id %>"><%= provider.name %></option>
+    <%- end -%>
+  </select>
+
+  <%= submit_tag('Invite!') %>
+<%- end -%>

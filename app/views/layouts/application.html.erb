@@ -26,6 +26,12 @@
             <%= nav_item(word.titleize, "/#{word}") %>
           <%- end -%>
 
+          <%- if_permitted('admin') do -%>
+            <%= nav_dropdown('Administration') do -%>
+              <%= nav_item('Invitations', invitations_path) %>
+            <%- end -%>
+          <%- end -%>
+
           <%= nav_items_right do -%>
             <%- if @subject -%>
               <%= nav_item('Logout', '/auth/logout') %>
