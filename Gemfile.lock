@@ -8,12 +8,20 @@ GIT
 
 GIT
   remote: https://github.com/ausaccessfed/aaf-service-base
-  revision: 22c163142a7fbfa2b3c7ca64899ab0143e981638
-  branch: feature/email-message
+  revision: 526ce0d59f103f76e9499ea6b0f4c18ad59879fb
+  branch: private/ide-integration
   specs:
     aaf-service-base (0.0.1)
       actionview (~> 4.1.8)
       kramdown (~> 1.5)
+
+GIT
+  remote: https://github.com/ausaccessfed/rapid-rack
+  revision: 7f7b161673d8e2e3d13c07090f0925f01d19c53b
+  branch: private/ide-integration
+  specs:
+    rapid-rack (0.1.0)
+      json-jwt
 
 GEM
   remote: https://rubygems.org/
@@ -176,8 +184,6 @@ GEM
     rainbow (2.0.0)
     raindrops (0.13.0)
     rake (10.4.0)
-    rapid-rack (0.1.0)
-      json-jwt
     rb-fsevent (0.9.4)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
@@ -301,7 +307,7 @@ DEPENDENCIES
   rails (~> 4.1.8)
   rails-assets-jquery (~> 1.11)
   rails-assets-semantic-ui (~> 1.0)
-  rapid-rack
+  rapid-rack!
   redis
   redis-rails
   rspec-rails (~> 3.1)

@@ -7,10 +7,11 @@ gem 'mysql2'
 gem 'redis'
 gem 'redis-rails'
 gem 'audited-activerecord'
-gem 'rapid-rack'
+gem 'rapid-rack', git: 'https://github.com/ausaccessfed/rapid-rack',
+                  branch: 'private/ide-integration'
 gem 'accession'
 gem 'aaf-service-base', git: 'https://github.com/ausaccessfed/aaf-service-base',
-                        branch: 'feature/email-message'
+                        branch: 'private/ide-integration'
 gem 'rails-assets-semantic-ui', '~> 1.0'
 gem 'rails-assets-jquery', '~> 1.11'
 
