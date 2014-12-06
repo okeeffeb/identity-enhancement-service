@@ -18,4 +18,14 @@ end
 RSpec.configure do |config|
   config.use_transactional_fixtures = true
   config.include ControllerMatchers, type: :controller
+
+  config.around(:example, :debug) do |example|
+    old = ActiveRecord::Base.logger
+    begin
+      ActiveRecord::Base.logger = Logger.new($stderr)
+      example.run
+    ensure
+      ActiveRecord::Base.logger = old
+    end
+  end
 end
