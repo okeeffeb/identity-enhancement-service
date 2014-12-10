@@ -8,4 +8,8 @@ Rails.application.routes.draw do
       post ':identifier' => 'invitations#accept', as: 'accept'
     end
   end
+
+  scope '/admin' do
+    resources :providers
+  end
 end
