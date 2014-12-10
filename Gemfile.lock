@@ -7,11 +7,11 @@ GIT
       guard (>= 1.1)
 
 GIT
-  remote: https://github.com/ausaccessfed/aaf-service-base
-  revision: 526ce0d59f103f76e9499ea6b0f4c18ad59879fb
+  remote: https://github.com/ausaccessfed/aaf-lipstick
+  revision: a0f1a18b04c7684bd46c440dea27a667c14e0b47
   branch: private/ide-integration
   specs:
-    aaf-service-base (0.0.1)
+    aaf-lipstick (0.0.1)
       actionview (~> 4.1.8)
       kramdown (~> 1.5)
 
@@ -287,7 +287,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  aaf-service-base!
+  aaf-lipstick!
   accession
   audited-activerecord
   brakeman (~> 2.6)

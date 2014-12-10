@@ -50,9 +50,9 @@ class InvitationsController < ApplicationController
   end
 
   def email_message(invitation)
-    AAFServiceBase::EmailMessage.new(title: 'AAF Identity Enhancement',
-                                     image_url: 'http://example.com',
-                                     content: email_body(invitation))
+    Lipstick::EmailMessage.new(title: 'AAF Identity Enhancement',
+                               image_url: 'http://example.com',
+                               content: email_body(invitation))
   end
 
   EMAIL_BODY = <<-EOF.gsub(/^\s+\|/, '')

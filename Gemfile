@@ -10,8 +10,8 @@ gem 'audited-activerecord'
 gem 'rapid-rack', git: 'https://github.com/ausaccessfed/rapid-rack',
                   branch: 'private/ide-integration'
 gem 'accession'
-gem 'aaf-service-base', git: 'https://github.com/ausaccessfed/aaf-service-base',
-                        branch: 'private/ide-integration'
+gem 'aaf-lipstick', git: 'https://github.com/ausaccessfed/aaf-lipstick',
+                    branch: 'private/ide-integration'
 gem 'rails-assets-semantic-ui', '~> 1.0'
 gem 'rails-assets-jquery', '~> 1.11'
 

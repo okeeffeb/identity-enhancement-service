@@ -1,6 +1,6 @@
 module ApplicationHelper
-  include AAFServiceBase::Helpers::LayoutHelper
-  include AAFServiceBase::Helpers::NavHelper
+  include Lipstick::Helpers::LayoutHelper
+  include Lipstick::Helpers::NavHelper
 
   def environment_string
     'Development'
