@@ -9,4 +9,18 @@ class Provider < ActiveRecord::Base
 
   validates :name, :description, presence: true
   validates :identifier, presence: true, format: { with: /\A[\w-]{1,40}\z/ }
+
+  has_many :invitations
+
+  def invite(subject)
+    identifier = SecureRandom.urlsafe_base64(19)
+
+    message = "Created invitation for #{subject.name}"
+
+    attrs = { subject_id: subject.id, identifier: identifier,
+              name: subject.name, mail: subject.mail,
+              expires: 1.month.from_now, audit_comment: message }
+
+    invitations.create!(attrs)
+  end
 end

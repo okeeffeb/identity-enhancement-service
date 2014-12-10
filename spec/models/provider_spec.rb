@@ -17,4 +17,35 @@ RSpec.describe Provider, type: :model do
       it { is_expected.not_to allow_value(identifier).for(:identifier) }
     end
   end
+
+  context '#invite' do
+    let(:user) { create(:subject) }
+    let(:provider) { create(:provider) }
+
+    def run
+      provider.invite(user)
+    end
+
+    it 'creates the invitation' do
+      expect { run }.to change(Invitation, :count).by(1)
+    end
+
+    it 'sets the user attributes' do
+      run
+      expect(user.invitations.last)
+        .to have_attributes(name: user.name, mail: user.mail,
+                            subject_id: user.id)
+    end
+
+    it 'sets the expiry' do
+      Timecop.freeze do
+        run
+        expect(user.invitations.last.expires.to_i).to eq(1.month.from_now.to_i)
+      end
+    end
+
+    it 'returns the invitation' do
+      expect(run).to be_an(Invitation)
+    end
+  end
 end

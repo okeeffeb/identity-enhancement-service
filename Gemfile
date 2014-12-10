@@ -7,10 +7,11 @@ gem 'mysql2'
 gem 'redis'
 gem 'redis-rails'
 gem 'audited-activerecord'
-gem 'rapid-rack'
+gem 'rapid-rack', git: 'https://github.com/ausaccessfed/rapid-rack',
+                  branch: 'private/ide-integration'
 gem 'accession'
 gem 'aaf-service-base', git: 'https://github.com/ausaccessfed/aaf-service-base',
-                        branch: 'feature/semantic-ui-1.0'
+                        branch: 'private/ide-integration'
 gem 'rails-assets-semantic-ui', '~> 1.0'
 gem 'rails-assets-jquery', '~> 1.11'
 
@@ -23,6 +24,8 @@ group :development, :test do
   gem 'faker'
   gem 'shoulda-matchers'
   gem 'timecop'
+  gem 'capybara'
+  gem 'capybara-webkit'
 
   gem 'pry', require: false
   gem 'brakeman', '~> 2.6', require: false

@@ -7,11 +7,22 @@ class Subject < ActiveRecord::Base
   has_many :subject_role_assignments
   has_many :roles, through: :subject_role_assignments
   has_many :provided_attributes
+  has_many :invitations
 
   validates :name, :mail, presence: true
   validates :targeted_id, :shared_token, presence: true, if: :complete?
 
   def permissions
     subject_role_assignments.flat_map { |ra| ra.role.permissions.map(&:value) }
+  end
+
+  def accept(invitation, attrs)
+    transaction do
+      message = 'Provisioned account via invitation'
+      update_attributes!(attrs.merge(audit_comment: message, complete: true))
+
+      invitation.update_attributes!(used: true,
+                                    audit_comment: "Accepted by #{name}")
+    end
   end
 end
