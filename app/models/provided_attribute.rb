@@ -1,4 +1,6 @@
 class ProvidedAttribute < ActiveRecord::Base
+  audited comment_required: true, associated_with: :subject
+
   belongs_to :permitted_attribute
   belongs_to :subject
 

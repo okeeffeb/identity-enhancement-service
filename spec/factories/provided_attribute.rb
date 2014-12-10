@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :provided_attribute do
+  factory :provided_attribute, traits: %i(audited) do
     association :permitted_attribute
     association :subject
 

@@ -1,5 +1,5 @@
 FactoryGirl.define do
-  factory :subject do
+  factory :subject, traits: %i(audited) do
     name { Faker::Name.name }
     mail { Faker::Internet.email(name) }
     shared_token { SecureRandom.urlsafe_base64(16) }
@@ -12,7 +12,7 @@ FactoryGirl.define do
 
       after(:create) do |subject, attrs|
         perm = create(:permission, value: attrs.permission)
-        subject.subject_role_assignments.create(role: perm.role)
+        create(:subject_role_assignment, role: perm.role, subject: subject)
       end
     end
   end

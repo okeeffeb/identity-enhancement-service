@@ -1,4 +1,7 @@
 class Provider < ActiveRecord::Base
+  audited comment_required: true
+  has_associated_audits
+
   has_many :roles
   has_many :permitted_attributes
   has_many :provided_attributes

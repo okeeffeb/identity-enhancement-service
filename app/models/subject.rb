@@ -1,4 +1,7 @@
 class Subject < ActiveRecord::Base
+  audited comment_required: true
+  has_associated_audits
+
   include Accession::Principal
 
   has_many :subject_role_assignments

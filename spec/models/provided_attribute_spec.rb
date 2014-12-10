@@ -1,6 +1,8 @@
 require 'rails_helper'
 
 RSpec.describe ProvidedAttribute, type: :model do
+  it_behaves_like 'an audited model'
+
   context 'validations' do
     let(:attr) { subject.permitted_attribute.available_attribute }
     subject { build(:provided_attribute) }
