@@ -1,0 +1,12 @@
+<table>
+  <%- @providers.each do |provider| -%>
+    <tr>
+      <td><%= provider.name %></td>
+      <td><%= link_to('Show', provider) %></td>
+      <td><%= link_to('Edit', [:edit, provider]) %></td>
+      <td><%= link_to('Delete', provider, method: :delete) %></td>
+    </tr>
+  <%- end -%>
+</table>
+
+<%= link_to('Create', new_provider_path) %>

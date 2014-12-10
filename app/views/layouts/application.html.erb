@@ -29,6 +29,7 @@
           <%- if_permitted('admin') do -%>
             <%= nav_dropdown('Administration') do -%>
               <%= nav_item('Invitations', invitations_path) %>
+              <%= nav_item('Providers', providers_path) %>
             <%- end -%>
           <%- end -%>
 
