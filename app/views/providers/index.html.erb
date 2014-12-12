@@ -8,7 +8,7 @@
       <th>Actions</th>
     </tr>
   </thead>
-  <%- @providers.each do |provider| -%>
+  <%- @providers.sort_by(&:name).each do |provider| -%>
     <tbody>
       <tr>
         <td><%= provider.name %></td>
