@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 RSpec.describe ProvidersController, type: :routing do
-  context 'get /providers' do
+  context 'get /admin/providers' do
     subject { { get: '/admin/providers' } }
     it { is_expected.to route_to('providers#index') }
   end
 
-  context 'get /providers/new' do
+  context 'get /admin/providers/new' do
     subject { { get: '/admin/providers/new' } }
     it { is_expected.to route_to('providers#new') }
   end
