@@ -11,5 +11,6 @@ Rails.application.routes.draw do
 
   scope '/admin' do
     resources :providers
+    resources :available_attributes
   end
 end
