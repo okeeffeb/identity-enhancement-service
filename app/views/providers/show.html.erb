@@ -13,14 +13,14 @@
   </tbody>
 </table>
 
-<%= button_link_to(providers_path, class: 'tiny icon') do -%>
+<%= button_link_to(providers_path, class: 'large icon') do -%>
   <%= icon_tag('left arrow') %>
   Back
 <%- end -%>
 
-<%= button_link_to([:edit, @provider], class: 'tiny icon') do -%>
+<%= button_link_to([:edit, @provider], class: 'large icon') do -%>
   <%= icon_tag('edit') %>
   Edit
 <%- end -%>
 
-<%= delete_button_tag(@provider) %>
+<%= delete_button_tag(@provider, class: 'large') %>

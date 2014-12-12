@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/ausaccessfed/aaf-lipstick
-  revision: 110293a73d36cf02dca8610ec7dbe28e46fcd925
+  revision: ff0afff16a98badf65f6a23587a20c56c68e0860
   branch: private/ide-integration
   specs:
     aaf-lipstick (0.0.1)

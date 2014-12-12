@@ -17,14 +17,14 @@
   </tbody>
 </table>
 
-<%= button_link_to(available_attributes_path, class: 'tiny icon') do -%>
+<%= button_link_to(available_attributes_path, class: 'large icon') do -%>
   <%= icon_tag('left arrow') %>
   Back
 <%- end -%>
 
-<%= button_link_to([:edit, @attribute], class: 'tiny icon') do -%>
+<%= button_link_to([:edit, @attribute], class: 'large icon') do -%>
   <%= icon_tag('edit') %>
   Edit
 <%- end -%>
 
-<%= delete_button_tag(@attribute) %>
+<%= delete_button_tag(@attribute, class: 'large') %>
