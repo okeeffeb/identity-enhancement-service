@@ -4,7 +4,7 @@ RSpec.describe ProvidersController, type: :controller do
   let(:user) { create(:subject, :authorized, permission: 'admin:providers:*') }
   let(:orig_attrs) { attributes_for(:provider).except(:audit_comment) }
   let(:provider) { create(:provider, orig_attrs) }
-  before { session[:subject_id] = user.id }
+  before { session[:subject_id] = user.try(:id) }
   subject { response }
 
   context 'get :index' do
@@ -18,6 +18,12 @@ RSpec.describe ProvidersController, type: :controller do
     context 'as a non-admin' do
       let(:user) { create(:subject) }
       it { is_expected.to have_http_status(:forbidden) }
+    end
+
+    context 'with no user' do
+      let(:user) { nil }
+      before { get :index }
+      it { is_expected.to redirect_to('/auth/login') }
     end
   end
 
