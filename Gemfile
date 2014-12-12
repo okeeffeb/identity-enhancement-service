@@ -27,6 +27,7 @@ group :development, :test do
   gem 'timecop'
   gem 'capybara'
   gem 'capybara-webkit'
+  gem 'database_cleaner'
 
   gem 'pry', require: false
   gem 'brakeman', '~> 2.6', require: false

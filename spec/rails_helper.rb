@@ -25,10 +25,17 @@ module AliasedMatchers
   end
 end
 
+module NoTransactionalFixtures
+  def self.included(base)
+    base.class_eval { self.use_transactional_fixtures = false }
+  end
+end
+
 RSpec.configure do |config|
   config.use_transactional_fixtures = true
   config.include ControllerMatchers, type: :controller
   config.include AliasedMatchers
+  config.include NoTransactionalFixtures, type: :feature, js: true
 
   config.around(:example, :debug) do |example|
     old = ActiveRecord::Base.logger
@@ -39,4 +46,10 @@ RSpec.configure do |config|
       ActiveRecord::Base.logger = old
     end
   end
+
+  Capybara.javascript_driver = :webkit
+
+  config.before(:suite) { DatabaseCleaner.strategy = :truncation }
+  config.before(:each, js: true) { DatabaseCleaner.start }
+  config.after(:each, js: true) { DatabaseCleaner.clean }
 end

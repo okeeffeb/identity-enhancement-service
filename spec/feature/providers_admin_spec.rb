@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Modifying Providers' do
+RSpec.feature 'Modifying Providers', js: true do
   given(:user) { create(:subject, :authorized) }
   given!(:provider) { create(:provider) }
 
@@ -22,7 +22,7 @@ RSpec.feature 'Modifying Providers' do
   scenario 'viewing a provider' do
     visit '/admin/providers'
     within('table tr', text: provider.name) do
-      click_link 'Show'
+      click_link 'View'
     end
 
     expect(page).to have_content(provider.name)
@@ -31,7 +31,7 @@ RSpec.feature 'Modifying Providers' do
 
   scenario 'creating a provider' do
     visit '/admin/providers'
-    click_link 'Create'
+    click_link 'Add'
 
     expect(current_path).to eq(new_provider_path)
     attrs = attributes_for(:provider)
@@ -65,10 +65,93 @@ RSpec.feature 'Modifying Providers' do
     expect(page).to have_css('table tr td', text: new_name)
   end
 
+  shared_examples 'a validated provider form' do
+    scenario 'rejects a blank name' do
+      within('form') do
+        fill_in 'Name', with: ''
+        click_button button
+      end
+
+      expect(page).to have_css('.ui.error.message', text: 'Please enter a name')
+    end
+
+    scenario 'rejects a blank identifier' do
+      within('form') do
+        fill_in 'Identifier', with: ''
+        click_button button
+      end
+
+      expect(page).to have_css('.ui.error.message',
+                               text: 'Please enter an identifier')
+    end
+
+    scenario 'rejects a long identifier' do
+      within('form') do
+        fill_in 'Identifier', with: ('x' * 41)
+        click_button button
+      end
+
+      expect(page).to have_css('.ui.error.message',
+                               text: 'identifier must be 40 characters maximum')
+    end
+
+    scenario 'rejects an invalid identifier' do
+      within('form') do
+        fill_in 'Identifier', with: 'x='
+        click_button button
+      end
+
+      expect(page).to have_css('.ui.error.message',
+                               text: 'Valid characters for an identifier are')
+    end
+
+    scenario 'rejects a blank description' do
+      within('form') do
+        fill_in 'Description', with: ''
+        click_button button
+      end
+
+      expect(page).to have_css('.ui.error.message',
+                               text: 'Please enter a description')
+    end
+  end
+
+  feature 'validations during edit' do
+    background do
+      visit '/admin/providers'
+
+      within('table tr', text: provider.name) do
+        click_link 'Edit'
+      end
+    end
+
+    given(:button) { 'Save' }
+    it_behaves_like 'a validated provider form'
+  end
+
+  feature 'validations during creation' do
+    background do
+      visit '/admin/providers'
+      click_link 'Add'
+
+      within('form') do
+        fill_in 'Name', with: 'A Valid Name'
+        fill_in 'Description', with: 'A Valid Description'
+        fill_in 'Identifier', with: 'a-valid-identifier'
+      end
+    end
+
+    given(:button) { 'Create' }
+    it_behaves_like 'a validated provider form'
+  end
+
   scenario 'deleting a provider' do
     visit '/admin/providers'
+    expect(page).to have_css('table tr td', text: provider.name)
+
     within('table tr', text: provider.name) do
-      click_link 'Delete'
+      find('div.ui.button', text: 'Delete').click
+      click_link 'Confirm Delete'
     end
 
     expect(current_path).to eq(providers_path)

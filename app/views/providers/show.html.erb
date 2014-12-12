@@ -1,2 +1,26 @@
-<%= @provider.name %>
-<%= @provider.identifier %>
+<%= page_header('Providers', 'View Provider') %>
+
+<table class="ui definition table">
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td><%= @provider.name %></td>
+    </tr>
+    <tr>
+      <td>Identifier</td>
+      <td><%= @provider.identifier %></td>
+    </tr>
+  </tbody>
+</table>
+
+<%= button_link_to(providers_path, class: 'tiny icon') do -%>
+  <%= icon_tag('left arrow') %>
+  Back
+<%- end -%>
+
+<%= button_link_to([:edit, @provider], class: 'tiny icon') do -%>
+  <%= icon_tag('edit') %>
+  Edit
+<%- end -%>
+
+<%= delete_button_tag(@provider) %>

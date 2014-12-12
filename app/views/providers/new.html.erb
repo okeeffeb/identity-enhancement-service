@@ -1,4 +1,3 @@
-<%= form_for(@provider) do |f| -%>
-  <%= render(partial: 'form', locals: { f: f }) %>
-  <button type="submit">Create</button>
-<%- end -%>
+<%= page_header('Providers', 'New Provider') %>
+
+<%= render(partial: 'form', locals: { submit_label: 'Create' }) %>

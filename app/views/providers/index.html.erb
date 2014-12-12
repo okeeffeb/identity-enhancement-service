@@ -1,12 +1,37 @@
-<table>
-  <%- @providers.each do |provider| -%>
+<%= page_header('Providers') %>
+
+<table class="ui very basic compact table">
+  <thead>
     <tr>
-      <td><%= provider.name %></td>
-      <td><%= link_to('Show', provider) %></td>
-      <td><%= link_to('Edit', [:edit, provider]) %></td>
-      <td><%= link_to('Delete', provider, method: :delete) %></td>
+      <th>Name</th>
+      <th>Identifier</th>
+      <th>Actions</th>
     </tr>
+  </thead>
+  <%- @providers.each do |provider| -%>
+    <tbody>
+      <tr>
+        <td><%= provider.name %></td>
+        <td><%= provider.identifier %></td>
+        <td>
+          <%= button_link_to(provider, class: 'tiny icon') do -%>
+            <%= icon_tag('list layout') %>
+            View
+          <%- end -%>
+
+          <%= button_link_to([:edit, provider], class: 'tiny icon') do -%>
+            <%= icon_tag('edit') %>
+            Edit
+          <%- end -%>
+
+          <%= delete_button_tag(provider) %>
+        </td>
+      </tr>
+    </tbody>
   <%- end -%>
 </table>
 
-<%= link_to('Create', new_provider_path) %>
+<%= button_link_to(new_provider_path, class: 'large green icon') do -%>
+  <%= icon_tag('add') %>
+  Add
+<%- end -%>
