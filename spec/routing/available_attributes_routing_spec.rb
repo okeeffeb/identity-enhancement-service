@@ -35,4 +35,14 @@ RSpec.describe AvailableAttributesController, type: :routing do
     subject { { delete: '/admin/available_attributes/1' } }
     it { is_expected.to route_to('available_attributes#destroy', id: '1') }
   end
+
+  context 'get /admin/available_attributes/audits' do
+    subject { { get: '/admin/available_attributes/audits' } }
+    it { is_expected.to route_to('available_attributes#audits') }
+  end
+
+  context 'get /admin/available_attributes/:id/audits' do
+    subject { { get: '/admin/available_attributes/1/audits' } }
+    it { is_expected.to route_to('available_attributes#audits', id: '1') }
+  end
 end

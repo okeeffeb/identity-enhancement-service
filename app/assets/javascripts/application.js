@@ -4,6 +4,8 @@
 //= require aaf-layout
 
 jQuery(function($) {
+  $('.popup').popup({ inline: true, position: 'right center' });
+
   $.fn.form.settings.rules['urlsafe_base64'] = function(value) {
     return value.match(/^[\w-]*$/);
   };

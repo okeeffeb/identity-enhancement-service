@@ -1,0 +1,31 @@
+<%= page_header('Available Attributes', 'Audit Log') %>
+
+<%- if @attribute -%>
+  <h3 class="ui header">Current Record</h3>
+
+  <table class="ui definition table">
+    <tbody>
+      <tr>
+        <td>Name</td>
+        <td><%= @attribute.name %></td>
+      </tr>
+      <tr>
+        <td>Value</td>
+        <td><%= @attribute.value %></td>
+      </tr>
+      <tr>
+        <td>Description</td>
+        <td><%= @attribute.description %></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <h3 class="ui header">History</h3>
+<%- end -%>
+
+<%= audit_table(@audits) %>
+
+<%= button_link_to(available_attributes_path, class: 'large icon') do -%>
+  <%= icon_tag('left arrow') %>
+  Back to List
+<%- end -%>

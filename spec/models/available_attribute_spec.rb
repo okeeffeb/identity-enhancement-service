@@ -20,4 +20,18 @@ RSpec.describe AvailableAttribute, type: :model do
     it { is_expected.to allow_value(value).for(:value) }
     it { is_expected.not_to allow_value(value.sub('ide', 'idp')).for(:value) }
   end
+
+  context '::new' do
+    subject { AvailableAttribute.new }
+    let(:defaults) do
+      { name: 'eduPersonEntitlement', value: 'urn:mace:aaf.edu.au:ide:' }
+    end
+    it { is_expected.to have_attributes(defaults) }
+  end
+
+  context '::audits' do
+    let!(:attribute) { create(:available_attribute) }
+    subject { AvailableAttribute.audits.all }
+    it { is_expected.to include(attribute.audits.last) }
+  end
 end

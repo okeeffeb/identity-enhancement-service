@@ -155,4 +155,28 @@ RSpec.describe AvailableAttributesController, type: :controller do
       end
     end
   end
+
+  context 'get :audits' do
+    before { get :audits }
+    let(:audit) { attribute.audits.first }
+
+    it { is_expected.to have_http_status(:ok) }
+    it { is_expected.to have_assigned(:audits, include(audit)) }
+    it { is_expected.to render_template('available_attributes/audits') }
+
+    context 'as a non-admin' do
+      let(:user) { create(:subject) }
+      it { is_expected.to have_http_status(:forbidden) }
+    end
+
+    context 'with an id' do
+      let(:other) { create(:available_attribute) }
+      let(:other_audit) { other.audits.last }
+
+      before { get :audits, id: attribute.id }
+
+      it { is_expected.to have_assigned(:audits, include(audit)) }
+      it { is_expected.not_to have_assigned(:audits, include(other_audit)) }
+    end
+  end
 end

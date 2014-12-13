@@ -11,6 +11,13 @@ Rails.application.routes.draw do
 
   scope '/admin' do
     resources :providers
-    resources :available_attributes
+    resources :available_attributes do
+      collection do
+        get 'audits' => 'available_attributes#audits', as: 'audit'
+      end
+      member do
+        get 'audits' => 'available_attributes#audits', as: 'audit'
+      end
+    end
   end
 end

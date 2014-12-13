@@ -2,8 +2,10 @@ require 'rails_helper'
 
 RSpec.feature 'Modifying Available Attributes', js: true do
   def create_attribute
-    AvailableAttribute.create_with(attrs.slice(:audit_comment))
-      .find_or_create_by(attrs.except(:audit_comment))
+    Audited.audit_class.as_user(user) do
+      AvailableAttribute.create_with(attrs.slice(:audit_comment))
+        .find_or_create_by(attrs.except(:audit_comment))
+    end
   end
 
   given(:user) { create(:subject, :authorized) }
@@ -166,5 +168,18 @@ RSpec.feature 'Modifying Available Attributes', js: true do
 
     expect(current_path).to eq(available_attributes_path)
     expect(page).not_to have_css('table tr td', text: attribute.value)
+  end
+
+  scenario 'viewing the audit log' do
+    visit '/admin/available_attributes'
+
+    click_link 'Audit'
+
+    audit = attribute.audits.last
+
+    expect(current_path).to eq(audit_available_attributes_path)
+    expect(page).to have_css('table tr td', text: audit.user.name)
+    expect(page).to have_xpath("//td//a[@href='mailto:#{audit.user.mail}']")
+    expect(page).to have_css('table tr td', text: audit.comment)
   end
 end

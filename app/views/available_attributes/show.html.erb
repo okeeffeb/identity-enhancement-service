@@ -19,12 +19,17 @@
 
 <%= button_link_to(available_attributes_path, class: 'large icon') do -%>
   <%= icon_tag('left arrow') %>
-  Back
+  Back to List
 <%- end -%>
 
 <%= button_link_to([:edit, @attribute], class: 'large icon') do -%>
   <%= icon_tag('edit') %>
   Edit
+<%- end -%>
+
+<%= button_link_to([:audit, @attribute], class: 'large icon') do -%>
+  <%= icon_tag('history') %>
+  Audit
 <%- end -%>
 
 <%= delete_button_tag(@attribute, class: 'large') %>

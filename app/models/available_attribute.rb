@@ -14,4 +14,8 @@ class AvailableAttribute < ActiveRecord::Base
     self.name ||= 'eduPersonEntitlement'
     self.value ||= 'urn:mace:aaf.edu.au:ide:'
   end
+
+  def self.audits
+    Audited.audit_class.where(auditable_type: name)
+  end
 end

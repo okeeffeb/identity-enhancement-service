@@ -45,6 +45,16 @@ class AvailableAttributesController < ApplicationController
     redirect_to available_attributes_path
   end
 
+  def audits
+    check_access!('admin:attributes:audit')
+    if params[:id]
+      @attribute = AvailableAttribute.find(params[:id])
+      @audits = AvailableAttribute.audits.where(auditable_id: params[:id])
+    else
+      @audits = AvailableAttribute.audits.all
+    end
+  end
+
   private
 
   def available_attribute_params
