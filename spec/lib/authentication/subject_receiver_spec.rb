@@ -46,6 +46,24 @@ module Authentication
         expect(subject.subject(env, attrs)).to eq(obj)
       end
 
+      it 'records an audit record on creation' do
+        expect { subject.subject(env, attrs) }
+          .to change(Audited.audit_class, :count).by(1)
+      end
+
+      it 'records an audit record on update' do
+        obj = subject.subject(env, attrs.merge(name: 'Wrong',
+                                               mail: 'wrong@example.com'))
+        expect { subject.subject(env, attrs) }
+          .to change(Audited.audit_class, :count).by(1)
+      end
+
+      it 'does not record an audit record when nothing changes' do
+        subject.subject(env, attrs)
+        expect { subject.subject(env, attrs) }
+          .not_to change(Audited.audit_class, :count)
+      end
+
       context 'with an invite code' do
         let!(:invitation) { create(:invitation) }
         let(:attrs) { attributes_for(:subject) }

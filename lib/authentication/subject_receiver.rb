@@ -17,8 +17,12 @@ module Authentication
       return accept_invitation(session, attrs) if session.try(:key?, :invite)
 
       Subject.find_or_initialize_by(attrs.slice(:targeted_id)).tap do |subject|
-        subject.update_attributes!(
-          attrs.merge(audit_comment: 'Provisioned account for initial login'))
+        subject.attributes = attrs
+
+        if subject.changed?
+          subject.audit_comment = 'Provisioned account for initial login'
+          subject.save!
+        end
       end
     end
 
