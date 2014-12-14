@@ -1,0 +1,38 @@
+<%= page_header('Subjects', 'View Subject') %>
+
+<table class="ui definition table">
+  <tbody>
+    <tr>
+      <td>Display Name</td>
+      <td><%= @object.name %></td>
+    </tr>
+    <tr>
+      <td>Email Address</td>
+      <td><%= @object.mail %></td>
+    </tr>
+    <tr>
+      <td>Shared Token</td>
+      <td><%= @object.shared_token %></td>
+    </tr>
+    <tr>
+      <td>Targeted ID</td>
+      <td><%= @object.targeted_id %></td>
+    </tr>
+    <tr>
+      <td>Complete</td>
+      <td><%= yes_no_string(@object.complete?) %></td>
+    </tr>
+  </tbody>
+</table>
+
+<%= button_link_to(available_attributes_path, class: 'large icon') do -%>
+  <%= icon_tag('left arrow') %>
+  Back to List
+<%- end -%>
+
+<%= button_link_to([:audit, @object], class: 'large icon') do -%>
+  <%= icon_tag('history') %>
+  Audit
+<%- end -%>
+
+<%= delete_button_tag(@object, class: 'large') %>
