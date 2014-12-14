@@ -49,7 +49,7 @@ class AvailableAttributesController < ApplicationController
     check_access!('admin:attributes:audit')
     if params[:id]
       @attribute = AvailableAttribute.find(params[:id])
-      @audits = AvailableAttribute.audits.where(auditable_id: params[:id])
+      @audits = @attribute.audits.all
     else
       @audits = AvailableAttribute.audits.all
     end
