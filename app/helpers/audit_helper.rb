@@ -61,7 +61,7 @@ module AuditHelper
         concat(user.name)
       else
         concat(icon_tag('red warning sign'))
-        concat(content_tag('em', ' No user recorded'))
+        concat(content_tag('em', ' No subject was recorded'))
       end
     end
   end
@@ -111,16 +111,17 @@ module AuditHelper
   def audit_update_cell(audit)
     content_tag('td') do
       audit.audited_changes.each do |k, v|
-        old, new = v
-
-        concat(content_tag('strong', "Old #{k.titleize}: "))
-        concat(old)
-
-        concat('<br/>'.html_safe)
-
-        concat(content_tag('strong', "New #{k.titleize}: "))
-        concat(new)
+        v.zip(%w(Old New)).each do |(value, caption)|
+          concat(audit_update_line(k, value, caption))
+        end
       end
+    end
+  end
+
+  def audit_update_line(field, value, caption)
+    content_tag('div') do
+      concat(content_tag('strong', "#{caption} #{field.titleize}: "))
+      concat(value)
     end
   end
 end

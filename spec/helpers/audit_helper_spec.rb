@@ -60,5 +60,14 @@ RSpec.describe AuditHelper, type: :helper do
       it { is_expected.to have_css('td', text: "Old Value: #{old}") }
       it { is_expected.to have_css('td', text: "New Value: #{new}") }
     end
+
+    context 'for an audit record with no subject' do
+      before do
+        user.audit_comment = 'Destroying for test case'
+        user.destroy!
+      end
+      it { is_expected.to have_css('td i.icon.warning.sign') }
+      it { is_expected.to have_css('td', text: 'No subject was recorded') }
+    end
   end
 end
