@@ -49,6 +49,8 @@ class CreateAdminInvitation < ActiveRecord::Migration
           r.permissions.create(value: '*')
 
           s.subject_role_assignments.create(role: r)
+
+          say "Invitation path: /invitations/#{Invitation.last.identifier}"
         end
       end
     end
