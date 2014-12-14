@@ -179,7 +179,6 @@ RSpec.feature 'Modifying Available Attributes', js: true do
 
     expect(current_path).to eq(audit_available_attributes_path)
     expect(page).to have_css('table tr td', text: audit.user.name)
-    expect(page).to have_xpath("//td//a[@href='mailto:#{audit.user.mail}']")
     expect(page).to have_css('table tr td', text: audit.comment)
   end
 end
