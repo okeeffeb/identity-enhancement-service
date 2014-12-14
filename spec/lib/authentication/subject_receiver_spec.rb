@@ -26,7 +26,8 @@ module Authentication
 
       context 'for an unknown subject' do
         it 'creates the subject' do
-          expect { subject.subject(env, attrs) }.to change(Subject, :count).by(1)
+          expect { subject.subject(env, attrs) }
+            .to change(Subject, :count).by(1)
         end
 
         it 'returns the new subject' do
