@@ -79,5 +79,12 @@ RSpec.describe ApplicationController, type: :controller do
       get :force_authn
       expect(response).to have_http_status(:ok)
     end
+
+    it 'terminates the session if a subject disappears' do
+      user.audit_comment = 'Deleted for test case'
+      user.destroy!
+      get :force_authn
+      expect(response).to redirect_to('/auth/logout')
+    end
   end
 end
