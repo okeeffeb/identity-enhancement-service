@@ -15,3 +15,11 @@
  *= require_tree .
  *= require_self
  */
+
+.audit.table td.negative {
+  text-decoration: line-through;
+}
+
+.action-buttons {
+  white-space: nowrap;
+}

@@ -1,0 +1,35 @@
+<%= page_header('Available Attributes', 'View Available Attribute') %>
+
+<table class="ui definition table">
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td><%= @attribute.name %></td>
+    </tr>
+    <tr>
+      <td>Value</td>
+      <td><%= @attribute.value %></td>
+    </tr>
+    <tr>
+      <td>Description</td>
+      <td><%= @attribute.description %></td>
+    </tr>
+  </tbody>
+</table>
+
+<%= button_link_to(available_attributes_path, class: 'large icon') do -%>
+  <%= icon_tag('left arrow') %>
+  Back to List
+<%- end -%>
+
+<%= button_link_to([:edit, @attribute], class: 'large icon') do -%>
+  <%= icon_tag('edit') %>
+  Edit
+<%- end -%>
+
+<%= button_link_to([:audit, @attribute], class: 'large icon') do -%>
+  <%= icon_tag('history') %>
+  Audit
+<%- end -%>
+
+<%= delete_button_tag(@attribute, class: 'large') %>

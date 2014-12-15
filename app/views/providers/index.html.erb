@@ -1,0 +1,37 @@
+<%= page_header('Providers') %>
+
+<table class="ui very basic compact table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Identifier</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <%- @providers.sort_by(&:name).each do |provider| -%>
+    <tbody>
+      <tr>
+        <td><%= provider.name %></td>
+        <td><%= provider.identifier %></td>
+        <td class="action-buttons">
+          <%= button_link_to(provider, class: 'tiny icon') do -%>
+            <%= icon_tag('content') %>
+            View
+          <%- end -%>
+
+          <%= button_link_to([:edit, provider], class: 'tiny icon') do -%>
+            <%= icon_tag('edit') %>
+            Edit
+          <%- end -%>
+
+          <%= delete_button_tag(provider) %>
+        </td>
+      </tr>
+    </tbody>
+  <%- end -%>
+</table>
+
+<%= button_link_to(new_provider_path, class: 'large green icon') do -%>
+  <%= icon_tag('add') %>
+  Add
+<%- end -%>

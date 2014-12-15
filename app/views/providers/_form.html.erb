@@ -1,0 +1,52 @@
+<%= form_for(@provider, html: { id: 'provider-form' }) do |f| -%>
+  <%= field_block do -%>
+    <%= f.label :name do -%>
+      Name
+      <%= field_help_text('The descriptive name of the provider') %>
+    <%- end -%>
+    <%= f.text_field :name %>
+  <%- end -%>
+
+  <%= field_block do -%>
+    <%= f.label :identifier do -%>
+      Identifier
+      <%= field_help_text('The identifier to use when specifying that this ' \
+                          'provider granted an attribute.') %>
+    <%- end -%>
+    <%= f.text_field :identifier %>
+
+    <em class="tiny">
+    </em>
+  <%- end -%>
+
+  <%= field_block do -%>
+    <%= f.label :description do -%>
+      Description
+      <%= field_help_text('A more in-depth description of this provider, and ' \
+                          'what they do.') %>
+    <%- end -%>
+    <%= f.text_field :description %>
+  <%- end -%>
+
+  <%= f.button(class: 'large green icon') do -%>
+    <%= icon_tag('checkmark') %>
+    <%= submit_label %>
+  <%- end -%>
+
+  <%= button_link_to(providers_path, class: 'large icon') do -%>
+    <%= icon_tag('cancel') %>
+    Cancel
+  <%- end -%>
+
+  <%= error_messages_tag %>
+<%- end -%>
+
+<%= validate_form('#provider-form', :provider) do -%>
+  <%= validate_field(:name, empty: 'Please enter a name') -%>
+  <%= validate_field(:identifier,
+        empty: 'Please enter an identifier',
+        'maxLength[40]' => 'The identifier must be 40 characters maximum',
+        'urlsafe_base64' => 'Valid characters for an identifier are ' \
+                            'letters, numbers, underscore and hyphen.') -%>
+  <%= validate_field(:description, empty: 'Please enter a description') -%>
+<%- end -%>

@@ -24,26 +24,65 @@ module Authentication
         attributes_for(:subject)
       end
 
-      it 'creates the subject' do
-        expect { subject.subject(env, attrs) }.to change(Subject, :count).by(1)
+      context 'for an unknown subject' do
+        it 'creates the subject' do
+          expect { subject.subject(env, attrs) }
+            .to change(Subject, :count).by(1)
+        end
+
+        it 'returns the new subject' do
+          obj = subject.subject(env, attrs)
+          expect(obj).to be_a(Subject)
+          expect(obj).to have_attributes(attrs.except(:audit_comment))
+        end
+
+        it 'records an audit record' do
+          expect { subject.subject(env, attrs) }
+            .to change(Audited.audit_class, :count).by(1)
+        end
+
+        it 'records the subject as the user in the audit record' do
+          obj = subject.subject(env, attrs)
+          expect(obj.audits.last.user).to eq(obj)
+        end
+
+        it 'marks the new subject as complete' do
+          expect(subject.subject(env, attrs)).to be_complete
+        end
       end
 
-      it 'returns the new subject' do
-        obj = subject.subject(env, attrs)
-        expect(obj).to be_a(Subject)
-        expect(obj).to have_attributes(attrs.except(:audit_comment))
-      end
+      context 'with an existing subject' do
+        let!(:object) { create(:subject, attrs.merge(complete: false)) }
 
-      it 'updates an existing subject' do
-        obj = subject.subject(env, attrs.merge(name: 'Wrong',
-                                               mail: 'wrong@example.com'))
-        subject.subject(env, attrs)
-        expect(obj.reload).to have_attributes(attrs.except(:audit_comment))
-      end
+        it 'updates the attributes' do
+          attrs = attributes_for(:subject).slice(:name, :mail, :shared_token)
+          subject.subject(env, attrs)
+          expect(object.reload).to have_attributes(attrs)
+        end
 
-      it 'returns the existing subject' do
-        obj = subject.subject(env, attrs)
-        expect(subject.subject(env, attrs)).to eq(obj)
+        it 'returns the existing subject' do
+          expect(subject.subject(env, attrs)).to eq(object)
+        end
+
+        it 'records an audit record on update' do
+          expect { subject.subject(env, attrs.merge(name: 'Changed')) }
+            .to change(Audited.audit_class, :count).by(1)
+        end
+
+        it 'records the subject as the user in the audit record' do
+          obj = subject.subject(env, attrs.merge(name: 'Changed'))
+          expect(obj.audits.last.user).to eq(obj)
+        end
+
+        it 'does not record an audit record when nothing changes' do
+          object.without_auditing { object.update_attributes!(complete: true) }
+          expect { subject.subject(env, attrs) }
+            .not_to change(Audited.audit_class, :count)
+        end
+
+        it 'marks the subject as complete' do
+          expect(subject.subject(env, attrs)).to be_complete
+        end
       end
 
       context 'with an invite code' do
@@ -72,6 +111,16 @@ module Authentication
         it 'marks the invite as used' do
           expect { subject.subject(env, attrs) }
             .to change { invitation.reload.used? }.to true
+        end
+
+        it 'records an audit record' do
+          expect { subject.subject(env, attrs) }
+            .to change(Audited.audit_class, :count).by_at_least(1)
+        end
+
+        it 'records the subject as the user in the audit record' do
+          obj = subject.subject(env, attrs)
+          expect(obj.audits.last.user).to eq(obj)
         end
 
         context 'when the invitation fails to save' do

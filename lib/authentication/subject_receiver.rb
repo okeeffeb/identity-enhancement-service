@@ -17,8 +17,7 @@ module Authentication
       return accept_invitation(session, attrs) if session.try(:key?, :invite)
 
       Subject.find_or_initialize_by(attrs.slice(:targeted_id)).tap do |subject|
-        subject.update_attributes!(
-          attrs.merge(audit_comment: 'Provisioned account for initial login'))
+        update_subject(subject, attrs)
       end
     end
 
@@ -27,8 +26,26 @@ module Authentication
     def accept_invitation(session, attrs)
       invitation = Invitation.where(identifier: session[:invite])
                    .available.first!
-      invitation.subject.accept(invitation, attrs)
+
+      Audited.audit_class.as_user(invitation.subject) do
+        invitation.subject.accept(invitation, attrs)
+      end
+
       invitation.subject
+    end
+
+    def update_subject(subject, attrs)
+      subject.attributes = attrs.merge(complete: true)
+
+      Audited.audit_class.as_user(subject) do
+        if subject.new_record?
+          subject.audit_comment = 'Provisioned account for initial login'
+          subject.save!
+        elsif subject.changed?
+          subject.audit_comment = 'Updated attributes upon login'
+          subject.save!
+        end
+      end
     end
   end
 end

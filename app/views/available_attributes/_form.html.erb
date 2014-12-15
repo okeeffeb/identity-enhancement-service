@@ -1,0 +1,48 @@
+<%= form_for(@attribute, html: { id: 'attribute-form' }) do |f| -%>
+  <%= field_block do -%>
+    <%= f.label :name do -%>
+      Name
+      <%= field_help_text('The attribute name, as known by the attribute ' \
+                          'resolver') %>
+    <%- end -%>
+    <%= f.text_field :name %>
+  <%- end -%>
+
+  <%= field_block do -%>
+    <%= f.label :value do -%>
+      Value
+      <%= field_help_text('The value which is released when this attribute ' \
+                          'is provided to a user') %>
+    <%- end -%>
+    <%= f.text_field :value %>
+  <%- end -%>
+
+  <%= field_block do -%>
+    <%= f.label :description do -%>
+      Description
+      <%= field_help_text('A basic description of the name / value pair, and ' \
+                          'its meaning') %>
+    <%- end -%>
+    <%= f.text_field :description %>
+  <%- end -%>
+
+  <%= f.button(class: 'large green icon') do -%>
+    <%= icon_tag('checkmark') %>
+    <%= submit_label %>
+  <%- end -%>
+
+  <%= button_link_to(available_attributes_path, class: 'large icon') do -%>
+    <%= icon_tag('cancel') %>
+    Cancel
+  <%- end -%>
+
+  <%= error_messages_tag %>
+<%- end -%>
+
+<%= validate_form('#attribute-form', :available_attribute) do -%>
+  <%= validate_field(:name, empty: 'Please enter a name',
+                            attribute_name: 'Name must be eduPersonEntitlement') %>
+  <%= validate_field(:value, empty: 'Please enter a value',
+                             attribute_value: 'Value must conform to documented style') %>
+  <%= validate_field(:description, empty: 'Please enter a description') %>
+<%- end -%>

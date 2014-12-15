@@ -9,6 +9,15 @@ FactoryGirl.define do
 
     initialize_with { attributes.dup }
     skip_create
+
+    trait :from_subject do
+      transient { association :subject }
+
+      displayname { subject.name }
+      mail { subject.mail }
+      auedupersonsharedtoken { subject.shared_token }
+      edupersontargetedid { subject.targeted_id }
+    end
   end
 
   factory :jwt, class: 'JSON::JWT' do

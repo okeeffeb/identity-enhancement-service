@@ -3,6 +3,7 @@ source 'https://rails-assets.org'
 
 gem 'rails', '~> 4.1.8'
 gem 'sass-rails', '~> 4.0.3'
+gem 'jquery-rails'
 gem 'mysql2'
 gem 'redis'
 gem 'redis-rails'
@@ -10,8 +11,8 @@ gem 'audited-activerecord'
 gem 'rapid-rack', git: 'https://github.com/ausaccessfed/rapid-rack',
                   branch: 'private/ide-integration'
 gem 'accession'
-gem 'aaf-service-base', git: 'https://github.com/ausaccessfed/aaf-service-base',
-                        branch: 'private/ide-integration'
+gem 'aaf-lipstick', git: 'https://github.com/ausaccessfed/aaf-lipstick',
+                    branch: 'private/ide-integration'
 gem 'rails-assets-semantic-ui', '~> 1.0'
 gem 'rails-assets-jquery', '~> 1.11'
 
@@ -26,6 +27,7 @@ group :development, :test do
   gem 'timecop'
   gem 'capybara'
   gem 'capybara-webkit'
+  gem 'database_cleaner'
 
   gem 'pry', require: false
   gem 'brakeman', '~> 2.6', require: false

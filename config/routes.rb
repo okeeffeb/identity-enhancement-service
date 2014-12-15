@@ -8,4 +8,22 @@ Rails.application.routes.draw do
       post ':identifier' => 'invitations#accept', as: 'accept'
     end
   end
+
+  scope '/admin' do
+    resources :providers
+    resources :available_attributes do
+      collection do
+        get 'audits' => 'available_attributes#audits', as: 'audit'
+      end
+      member do
+        get 'audits' => 'available_attributes#audits', as: 'audit'
+      end
+    end
+
+    resources :subjects, only: %i(index show destroy) do
+      member do
+        get 'audits' => 'subjects#audits', as: 'audit'
+      end
+    end
+  end
 end

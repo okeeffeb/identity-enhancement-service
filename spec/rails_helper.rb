@@ -9,15 +9,33 @@ ActiveRecord::Migration.maintain_test_schema!
 module ControllerMatchers
   extend RSpec::Matchers::DSL
 
-  matcher :have_assigned do |sym, obj|
-    match { assigns[sym] == obj }
-    description { "have assigned the #{sym}" }
+  matcher :have_assigned do |sym, expected|
+    include RSpec::Matchers::Composable
+    match do |actual|
+      actual.call if actual.is_a?(Proc)
+      values_match?(expected, assigns[sym])
+    end
+    description { "set @#{sym} to #{description_of(expected)}" }
+  end
+end
+
+module AliasedMatchers
+  def a_new(*args)
+    be_a_new(*args)
+  end
+end
+
+module NoTransactionalFixtures
+  def self.included(base)
+    base.class_eval { self.use_transactional_fixtures = false }
   end
 end
 
 RSpec.configure do |config|
   config.use_transactional_fixtures = true
   config.include ControllerMatchers, type: :controller
+  config.include AliasedMatchers
+  config.include NoTransactionalFixtures, type: :feature, js: true
 
   config.around(:example, :debug) do |example|
     old = ActiveRecord::Base.logger
@@ -28,4 +46,10 @@ RSpec.configure do |config|
       ActiveRecord::Base.logger = old
     end
   end
+
+  Capybara.javascript_driver = :webkit
+
+  config.before(:suite) { DatabaseCleaner.strategy = :truncation }
+  config.before(:each, js: true) { DatabaseCleaner.start }
+  config.after(:each, js: true) { DatabaseCleaner.clean }
 end

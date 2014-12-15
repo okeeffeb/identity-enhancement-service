@@ -1,4 +1,5 @@
 config/rapidconnect.yml
+config/ide_service.yml
 
 log
 coverage
