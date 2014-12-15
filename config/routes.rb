@@ -2,6 +2,8 @@ Rails.application.routes.draw do
   mount RapidRack::Engine => '/auth'
   root to: 'welcome#index'
 
+  resources :providers
+
   resources :invitations, only: %i(index create show) do
     collection do
       get ':identifier' => 'invitations#show', as: 'show'
@@ -10,7 +12,6 @@ Rails.application.routes.draw do
   end
 
   scope '/admin' do
-    resources :providers
     resources :available_attributes do
       collection do
         get 'audits' => 'available_attributes#audits', as: 'audit'

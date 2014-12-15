@@ -13,14 +13,14 @@ RSpec.feature 'Modifying Providers', js: true do
   end
 
   scenario 'viewing the providers list' do
-    visit '/admin/providers'
-    expect(current_path).to eq('/admin/providers')
+    visit '/providers'
+    expect(current_path).to eq('/providers')
 
     expect(page).to have_css('table tr td', text: provider.name)
   end
 
   scenario 'viewing a provider' do
-    visit '/admin/providers'
+    visit '/providers'
     within('table tr', text: provider.name) do
       click_link 'View'
     end
@@ -30,7 +30,7 @@ RSpec.feature 'Modifying Providers', js: true do
   end
 
   scenario 'creating a provider' do
-    visit '/admin/providers'
+    visit '/providers'
     click_link 'Add'
 
     expect(current_path).to eq(new_provider_path)
@@ -47,7 +47,7 @@ RSpec.feature 'Modifying Providers', js: true do
   end
 
   scenario 'editing a provider' do
-    visit '/admin/providers'
+    visit '/providers'
     within('table tr', text: provider.name) do
       click_link 'Edit'
     end
@@ -118,7 +118,7 @@ RSpec.feature 'Modifying Providers', js: true do
 
   feature 'validations during edit' do
     background do
-      visit '/admin/providers'
+      visit '/providers'
 
       within('table tr', text: provider.name) do
         click_link 'Edit'
@@ -131,7 +131,7 @@ RSpec.feature 'Modifying Providers', js: true do
 
   feature 'validations during creation' do
     background do
-      visit '/admin/providers'
+      visit '/providers'
       click_link 'Add'
 
       within('form') do
@@ -146,7 +146,7 @@ RSpec.feature 'Modifying Providers', js: true do
   end
 
   scenario 'deleting a provider' do
-    visit '/admin/providers'
+    visit '/providers'
     expect(page).to have_css('table tr td', text: provider.name)
 
     within('table tr', text: provider.name) do

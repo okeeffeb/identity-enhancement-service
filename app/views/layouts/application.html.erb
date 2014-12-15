@@ -22,14 +22,11 @@
         <%= nav_item('Dashboard', root_path) %>
 
         <%= nav_collapsing_items do -%>
-          <%- Faker::Lorem.words(4).each do |word| -%>
-            <%= nav_item(word.titleize, "/#{word}") %>
-          <%- end -%>
+          <%= nav_item('Providers', providers_path) %>
 
           <%- if_permitted('admin') do -%>
             <%= nav_dropdown('Administration') do -%>
               <%= nav_item('Invitations', invitations_path) %>
-              <%= nav_item('Providers', providers_path) %>
               <%= nav_item('Subjects', subjects_path) %>
               <%= nav_item('Available Attributes', available_attributes_path) %>
             <%- end -%>

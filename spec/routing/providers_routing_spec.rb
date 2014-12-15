@@ -1,38 +1,38 @@
 require 'rails_helper'
 
 RSpec.describe ProvidersController, type: :routing do
-  context 'get /admin/providers' do
-    subject { { get: '/admin/providers' } }
+  context 'get /providers' do
+    subject { { get: '/providers' } }
     it { is_expected.to route_to('providers#index') }
   end
 
-  context 'get /admin/providers/new' do
-    subject { { get: '/admin/providers/new' } }
+  context 'get /providers/new' do
+    subject { { get: '/providers/new' } }
     it { is_expected.to route_to('providers#new') }
   end
 
-  context 'post /admin/providers' do
-    subject { { post: '/admin/providers' } }
+  context 'post /providers' do
+    subject { { post: '/providers' } }
     it { is_expected.to route_to('providers#create') }
   end
 
-  context 'get /admin/providers/:id' do
-    subject { { get: '/admin/providers/1' } }
+  context 'get /providers/:id' do
+    subject { { get: '/providers/1' } }
     it { is_expected.to route_to('providers#show', id: '1') }
   end
 
-  context 'get /admin/providers/:id/edit' do
-    subject { { get: '/admin/providers/1/edit' } }
+  context 'get /providers/:id/edit' do
+    subject { { get: '/providers/1/edit' } }
     it { is_expected.to route_to('providers#edit', id: '1') }
   end
 
-  context 'patch /admin/providers/:id' do
-    subject { { patch: '/admin/providers/1' } }
+  context 'patch /providers/:id' do
+    subject { { patch: '/providers/1' } }
     it { is_expected.to route_to('providers#update', id: '1') }
   end
 
-  context 'delete /admin/providers/:id' do
-    subject { { delete: '/admin/providers/1' } }
+  context 'delete /providers/:id' do
+    subject { { delete: '/providers/1' } }
     it { is_expected.to route_to('providers#destroy', id: '1') }
   end
 end

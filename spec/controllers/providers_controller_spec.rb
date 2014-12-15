@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe ProvidersController, type: :controller do
-  let(:user) { create(:subject, :authorized, permission: 'admin:providers:*') }
+  let(:user) { create(:subject, :authorized, permission: 'providers:*') }
   let(:orig_attrs) { attributes_for(:provider).except(:audit_comment) }
   let(:provider) { create(:provider, orig_attrs) }
   before { session[:subject_id] = user.try(:id) }
