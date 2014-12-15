@@ -2,7 +2,9 @@ Rails.application.routes.draw do
   mount RapidRack::Engine => '/auth'
   root to: 'welcome#index'
 
-  resources :providers
+  resources :providers do
+    resources :roles
+  end
 
   resources :invitations, only: %i(index create show) do
     collection do

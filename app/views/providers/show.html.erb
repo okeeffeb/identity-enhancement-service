@@ -23,4 +23,9 @@
   Edit
 <%- end -%>
 
+<%= button_link_to([@provider, :roles], class: 'large icon') do -%>
+  <%= icon_tag('legal') %>
+  Roles
+<%- end -%>
+
 <%= delete_button_tag(@provider, class: 'large') %>
