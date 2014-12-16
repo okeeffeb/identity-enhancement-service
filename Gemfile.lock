@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/ausaccessfed/aaf-lipstick
-  revision: c59209a21b6dd772acb0fab853cbfca3fd14f9b6
+  revision: c605ce2a9b19eb7ba36a45500a31dd2e938c0902
   branch: private/ide-integration
   specs:
     aaf-lipstick (0.0.1)
@@ -149,7 +149,7 @@ GEM
     method_source (0.8.2)
     mime-types (2.4.3)
     mini_portile (0.6.1)
-    minitest (5.4.3)
+    minitest (5.5.0)
     multi_json (1.10.1)
     mysql2 (0.3.17)
     nokogiri (1.6.5)
