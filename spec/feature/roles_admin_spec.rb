@@ -8,6 +8,7 @@ RSpec.feature 'Roles Admin' do
   given!(:other_role) { create(:role) }
   given!(:assoc) { create(:subject_role_assignment, role: role) }
   given!(:api_assoc) { create(:api_subject_role_assignment, role: role) }
+  given!(:other_subject) { create(:subject) }
 
   given(:base_path) { "/providers/#{provider.id}" }
 
@@ -88,5 +89,42 @@ RSpec.feature 'Roles Admin' do
 
     expect(current_path).to eq("#{base_path}/roles")
     expect(page).not_to have_css('tr td', text: role.name)
+  end
+
+  scenario 'assigning a role to a subject' do
+    within('tr', text: role.name) do
+      click_link('Members')
+    end
+
+    expect(current_path).to eq("#{base_path}/roles/#{role.id}")
+    expect(page).not_to have_css('tr', text: other_subject.name)
+    click_link('Add Subject')
+
+    expect(current_path).to eq("#{base_path}/roles/#{role.id}/members/new")
+
+    within('tr', text: other_subject.name) do
+      click_button('Grant')
+    end
+
+    expect(current_path).to eq("#{base_path}/roles/#{role.id}")
+    expect(page).to have_css('tr', text: other_subject.name)
+  end
+
+  scenario 'revoking a role from a subject' do
+    other_subject.subject_role_assignments
+      .create!(role: role, audit_comment: 'Granted role for test case')
+
+    within('tr', text: role.name) do
+      click_link('Members')
+    end
+
+    expect(current_path).to eq("#{base_path}/roles/#{role.id}")
+    within('tr', text: other_subject.name) do
+      find('div.ui.button', text: 'Revoke').click
+      click_link('Confirm Delete')
+    end
+
+    expect(current_path).to eq("#{base_path}/roles")
+    expect(page).not_to have_css('tr', text: other_subject.name)
   end
 end

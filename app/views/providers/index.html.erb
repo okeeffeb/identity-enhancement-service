@@ -24,6 +24,11 @@
             Edit
           <%- end -%>
 
+          <%= button_link_to([provider, :roles], class: 'tiny icon') do -%>
+            <%= icon_tag('legal') %>
+            Roles
+          <%- end -%>
+
           <%= delete_button_tag(provider) %>
         </td>
       </tr>

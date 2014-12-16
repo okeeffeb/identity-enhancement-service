@@ -3,7 +3,10 @@ Rails.application.routes.draw do
   root to: 'welcome#index'
 
   resources :providers do
-    resources :roles
+    resources :roles do
+      resources :members, controller: 'subject_role_assignments',
+                          only: %i(new create destroy)
+    end
   end
 
   resources :invitations, only: %i(index create show) do
