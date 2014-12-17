@@ -37,6 +37,10 @@ class ApplicationController < ActionController::Base
     render 'errors/forbidden', status: 403
   end
 
+  def bad_request
+    render 'errors/bad_request', status: 400
+  end
+
   def require_subject
     subject || redirect_to('/auth/login')
   end

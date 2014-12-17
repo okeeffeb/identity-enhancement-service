@@ -7,6 +7,8 @@ Rails.application.routes.draw do
       resources :members, controller: 'subject_role_assignments',
                           only: %i(new create destroy)
     end
+
+    resources :provided_attributes
   end
 
   resources :invitations, only: %i(index create show) do

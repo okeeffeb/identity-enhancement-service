@@ -4,5 +4,7 @@ class PermittedAttribute < ActiveRecord::Base
   belongs_to :provider
   belongs_to :available_attribute
 
+  has_many :provided_attributes
+
   validates :provider, :available_attribute, presence: true
 end

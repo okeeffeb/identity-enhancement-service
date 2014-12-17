@@ -34,6 +34,11 @@
             Permitted Attributes
           <%- end -%>
 
+          <%= button_link_to([provider, :provided_attributes], class: 'tiny icon') do -%>
+            <%= icon_tag('users') %>
+            Provided Attributes
+          <%- end -%>
+
           <%= delete_button_tag(provider) %>
         </td>
       </tr>

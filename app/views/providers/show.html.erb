@@ -33,4 +33,9 @@
   Permitted Attributes
 <%- end -%>
 
+<%= button_link_to([@provider, :provided_attributes], class: 'large icon') do -%>
+  <%= icon_tag('users') %>
+  Provided Attributes
+<%- end -%>
+
 <%= delete_button_tag(@provider, class: 'large') %>
