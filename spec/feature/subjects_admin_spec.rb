@@ -40,12 +40,11 @@ RSpec.feature 'Viewing Subjects', js: true do
     visit '/admin/subjects'
 
     within('table tr', text: object.name) do
-      find('div.ui.button', text: 'Delete').click
-      click_link('Confirm Delete')
+      click_delete_button
     end
 
     expect(current_path).to eq('/admin/subjects')
-    expect(page).not_to have_content(object.mail)
+    expect(page).to have_no_content(object.mail)
   end
 
   scenario 'viewing the audit log' do

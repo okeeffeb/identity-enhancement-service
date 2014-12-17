@@ -30,7 +30,7 @@ RSpec.feature 'Roles Admin' do
 
   scenario 'viewing the role list' do
     expect(page).to have_css('tr td', text: role.name)
-    expect(page).not_to have_css('tr td', text: other_role.name)
+    expect(page).to have_no_css('tr td', text: other_role.name)
   end
 
   scenario 'viewing a role' do
@@ -88,7 +88,7 @@ RSpec.feature 'Roles Admin' do
     end
 
     expect(current_path).to eq("#{base_path}/roles")
-    expect(page).not_to have_css('tr td', text: role.name)
+    expect(page).to have_no_css('tr td', text: role.name)
   end
 
   scenario 'assigning a role to a subject' do
@@ -97,7 +97,7 @@ RSpec.feature 'Roles Admin' do
     end
 
     expect(current_path).to eq("#{base_path}/roles/#{role.id}")
-    expect(page).not_to have_css('tr', text: other_subject.name)
+    expect(page).to have_no_css('tr', text: other_subject.name)
     click_link('Add Subject')
 
     expect(current_path).to eq("#{base_path}/roles/#{role.id}/members/new")
@@ -125,6 +125,6 @@ RSpec.feature 'Roles Admin' do
     end
 
     expect(current_path).to eq("#{base_path}/roles")
-    expect(page).not_to have_css('tr', text: other_subject.name)
+    expect(page).to have_no_css('tr', text: other_subject.name)
   end
 end

@@ -150,11 +150,10 @@ RSpec.feature 'Modifying Providers', js: true do
     expect(page).to have_css('table tr td', text: provider.name)
 
     within('table tr', text: provider.name) do
-      find('div.ui.button', text: 'Delete').click
-      click_link 'Confirm Delete'
+      click_delete_button
     end
 
     expect(current_path).to eq(providers_path)
-    expect(page).not_to have_css('table tr td', text: provider.name)
+    expect(page).to have_no_css('table tr td', text: provider.name)
   end
 end

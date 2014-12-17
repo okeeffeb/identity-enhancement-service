@@ -28,10 +28,10 @@ RSpec.feature 'Permitted attributes admin', js: true do
 
   scenario 'viewing the attribute list' do
     expect(page).to have_css('#permitted tr td', text: attribute.value)
-    expect(page).not_to have_css('#permitted tr td',
-                                 text: other_attribute.value)
+    expect(page).to have_no_css('#permitted tr td',
+                                text: other_attribute.value)
 
-    expect(page).not_to have_css('#available tr td', text: attribute.value)
+    expect(page).to have_no_css('#available tr td', text: attribute.value)
     expect(page).to have_css('#available tr td', text: other_attribute.value)
   end
 
@@ -46,11 +46,10 @@ RSpec.feature 'Permitted attributes admin', js: true do
 
   scenario 'removing a permitted attribute' do
     within('#permitted tr', text: attribute.value) do
-      find('div.ui.button', text: 'Remove').click
-      click_link('Confirm Delete')
+      click_delete_button(text: 'Remove')
     end
 
-    expect(page).not_to have_css('#permitted tr td', text: attribute.value)
+    expect(page).to have_no_css('#permitted tr td', text: attribute.value)
     expect(page).to have_css('#available tr td', text: attribute.value)
     expect(current_path).to eq("#{base_path}/permitted_attributes")
   end
