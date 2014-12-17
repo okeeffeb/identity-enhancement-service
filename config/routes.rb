@@ -31,5 +31,9 @@ Rails.application.routes.draw do
         get 'audits' => 'subjects#audits', as: 'audit'
       end
     end
+
+    resources :providers, only: [] do
+      resources :permitted_attributes, only: %i(index create destroy)
+    end
   end
 end
