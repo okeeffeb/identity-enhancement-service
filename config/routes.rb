@@ -9,9 +9,10 @@ Rails.application.routes.draw do
     end
 
     resources :provided_attributes
+    resources :invitations, only: %i(new create)
   end
 
-  resources :invitations, only: %i(index create show) do
+  resources :invitations, only: [] do
     collection do
       get ':identifier' => 'invitations#show', as: 'show'
       post ':identifier' => 'invitations#accept', as: 'accept'
@@ -19,6 +20,8 @@ Rails.application.routes.draw do
   end
 
   scope '/admin' do
+    resources :invitations, only: %i(index)
+
     resources :available_attributes do
       collection do
         get 'audits' => 'available_attributes#audits', as: 'audit'

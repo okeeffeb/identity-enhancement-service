@@ -5,6 +5,7 @@ RSpec.feature 'Providing attributes to subjects', js: true do
 
   given!(:attribute) { create(:provided_attribute) }
   given(:provider) { attribute.permitted_attribute.provider }
+  given!(:other_provider) { create(:provider) }
   given!(:permitted) { create(:permitted_attribute, provider: provider) }
   given(:object) { attribute.subject }
   given(:base_path) { "/providers/#{provider.id}" }
@@ -31,6 +32,18 @@ RSpec.feature 'Providing attributes to subjects', js: true do
       expect(page).to have_content(attribute.name)
       expect(page).to have_content(attribute.value)
     end
+  end
+
+  scenario 'listing attributes provided by a different provider' do
+    visit '/providers'
+    within('tr', text: other_provider.name) do
+      click_link('View')
+    end
+
+    click_link('Provided Attributes')
+
+    expect(page).to have_no_css('#provided-attributes tr',
+                                text: attribute.value)
   end
 
   scenario 'providing a new attribute' do
