@@ -7,6 +7,11 @@ class ProvidedAttribute < ActiveRecord::Base
   validates :permitted_attribute, :subject, :name, :value, presence: true
   validate :must_match_permitted_attribute
 
+  def self.for_provider(provider)
+    joins(:permitted_attribute)
+      .where('permitted_attributes.provider_id' => provider.id)
+  end
+
   def must_match_permitted_attribute
     return unless permitted_attribute
     attr = permitted_attribute.available_attribute

@@ -5,6 +5,7 @@
     <tr>
       <th>Name</th>
       <th>Email Address</th>
+      <th>State</th>
       <th>Actions</th>
     </tr>
   </thead>
@@ -14,6 +15,13 @@
       <tr>
         <td><%= object.name %></td>
         <td><%= link_to(object.mail, "mailto:#{object.mail}") %></td>
+        <td>
+          <%- if object.complete? -%>
+            <%= icon_tag('green checkmark') %> Active
+          <%- else -%>
+            <%= icon_tag('yellow warning sign') %> Pending
+          <%- end -%>
+        </td>
         <td class="action-buttons">
           <%= button_link_to(object, class: 'tiny icon') do -%>
             <%= icon_tag('content') %>

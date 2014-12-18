@@ -17,7 +17,7 @@ class ProvidedAttributesController < ApplicationController
   def new
     check_access!("providers:#{@provider.id}:attributes:create")
     @object = Subject.find(params[:subject_id])
-    @provided_attributes = @object.provided_attributes
+    @provided_attributes = @object.provided_attributes.for_provider(@provider)
     ids = @provided_attributes.map(&:permitted_attribute_id)
     @permitted_attributes = @provider.permitted_attributes
                             .reject { |a| ids.include?(a.id) }

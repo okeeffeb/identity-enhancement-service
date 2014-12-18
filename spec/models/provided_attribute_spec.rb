@@ -16,4 +16,20 @@ RSpec.describe ProvidedAttribute, type: :model do
     it { is_expected.to allow_value(attr.value).for(:value) }
     it { is_expected.not_to allow_value(attr.value + 'a').for(:value) }
   end
+
+  context '::for_provider' do
+    let!(:attribute) { create(:provided_attribute) }
+    let(:provider) { attribute.permitted_attribute.provider }
+    let(:other_provider) { create(:provider) }
+
+    context 'with a matching provider' do
+      subject { ProvidedAttribute.for_provider(provider) }
+      it { is_expected.to include(attribute) }
+    end
+
+    context 'with a different provider' do
+      subject { ProvidedAttribute.for_provider(other_provider) }
+      it { is_expected.not_to include(attribute) }
+    end
+  end
 end
