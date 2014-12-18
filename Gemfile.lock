@@ -8,8 +8,8 @@ GIT
 
 GIT
   remote: https://github.com/ausaccessfed/aaf-gumboot
-  revision: 9bd0bb6135e99cf4753eaee84a9a08acf043bfa9
-  branch: feature/initial-models-shared-specs
+  revision: 4509214211467dcc092727e5d46d35761249541a
+  branch: develop
   specs:
     aaf-gumboot (0.0.1)
       accession

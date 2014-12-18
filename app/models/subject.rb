@@ -11,6 +11,7 @@ class Subject < ActiveRecord::Base
 
   validates :name, :mail, presence: true
   validates :targeted_id, :shared_token, presence: true, if: :complete?
+  validates :complete, :enabled, inclusion: { in: [true, false] }
 
   def permissions
     subject_role_assignments.flat_map { |ra| ra.role.permissions.map(&:value) }
@@ -24,5 +25,9 @@ class Subject < ActiveRecord::Base
       invitation.update_attributes!(used: true,
                                     audit_comment: "Accepted by #{name}")
     end
+  end
+
+  def functioning?
+    enabled?
   end
 end

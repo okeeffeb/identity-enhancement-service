@@ -12,6 +12,7 @@ class APISubject < ActiveRecord::Base
   validates :provider, :name, :description, :contact_name, :mail,
             presence: true
   validates :x509_cn, presence: true, format: { with: /\A[\w-]+\z/ }
+  validates :enabled, inclusion: { in: [true, false] }
 
   def permissions
     roles.flat_map { |role| role.permissions.map(&:value) }
