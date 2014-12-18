@@ -36,6 +36,7 @@ RSpec.configure do |config|
   config.include ControllerMatchers, type: :controller
   config.include AliasedMatchers
   config.include NoTransactionalFixtures, type: :feature
+  config.include DeleteButton, type: :feature
 
   config.around(:example, :debug) do |example|
     old = ActiveRecord::Base.logger

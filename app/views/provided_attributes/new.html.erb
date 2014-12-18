@@ -1,0 +1,88 @@
+<%= page_header(@provider.name, 'New Provided Attribute') %>
+
+<h3 class="ui header">Subject</h3>
+
+<table class="ui definition table">
+  <tbody>
+    <tr>
+      <td>Name</td>
+      <td><%= @object.name %></td>
+    </tr>
+    <tr>
+      <td>Email</td>
+      <td><%= @object.mail %></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 class="ui header">Current Attributes</h3>
+
+<%- if @provided_attributes.empty? -%>
+  <%= info_message('No Provided Attributes') do -%>
+    <strong><%= @provider.name %></strong> is not currently enhancing the
+    identity of <strong><%= @object.name %></strong>
+  <%- end -%>
+<%- else -%>
+  <table class="ui very basic compact table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Value</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%- @provided_attributes.each do |provided_attribute| -%>
+        <tr>
+          <td><%= provided_attribute.name %></td>
+          <td><%= provided_attribute.value %></td>
+          <td>
+            <%= delete_button_tag(provider_provided_attribute_path(@provider, provided_attribute)) %>
+          </td>
+        </tr>
+      <%- end -%>
+    </tbody>
+  </table>
+<%- end -%>
+
+<h3 class="ui header">Permitted Attributes</h3>
+
+<%- if @permitted_attributes.empty? -%>
+  <%= info_message('No Attributes Available') do -%>
+    <strong><%= @provider.name %></strong> is not able to
+    <%- if @provided_attributes.any? -%>further<%- end %> enhance the identity
+    of <strong><%= @object.name %></strong>
+  <%- end -%>
+<%- else -%>
+  <table class="ui very basic compact table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Value</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%- @permitted_attributes.each do |permitted_attribute| -%>
+        <%- attribute = permitted_attribute.available_attribute -%>
+        <tr>
+          <td><%= attribute.name %></td>
+          <td><%= attribute.value %></td>
+          <td>
+            <%= form_tag(provider_provided_attributes_path(@provider)) do -%>
+              <%= hidden_fields do -%>
+                <%= hidden_field_tag(:'provided_attribute[subject_id]', @object.id) %>
+                <%= hidden_field_tag(:'provided_attribute[permitted_attribute_id]', permitted_attribute.id) %>
+              <%- end -%>
+
+              <%= button_tag(type: 'submit', class: 'tiny green icon') do -%>
+                <%= icon_tag('add') %>
+                Add
+              <%- end -%>
+            <%- end -%>
+          </td>
+        </tr>
+      <%- end -%>
+    </tbody>
+  </table>
+<%- end -%>

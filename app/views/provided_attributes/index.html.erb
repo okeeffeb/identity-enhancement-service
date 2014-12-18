@@ -1,0 +1,80 @@
+<%= page_header(@provider.name, 'Provided Attributes') %>
+<%= flash[:success] %>
+
+<h3 class="ui header">Current Provided Attributes</h3>
+
+<%- if @provided_attributes.empty? -%>
+  <%= info_message('No Provided Attributes') do -%>
+    <p>
+      <strong><%= @provider.name %></strong> is not currently enhancing any
+      identities.
+    </p>
+  <%- end -%>
+<%- else -%>
+  <table class="ui very basic compact table" id="provided-attributes">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Email</th>
+        <th>Attribute</th>
+        <th>Value</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <%- @provided_attributes.each do |attribute| -%>
+        <tr>
+          <td><%= attribute.subject.name %></td>
+          <td><%= attribute.subject.mail %></td>
+          <td><%= attribute.name %></td>
+          <td><%= attribute.value %></td>
+          <td>
+            <%= delete_button_tag(
+                  provider_provided_attribute_path(@provider, attribute)) %>
+          </td>
+        </tr>
+      <%- end -%>
+    </tbody>
+  </table>
+<%- end -%>
+
+<h3 class="ui header">Available Subjects</h3>
+
+<table class="ui basic compact table" id="available-subjects">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Email</th>
+      <th>State</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%- @objects.each do |object| -%>
+      <tr>
+        <td><%= object.name %></td>
+        <td><%= object.mail %></td>
+        <td>
+          <%- if object.complete? -%>
+            <%= icon_tag('green checkmark') %> Active
+          <%- else -%>
+            <%= icon_tag('yellow warning sign') %> Pending
+          <%- end -%>
+        </td>
+        <td class="action-buttons">
+          <%= button_link_to(new_provider_provided_attribute_path(@provider, subject_id: object.id),
+                             class: 'tiny green icon') do -%>
+            <%= icon_tag('add') %>
+            Provide Attribute
+          <%- end -%>
+        </td>
+      </tr>
+    <%- end -%>
+  </tbody>
+</table>
+
+<%= button_link_to(new_provider_invitation_path(@provider), class: 'large green icon') do -%>
+  <%= icon_tag('add') %>
+  Invite Subject
+<%- end -%>

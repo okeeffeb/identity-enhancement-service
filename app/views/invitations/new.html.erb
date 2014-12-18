@@ -1,0 +1,23 @@
+<%= page_header(@provider.name, 'Invite Subject') %>
+
+<%= form_for([@provider, @invitation]) do |f| -%>
+  <%= field_block do -%>
+    <%= f.label(:name) %>
+    <%= f.text_field(:name) %>
+  <%- end -%>
+
+  <%= field_block do -%>
+    <%= f.label(:mail, 'Email Address') %>
+    <%= f.text_field(:mail) %>
+  <%- end -%>
+
+  <%= button_tag(type: 'submit', class: 'large green icon') do -%>
+    <%= icon_tag('checkmark') %>
+    Send Invitation
+  <%- end -%>
+
+  <%= button_link_to(provider_provided_attributes_path(@provider), class: 'large icon') do -%>
+    <%= icon_tag('cancel') %>
+    Cancel
+  <%- end -%>
+<%- end -%>

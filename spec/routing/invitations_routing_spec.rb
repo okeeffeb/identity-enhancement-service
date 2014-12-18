@@ -3,14 +3,24 @@ require 'rails_helper'
 RSpec.describe InvitationsController, type: :routing do
   let(:identifier) { SecureRandom.urlsafe_base64(19) }
 
-  context 'get /invitations' do
-    subject { { get: '/invitations' } }
+  context 'get /admin/invitations' do
+    subject { { get: '/admin/invitations' } }
     it { is_expected.to route_to('invitations#index') }
   end
 
-  context 'post /invitations' do
-    subject { { post: '/invitations' } }
-    it { is_expected.to route_to('invitations#create') }
+  context 'get /providers/:id/invitations' do
+    subject { { get: '/providers/1/invitations' } }
+    it { is_expected.not_to be_routable }
+  end
+
+  context 'get /providers/:id/invitations/new' do
+    subject { { get: '/providers/1/invitations/new' } }
+    it { is_expected.to route_to('invitations#new', provider_id: '1') }
+  end
+
+  context 'post /providers/:id/invitations' do
+    subject { { post: '/providers/1/invitations' } }
+    it { is_expected.to route_to('invitations#create', provider_id: '1') }
   end
 
   context 'get /invitations/:identifier' do

@@ -1,6 +1,6 @@
 <%= page_header('Invitations', 'All Invitations') %>
 
-<table class="ui basic padded small table">
+<table class="ui very basic compact table">
   <thead>
     <tr>
       <th>Identifier</th>
@@ -28,16 +28,3 @@
     <%- end -%>
   </tbody>
 </table>
-
-<%= form_tag(invitations_path, method: 'post') do -%>
-  <input type="text" placeholder="Name" name="invitation[name]"/>
-  <input type="text" placeholder="Email" name="invitation[mail]"/>
-
-  <select name="invitation[provider_id]">
-    <%- @providers.sort_by(&:name).each do |provider| -%>
-      <option value="<%= provider.id %>"><%= provider.name %></option>
-    <%- end -%>
-  </select>
-
-  <%= submit_tag('Invite!') %>
-<%- end -%>

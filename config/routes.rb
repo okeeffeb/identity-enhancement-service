@@ -7,9 +7,12 @@ Rails.application.routes.draw do
       resources :members, controller: 'subject_role_assignments',
                           only: %i(new create destroy)
     end
+
+    resources :provided_attributes
+    resources :invitations, only: %i(new create)
   end
 
-  resources :invitations, only: %i(index create show) do
+  resources :invitations, only: [] do
     collection do
       get ':identifier' => 'invitations#show', as: 'show'
       post ':identifier' => 'invitations#accept', as: 'accept'
@@ -17,6 +20,8 @@ Rails.application.routes.draw do
   end
 
   scope '/admin' do
+    resources :invitations, only: %i(index)
+
     resources :available_attributes do
       collection do
         get 'audits' => 'available_attributes#audits', as: 'audit'
@@ -30,6 +35,10 @@ Rails.application.routes.draw do
       member do
         get 'audits' => 'subjects#audits', as: 'audit'
       end
+    end
+
+    resources :providers, only: [] do
+      resources :permitted_attributes, only: %i(index create destroy)
     end
   end
 end

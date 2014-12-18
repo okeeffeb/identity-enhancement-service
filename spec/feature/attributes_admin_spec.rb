@@ -159,16 +159,14 @@ RSpec.feature 'Modifying Available Attributes', js: true do
 
   scenario 'deleting an available_attribute' do
     visit '/admin/available_attributes'
-    link_xpath = "//a[@href='/admin/available_attributes/#{attribute.id}']"
-    expect(page).to have_xpath(link_xpath, text: 'View')
+    expect(page).to have_css('tr td', text: attribute.value)
 
     within('table tr', text: attribute.name) do
-      find('div.ui.button', text: 'Delete').click
-      click_link 'Confirm Delete'
+      click_delete_button
     end
 
     expect(current_path).to eq(available_attributes_path)
-    expect(page).not_to have_xpath(link_xpath, text: 'View')
+    expect(page).to have_no_css('tr td', text: attribute.value)
   end
 
   scenario 'viewing the audit log' do
