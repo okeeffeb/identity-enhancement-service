@@ -5,14 +5,15 @@ FactoryGirl.define do
     name { Faker::Company.name }
     description { Faker::Company.bs }
     contact_name { Faker::Name.name }
-    contact_mail { Faker::Internet.email(contact_name) }
+    mail { Faker::Internet.email(contact_name) }
 
     trait :authorized do
       transient { permission '*' }
 
       after(:create) do |api_subject, attrs|
         perm = create(:permission, value: attrs.permission)
-        api_subject.api_subject_role_assignments.create(role: perm.role)
+        create(:api_subject_role_assignment, role: perm.role,
+                                             api_subject: api_subject)
       end
     end
   end

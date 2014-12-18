@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141204025623) do
+ActiveRecord::Schema.define(version: 20141218061928) do
 
   create_table "api_subject_role_assignments", force: true do |t|
     t.integer  "api_subject_id", null: false
@@ -21,14 +21,15 @@ ActiveRecord::Schema.define(version: 20141204025623) do
   end
 
   create_table "api_subjects", force: true do |t|
-    t.integer  "provider_id",               null: false
-    t.string   "x509_cn",                   null: false
-    t.string   "name",                      null: false
-    t.string   "description",  default: "", null: false
-    t.string   "contact_name",              null: false
-    t.string   "contact_mail",              null: false
+    t.integer  "provider_id",                 null: false
+    t.string   "x509_cn",                     null: false
+    t.string   "name",                        null: false
+    t.string   "description",  default: "",   null: false
+    t.string   "contact_name",                null: false
+    t.string   "mail",                        null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.boolean  "enabled",      default: true, null: false
   end
 
   create_table "audits", force: true do |t|
