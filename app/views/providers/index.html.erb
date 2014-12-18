@@ -8,8 +8,8 @@
       <th>Actions</th>
     </tr>
   </thead>
-  <%- @providers.sort_by(&:name).each do |provider| -%>
-    <tbody>
+  <tbody>
+    <%- @providers.sort_by(&:name).each do |provider| -%>
       <tr>
         <td><%= provider.name %></td>
         <td><%= provider.identifier %></td>
@@ -24,11 +24,16 @@
             Edit
           <%- end -%>
 
+          <%= button_link_to([provider, :roles], class: 'tiny icon') do -%>
+            <%= icon_tag('legal') %>
+            Roles
+          <%- end -%>
+
           <%= delete_button_tag(provider) %>
         </td>
       </tr>
-    </tbody>
-  <%- end -%>
+    <%- end -%>
+  </tbody>
 </table>
 
 <%= button_link_to(new_provider_path, class: 'large green icon') do -%>

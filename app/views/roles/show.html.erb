@@ -1,0 +1,43 @@
+<%= page_header(@provider.name, 'View Role') %>
+
+<h3 class="ui header"><%= @role.name %></h3>
+
+<table class="ui very basic compact table">
+  <thead>
+    <tr>
+      <th>Member</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%- @role.subject_role_assignments.each do |assoc| -%>
+      <tr>
+        <td><%= assoc.subject.name %></td>
+        <td>
+          <%= delete_button_tag([@provider, @role, { member: assoc.id }], text: 'Revoke') %>
+        </td>
+      </tr>
+    <%- end -%>
+    <%- @role.api_subject_role_assignments.each do |assoc| -%>
+      <tr>
+        <td><%= assoc.api_subject.name %></td>
+        <td></td>
+      </tr>
+    <%- end -%>
+  </tbody>
+</table>
+
+<%= button_link_to(provider_roles_path(@provider), class: 'large icon') do -%>
+  <%= icon_tag('left arrow') %>
+  Back to List
+<%- end -%>
+
+<%= button_link_to(edit_provider_role_path(@provider, @role), class: 'large icon') do -%>
+  <%= icon_tag('edit') %>
+  Edit
+<%- end -%>
+
+<%= button_link_to(new_provider_role_member_path(@provider, @role), class: 'large green icon') do -%>
+  <%= icon_tag('add') %>
+  Add Subject
+<%- end -%>

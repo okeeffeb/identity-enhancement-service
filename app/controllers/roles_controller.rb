@@ -1,0 +1,54 @@
+class RolesController < ApplicationController
+  before_action :require_subject
+
+  before_action { @provider = Provider.find(params[:provider_id]) }
+
+  def index
+    check_access!("providers:#{@provider.id}:roles:list")
+    @roles = @provider.roles.all
+  end
+
+  def new
+    check_access!("providers:#{@provider.id}:roles:create")
+    @role = @provider.roles.new
+  end
+
+  def create
+    check_access!("providers:#{@provider.id}:roles:create")
+    audit_attrs = { audit_comment: 'Created from providers interface' }
+    @role = @provider.roles.create!(role_params.merge(audit_attrs))
+    redirect_to([@provider, :roles])
+  end
+
+  def edit
+    check_access!("providers:#{@provider.id}:roles:update")
+    @role = @provider.roles.find(params[:id])
+  end
+
+  def update
+    check_access!("providers:#{@provider.id}:roles:update")
+    audit_attrs = { audit_comment: 'Updated from providers interface' }
+    @role = @provider.roles.find(params[:id])
+    @role.update_attributes!(role_params.merge(audit_attrs))
+    redirect_to([@provider, :roles])
+  end
+
+  def show
+    check_access!("providers:#{@provider.id}:roles:read")
+    @role = @provider.roles.find(params[:id])
+  end
+
+  def destroy
+    check_access!("providers:#{@provider.id}:roles:delete")
+    @role = @provider.roles.find(params[:id])
+    @role.audit_comment = 'Deleted from providers interface'
+    @role.destroy!
+    redirect_to([@provider, :roles])
+  end
+
+  private
+
+  def role_params
+    params.require(:role).permit(:name)
+  end
+end

@@ -63,4 +63,13 @@ RSpec.describe Subject, type: :model do
       expect { run }.to change { subject.reload.complete? }.to be_truthy
     end
   end
+
+  context '#providers' do
+    let!(:provider) do
+      create(:provider).tap do |provider|
+        subject.roles.first.update_attributes!(provider: provider)
+      end
+    end
+    let!(:other) { create(:provider) }
+  end
 end

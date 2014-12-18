@@ -5,6 +5,8 @@ class Role < ActiveRecord::Base
   belongs_to :provider
 
   has_many :permissions
+  has_many :subject_role_assignments
+  has_many :api_subject_role_assignments
 
   validates :provider, :name, presence: true
 end
