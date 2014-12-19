@@ -14,7 +14,9 @@ module ActionController
 
   RSpec.configure do |config|
     config.before(:suite) do
-      TestResponse.send(:include, TestResponseStringOverride)
+      if defined?(TestResponse)
+        TestResponse.send(:include, TestResponseStringOverride)
+      end
     end
   end
 end
