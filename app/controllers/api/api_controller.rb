@@ -10,6 +10,9 @@ module API
     private_constant :Unauthorized
     rescue_from Unauthorized, with: :unauthorized
 
+    BadRequest = Class.new(StandardError)
+    rescue_from BadRequest, with: :bad_request
+
     protect_from_forgery with: :null_session
     before_action :ensure_authenticated
     after_action :ensure_access_checked
@@ -67,6 +70,12 @@ module API
     def forbidden(_exception)
       message = 'The request was understood but explicitly denied.'
       render json: { message: message }, status: :forbidden
+    end
+
+    def bad_request(exception)
+      message = 'The request parameters could not be successfully processed.'
+      error = exception.message
+      render json: { message: message, error: error }, status: :bad_request
     end
   end
 end

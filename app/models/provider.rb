@@ -12,6 +12,11 @@ class Provider < ActiveRecord::Base
 
   has_many :invitations
 
+  def self.lookup(identifier)
+    re = /\A#{Rails.application.config.ide_service.provider_prefix}:(.*)\z/
+    find_by_identifier(Regexp.last_match[1]) if re.match(identifier)
+  end
+
   def invite(subject)
     identifier = SecureRandom.urlsafe_base64(19)
 

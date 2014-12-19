@@ -44,10 +44,13 @@ Rails.application.routes.draw do
     end
   end
 
-  v1_constraints = APIConstraints.new(version: 1, default: true)
+  v1 = APIConstraints.new(version: 1, default: true)
   namespace :api, defaults: { format: 'json' } do
-    scope constraints: v1_constraints do
-      get 'attributes/:shared_token' => 'attributes#show'
+    scope constraints: v1 do
+      get 'attributes/:shared_token' => 'attributes#show',
+          constraints: { shared_token: /[\w-]+/ }
+
+      post 'attributes' => 'attributes#create'
     end
   end
 end

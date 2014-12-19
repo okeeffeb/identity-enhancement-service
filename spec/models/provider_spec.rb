@@ -18,6 +18,20 @@ RSpec.describe Provider, type: :model do
     end
   end
 
+  context '::lookup' do
+    let(:provider) { create(:provider) }
+    let(:prefix) { Rails.application.config.ide_service.provider_prefix }
+    let(:identifier) { [prefix, provider.identifier].join(':') }
+
+    it 'returns the provider' do
+      expect(Provider.lookup(identifier)).to eq(provider)
+    end
+
+    it 'returns nil when missing' do
+      expect(Provider.lookup(identifier + 'x')).to be_nil
+    end
+  end
+
   context '#invite' do
     let(:user) { create(:subject) }
     let(:provider) { create(:provider) }
