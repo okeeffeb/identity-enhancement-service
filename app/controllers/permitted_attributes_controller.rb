@@ -1,5 +1,4 @@
 class PermittedAttributesController < ApplicationController
-  before_action :require_subject
   before_action { @provider = Provider.find(params[:provider_id]) }
 
   def index

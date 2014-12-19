@@ -1,9 +1,8 @@
 class WelcomeController < ApplicationController
-  before_action do
-    @subject = session[:subject_id] && Subject.find(session[:subject_id])
-  end
+  skip_before_action :ensure_authenticated
 
   def index
+    subject
     public_action
   end
 end

@@ -1,6 +1,4 @@
 class SubjectRoleAssignmentsController < ApplicationController
-  before_action :require_subject
-
   before_action do
     @provider = Provider.find(params[:provider_id])
     @role = Role.find(params[:role_id])

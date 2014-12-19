@@ -1,6 +1,4 @@
 class SubjectsController < ApplicationController
-  before_action :require_subject
-
   # @subject is the current user. We use @objects and @object to sidestep that.
 
   def index

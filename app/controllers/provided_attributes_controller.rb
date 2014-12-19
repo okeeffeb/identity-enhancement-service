@@ -3,7 +3,6 @@ class ProvidedAttributesController < ApplicationController
   private_constant :NotPermitted
   rescue_from NotPermitted, with: :bad_request
 
-  before_action :require_subject
   before_action { @provider = Provider.find(params[:provider_id]) }
 
   def index
