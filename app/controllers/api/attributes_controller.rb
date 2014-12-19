@@ -14,7 +14,8 @@ module API
         @provider = lookup_provider(params[:provider])
         @object = lookup_subject(@provider, params[:subject])
         params[:attributes].each do |attribute|
-          create_attribute(@provider, @object, attribute.permit(:name, :value))
+          update_attribute(@provider, @object,
+                           attribute.permit(:name, :value, :_destroy))
         end
 
         render status: :no_content, nothing: true
@@ -23,7 +24,30 @@ module API
 
     private
 
+    def update_attribute(provider, subject, opts)
+      return destroy_attribute(provider, subject, opts) if opts[:_destroy]
+      create_attribute(provider, subject, opts)
+    end
+
     def create_attribute(provider, subject, opts)
+      permitted_attribute = lookup_permitted_attribute(provider, opts)
+
+      audit_attrs = { audit_comment: 'Provided attribute via API call' }
+      subject.provided_attributes.create_with(opts.merge(audit_attrs))
+        .find_or_create_by!(permitted_attribute: permitted_attribute)
+    end
+
+    def destroy_attribute(provider, subject, opts)
+      permitted_attribute = lookup_permitted_attribute(provider,
+                                                       opts.except(:_destroy))
+
+      attribute = subject.provided_attributes
+                  .find_by(permitted_attribute: permitted_attribute)
+      attribute.audit_comment = 'Revoked attribute via API call'
+      attribute.destroy!
+    end
+
+    def lookup_permitted_attribute(provider, opts)
       permitted_attribute = provider.permitted_attributes
                             .joins(:available_attribute)
                             .find_by(available_attributes: opts)
@@ -31,11 +55,6 @@ module API
       permitted_attribute ||
         fail(BadRequest, "#{provider.name} is not permitted to provide " \
                          "#{opts[:name]} with value #{opts[:value]}")
-
-      comment = 'Provided attribute via API call'
-      subject.provided_attributes.create!(
-        opts.merge(permitted_attribute: permitted_attribute,
-                   audit_comment: comment))
     end
 
     def lookup_provider(opts)

@@ -164,6 +164,45 @@ module API
 
           include_examples 'attribute creation'
           include_examples 'use of existing subject'
+
+          context 'creating an attribute which already exists' do
+            let(:provided_attribute) do
+              create(:provided_attribute,
+                     subject: object, permitted_attribute: permitted_attribute)
+            end
+
+            def run
+              provided_attribute
+              expect { super }.not_to change(ProvidedAttribute, :count)
+            end
+
+            it { is_expected.to have_http_status(:no_content) }
+          end
+
+          context 'removing an attribute' do
+            let(:provided_attribute) do
+              create(:provided_attribute,
+                     subject: object, permitted_attribute: permitted_attribute)
+            end
+
+            let(:attrs) do
+              [{ name: provided_attribute.name,
+                 value: provided_attribute.value,
+                 _destroy: true }]
+            end
+
+            def run
+              provided_attribute
+              expect { super }.to change(ProvidedAttribute, :count).by(-1)
+            end
+
+            it { is_expected.to have_http_status(:no_content) }
+
+            it 'deletes the provided attribute' do
+              expect { provided_attribute.reload }
+                .to raise_error(ActiveRecord::RecordNotFound)
+            end
+          end
         end
 
         context 'identifying by name and email address' do
