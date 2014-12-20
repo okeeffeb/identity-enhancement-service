@@ -12,9 +12,17 @@ class Provider < ActiveRecord::Base
 
   has_many :invitations
 
+  def self.identifier_prefix
+    Rails.application.config.ide_service.provider_prefix
+  end
+
   def self.lookup(identifier)
-    re = /\A#{Rails.application.config.ide_service.provider_prefix}:(.*)\z/
+    re = /\A#{identifier_prefix}:(.*)\z/
     find_by_identifier(Regexp.last_match[1]) if re.match(identifier)
+  end
+
+  def full_identifier
+    [Provider.identifier_prefix, identifier].join(':')
   end
 
   def invite(subject)

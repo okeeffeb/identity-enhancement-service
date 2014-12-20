@@ -32,6 +32,16 @@ RSpec.describe Provider, type: :model do
     end
   end
 
+  context '#full_identifier' do
+    let(:provider) { create(:provider) }
+    let(:prefix) { Rails.application.config.ide_service.provider_prefix }
+
+    it 'calculates the identifier' do
+      expect(provider.full_identifier)
+        .to eq([prefix, provider.identifier].join(':'))
+    end
+  end
+
   context '#invite' do
     let(:user) { create(:subject) }
     let(:provider) { create(:provider) }

@@ -5,7 +5,16 @@ module API
     def show
       check_access!('api:attributes:read')
       @object = Subject.find_by_shared_token(params[:shared_token])
-      @provided_attributes = @object.provided_attributes.all
+
+      @provided_attributes =
+        @object.provided_attributes
+        .includes(permitted_attribute: [:available_attribute, :provider]).all
+
+      @available_attributes = @provided_attributes.map do |a|
+        a.permitted_attribute.available_attribute
+      end
+
+      @available_attributes.uniq!
     end
 
     def create
