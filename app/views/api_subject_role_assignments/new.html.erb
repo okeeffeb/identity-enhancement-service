@@ -1,0 +1,34 @@
+<%= page_header(@provider.name, 'Grant Role to Subject') %>
+
+<h3 class="ui header"><%= @role.name %></h3>
+
+<table class="ui very basic compact table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>X.509 CN</th>
+      <th>Actions</th>
+    </tr>
+  </thead>
+  <tbody>
+    <%- @api_subjects.each do |api_subject| -%>
+      <tr>
+        <td><%= api_subject.name %></td>
+        <td><%= api_subject.description %></td>
+        <td><%= api_subject.x509_cn %></td>
+        <td>
+          <%= form_for([@provider, @role, @assoc], url: provider_role_api_members_path(@provider, @role),
+                                                   html: { class: 'inline' }) do |f| -%>
+
+            <%= button_tag(name: 'api_subject_role_assignment[api_subject_id]',
+                           value: api_subject.id, class: 'tiny green icon') do -%>
+              <%= icon_tag('checkmark') %>
+              Grant
+            <%- end -%>
+          <%- end -%>
+        </td>
+      </tr>
+    <%- end -%>
+  </tbody>
+</table>

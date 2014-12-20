@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Roles Admin' do
+RSpec.feature 'Roles Admin', :focus do
   given(:user) { create(:subject, :authorized) }
 
   given!(:role) { create(:role) }
@@ -9,6 +9,7 @@ RSpec.feature 'Roles Admin' do
   given!(:assoc) { create(:subject_role_assignment, role: role) }
   given!(:api_assoc) { create(:api_subject_role_assignment, role: role) }
   given!(:other_subject) { create(:subject) }
+  given!(:api_subject) { create(:api_subject) }
 
   given(:base_path) { "/providers/#{provider.id}" }
 
@@ -126,5 +127,42 @@ RSpec.feature 'Roles Admin' do
 
     expect(current_path).to eq("#{base_path}/roles")
     expect(page).to have_no_css('tr', text: other_subject.name)
+  end
+
+  scenario 'assigning a role to an api subject' do
+    within('tr', text: role.name) do
+      click_link('Members')
+    end
+
+    expect(current_path).to eq("#{base_path}/roles/#{role.id}")
+    expect(page).to have_no_css('tr', text: api_subject.name)
+    click_link('Add API Account')
+
+    expect(current_path).to eq("#{base_path}/roles/#{role.id}/api_members/new")
+
+    within('tr', text: api_subject.name) do
+      click_button('Grant')
+    end
+
+    expect(current_path).to eq("#{base_path}/roles/#{role.id}")
+    expect(page).to have_css('tr', text: api_subject.name)
+  end
+
+  scenario 'revoking a role from an api subject' do
+    api_subject.api_subject_role_assignments
+      .create!(role: role, audit_comment: 'Granted role for test case')
+
+    within('tr', text: role.name) do
+      click_link('Members')
+    end
+
+    expect(current_path).to eq("#{base_path}/roles/#{role.id}")
+    within('tr', text: api_subject.name) do
+      find('div.ui.button', text: 'Revoke').click
+      click_link('Confirm Delete')
+    end
+
+    expect(current_path).to eq("#{base_path}/roles")
+    expect(page).to have_no_css('tr', text: api_subject.name)
   end
 end
