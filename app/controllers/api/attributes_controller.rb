@@ -52,6 +52,8 @@ module API
 
       attribute = subject.provided_attributes
                   .find_by(permitted_attribute: permitted_attribute)
+
+      return if attribute.nil?
       attribute.audit_comment = 'Revoked attribute via API call'
       attribute.destroy!
     end

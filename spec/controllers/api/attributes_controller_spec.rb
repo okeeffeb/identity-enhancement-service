@@ -203,6 +203,21 @@ module API
                 .to raise_error(ActiveRecord::RecordNotFound)
             end
           end
+
+          context 'removing an attribute which does not exist' do
+            let(:provided_attribute) do
+              build(:provided_attribute,
+                    subject: object, permitted_attribute: permitted_attribute)
+            end
+
+            let(:attrs) do
+              [{ name: provided_attribute.name,
+                 value: provided_attribute.value,
+                 _destroy: true }]
+            end
+
+            it { is_expected.to have_http_status(:no_content) }
+          end
         end
 
         context 'identifying by name and email address' do
