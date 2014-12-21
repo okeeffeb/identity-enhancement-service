@@ -5,7 +5,7 @@ FactoryGirl.define do
     name { Faker::Company.name }
     description { Faker::Company.bs }
     contact_name { Faker::Name.name }
-    mail { Faker::Internet.email(contact_name) }
+    contact_mail { Faker::Internet.email(contact_name) }
 
     trait :authorized do
       transient { permission '*' }

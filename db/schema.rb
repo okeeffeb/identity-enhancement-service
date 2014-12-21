@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141218225201) do
+ActiveRecord::Schema.define(version: 20141222000031) do
 
   create_table "api_subject_role_assignments", force: true do |t|
     t.integer  "api_subject_id", null: false
@@ -26,7 +26,7 @@ ActiveRecord::Schema.define(version: 20141218225201) do
     t.string   "name",                        null: false
     t.string   "description",  default: "",   null: false
     t.string   "contact_name",                null: false
-    t.string   "mail",                        null: false
+    t.string   "contact_mail",                null: false
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "enabled",      default: true, null: false
