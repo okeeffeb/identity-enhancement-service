@@ -24,6 +24,26 @@
   white-space: nowrap;
 }
 
-#available-subjects .action-buttons {
-  padding-left: 0.5em;
+.ui.welcome.message {
+  padding: 5%;
+
+  @media only screen and (min-width: 960px) {
+    padding: 5em;
+  }
+
+  h1 {
+    color: #555555;
+  }
+
+  p {
+    font-size: 1.3em;
+  }
+
+  .ui.grid {
+    margin-top: 5em;
+  }
+
+  .button.column {
+    text-align: center;
+  }
 }
