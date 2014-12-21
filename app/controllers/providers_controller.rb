@@ -17,17 +17,17 @@ class ProvidersController < ApplicationController
   end
 
   def show
-    check_access!("providers:read:#{params[:id]}")
+    check_access!("providers:#{params[:id]}:read")
     @provider = Provider.find(params[:id])
   end
 
   def edit
-    check_access!("providers:update:#{params[:id]}")
+    check_access!("providers:#{params[:id]}:update")
     @provider = Provider.find(params[:id])
   end
 
   def update
-    check_access!("providers:update:#{params[:id]}")
+    check_access!("providers:#{params[:id]}:update")
     audit_attrs = { audit_comment: 'Updated provider from admin interface' }
     @provider = Provider.find(params[:id])
     @provider.update_attributes!(provider_params.merge(audit_attrs))

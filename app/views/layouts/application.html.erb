@@ -19,10 +19,12 @@
   <body>
     <%= aaf_header(title: 'AAF Identity Enhancement', environment: environment_string) do -%>
       <%= nav_bar do -%>
-        <%= nav_item('Dashboard', root_path) %>
+        <%= nav_item('Welcome', root_path) %>
 
         <%= nav_collapsing_items do -%>
-          <%= nav_item('Providers', providers_path) %>
+          <%- if_permitted('providers:list') do -%>
+            <%= nav_item('Providers', providers_path) %>
+          <%- end -%>
 
           <%- if_permitted('admin') do -%>
             <%= nav_dropdown('Administration') do -%>
@@ -31,6 +33,8 @@
               <%= nav_item('Available Attributes', available_attributes_path) %>
             <%- end -%>
           <%- end -%>
+
+          <%= nav_item('Support', 'http://support.aaf.edu.au') %>
 
           <%= nav_items_right do -%>
             <%- if @subject -%>
