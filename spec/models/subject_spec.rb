@@ -48,7 +48,7 @@ RSpec.describe Subject, type: :model do
       it { is_expected.to be_functioning }
     end
 
-    context 'when enabled' do
+    context 'when disabled' do
       subject { create(:subject, enabled: false) }
       it { is_expected.not_to be_functioning }
     end
