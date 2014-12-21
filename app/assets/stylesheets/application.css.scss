@@ -47,3 +47,14 @@
     text-align: center;
   }
 }
+
+#provided-attributes td {
+  code, .help.button {
+    float: left;
+  }
+
+  .help.button {
+    margin-left: 2em;
+    margin-top: 0.5em;
+  }
+}

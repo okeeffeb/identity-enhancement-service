@@ -17,7 +17,7 @@ RSpec.feature 'Visiting the invitation page', type: :feature do
     expect(current_path).to eq('/auth/login')
     click_button 'Login'
 
-    expect(current_path).to eq('/')
+    expect(current_path).to eq('/dashboard')
     expect(page).to have_content("Logged in as: #{invitation.name}")
   end
 

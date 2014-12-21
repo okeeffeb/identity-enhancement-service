@@ -1,0 +1,83 @@
+<%= page_header('Dashboard') %>
+
+<%- if @provider_roles.any? -%>
+  <h3>Providers</h3>
+
+  <p>You have been granted some access at the following providers:</p>
+
+  <table class="ui very basic compact table">
+    <thead>
+      <tr>
+        <th>Provider</th>
+        <th>Roles</th>
+        <th>Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      <%- @provider_roles.keys.sort_by(&:name).each do |provider| -%>
+        <tr>
+          <td><%= provider.name %></td>
+          <td>
+            <%- @provider_roles[provider].sort_by(&:name).each do |role| -%>
+              <div><%= role.name %></div>
+            <%- end -%>
+          </td>
+          <td>
+            <%= button_link_to(provider, class: 'tiny icon') do -%>
+              <%= icon_tag('content') %>
+              View
+            <%- end -%>
+          </td>
+      <%- end -%>
+    </tbody>
+  </table>
+
+  <%= divider_tag %>
+<%- end -%>
+
+<h3>Attributes</h3>
+
+<%- if @subject.provided_attributes.empty? -%>
+  <%= info_message('No Attributes') do -%>
+    <p>Your identity is currently not being enhanced by AAF Identity Enhancement.</p>
+    <p>Please contact the administrator at your organisation to request this.</p>
+  <%- end -%>
+<%- else -%>
+  <p class="large">
+  These attributes are provided to services who request information about the
+  enhancements available for your identity.
+  </p>
+
+  <table class="ui very basic compact table" id="provided-attributes">
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Provided By</th>
+        <th>
+          Attribute Content&nbsp;&nbsp;
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <%- @subject.provided_attributes.each do |attribute| -%>
+        <tr>
+          <td><%= attribute.permitted_attribute.available_attribute.description %></td>
+          <td><%= attribute.permitted_attribute.provider.name %></td>
+          <td>
+            <code><%= attribute.name %><br/><%= attribute.value %></code>
+            <%-
+              message = %q(This is the raw technical detail which is given to
+                           services who ask for more detail about your identity.
+                           It's only shown here for your information, <strong>
+                           you don't need to understand or remember it</strong>.
+                           )
+            -%>
+            <%= button_tag(type: 'button', class: 'mini inverted red help', :'data-html' => message) do -%>
+              What's this?
+            <%- end -%>
+          </td>
+        </tr>
+      <%- end -%>
+    </tbody>
+  </table>
+<%- end -%>
