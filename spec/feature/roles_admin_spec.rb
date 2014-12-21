@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'Roles Admin', :focus do
+RSpec.feature 'Roles Admin' do
   given(:user) { create(:subject, :authorized) }
 
   given!(:role) { create(:role) }
