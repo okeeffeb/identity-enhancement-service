@@ -8,8 +8,8 @@ GIT
 
 GIT
   remote: https://github.com/ausaccessfed/aaf-gumboot
-  revision: e3ef1ce68a1632bbc38fc18fb4d4fbe4add5486e
-  branch: develop
+  revision: 59cca0c014c4713fd4c6bdee1e28a4b4ffa696be
+  branch: feature/api-constraints-spec
   specs:
     aaf-gumboot (0.0.1)
       accession
