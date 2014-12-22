@@ -31,15 +31,17 @@
     <%= f.text_field :contact_mail %>
   <%- end -%>
 
-  <%= button_tag(type: 'submit', class: 'large green icon') do -%>
-    <%= icon_tag('checkmark') %>
-    <%= submit_label %>
-  <%- end -%>
+  <div class="line-of-buttons">
+    <%= button_tag(type: 'submit', class: 'large green icon') do -%>
+      <%= icon_tag('checkmark') %>
+      <%= submit_label %>
+    <%- end -%>
 
-  <%= button_link_to(provider_api_subjects_path(@provider), class: 'large icon') do -%>
-    <%= icon_tag('cancel') %>
-    Cancel
-  <%- end -%>
+    <%= button_link_to(provider_api_subjects_path(@provider), class: 'large icon') do -%>
+      <%= icon_tag('cancel') %>
+      Cancel
+    <%- end -%>
+  </div>
 
   <%= error_messages_tag %>
 <%- end -%>

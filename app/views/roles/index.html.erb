@@ -37,7 +37,9 @@
   </tbody>
 </table>
 
-<%= button_link_to(new_provider_role_path(@provider), class: 'large green icon') do -%>
-  <%= icon_tag('add') %>
-  New Role
-<%- end -%>
+<div class="line-of-buttons">
+  <%= button_link_to(new_provider_role_path(@provider), class: 'large green icon') do -%>
+    <%= icon_tag('add') %>
+    New Role
+  <%- end -%>
+</div>

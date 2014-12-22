@@ -82,7 +82,9 @@
   </tbody>
 </table>
 
-<%= button_link_to(new_provider_invitation_path(@provider), class: 'large green icon') do -%>
-  <%= icon_tag('add') %>
-  New Subject
-<%- end -%>
+<div class="line-of-buttons">
+  <%= button_link_to(new_provider_invitation_path(@provider), class: 'large green icon') do -%>
+    <%= icon_tag('add') %>
+    New Subject
+  <%- end -%>
+</div>

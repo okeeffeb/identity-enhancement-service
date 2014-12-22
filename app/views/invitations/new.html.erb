@@ -20,13 +20,15 @@
     <%= f.text_field(:mail) %>
   <%- end -%>
 
-  <%= button_tag(type: 'submit', class: 'large green icon') do -%>
-    <%= icon_tag('checkmark') %>
-    Send Invitation
-  <%- end -%>
+  <div class="line-of-buttons">
+    <%= button_tag(type: 'submit', class: 'large green icon') do -%>
+      <%= icon_tag('checkmark') %>
+      Send Invitation
+    <%- end -%>
 
-  <%= button_link_to(provider_provided_attributes_path(@provider), class: 'large icon') do -%>
-    <%= icon_tag('cancel') %>
-    Cancel
-  <%- end -%>
+    <%= button_link_to(provider_provided_attributes_path(@provider), class: 'large icon') do -%>
+      <%= icon_tag('cancel') %>
+      Cancel
+    <%- end -%>
+  </div>
 <%- end -%>

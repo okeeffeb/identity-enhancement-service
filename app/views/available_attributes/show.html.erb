@@ -25,14 +25,16 @@
   </tbody>
 </table>
 
-<%= button_link_to([:edit, @attribute], class: 'large icon') do -%>
-  <%= icon_tag('edit') %>
-  Edit
-<%- end -%>
+<div class="line-of-buttons">
+  <%= button_link_to([:edit, @attribute], class: 'large icon') do -%>
+    <%= icon_tag('edit') %>
+    Edit
+  <%- end -%>
 
-<%= button_link_to([:audit, @attribute], class: 'large icon') do -%>
-  <%= icon_tag('history') %>
-  Audit
-<%- end -%>
+  <%= button_link_to([:audit, @attribute], class: 'large icon') do -%>
+    <%= icon_tag('history') %>
+    Audit
+  <%- end -%>
 
-<%= delete_button_tag(@attribute, class: 'large') %>
+  <%= delete_button_tag(@attribute, class: 'large') %>
+</div>

@@ -33,9 +33,11 @@
   </tbody>
 </table>
 
-<%= button_link_to([:audit, @object], class: 'large icon') do -%>
-  <%= icon_tag('history') %>
-  Audit
-<%- end -%>
+<div class="line-of-buttons">
+  <%= button_link_to([:audit, @object], class: 'large icon') do -%>
+    <%= icon_tag('history') %>
+    Audit
+  <%- end -%>
 
-<%= delete_button_tag(@object, class: 'large') %>
+  <%= delete_button_tag(@object, class: 'large') %>
+</div>

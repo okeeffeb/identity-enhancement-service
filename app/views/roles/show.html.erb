@@ -38,17 +38,19 @@
   </tbody>
 </table>
 
-<%= button_link_to(edit_provider_role_path(@provider, @role), class: 'large icon') do -%>
-  <%= icon_tag('edit') %>
-  Edit
-<%- end -%>
+<div class="line-of-buttons">
+  <%= button_link_to(edit_provider_role_path(@provider, @role), class: 'large icon') do -%>
+    <%= icon_tag('edit') %>
+    Edit
+  <%- end -%>
 
-<%= button_link_to(new_provider_role_member_path(@provider, @role), class: 'large green icon') do -%>
-  <%= icon_tag('add') %>
-  Add Subject
-<%- end -%>
+  <%= button_link_to(new_provider_role_member_path(@provider, @role), class: 'large green icon') do -%>
+    <%= icon_tag('add') %>
+    Add Subject
+  <%- end -%>
 
-<%= button_link_to(new_provider_role_api_member_path(@provider, @role), class: 'large green icon') do -%>
-  <%= icon_tag('add') %>
-  Add API Account
-<%- end -%>
+  <%= button_link_to(new_provider_role_api_member_path(@provider, @role), class: 'large green icon') do -%>
+    <%= icon_tag('add') %>
+    Add API Account
+  <%- end -%>
+</div>

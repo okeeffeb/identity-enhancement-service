@@ -41,7 +41,9 @@
   </table>
 <%- end -%>
 
-<%= button_link_to(new_provider_api_subject_path(@provider), class: 'large green icon') do -%>
-  <%= icon_tag('add') %>
-  New API Account
-<%- end -%>
+<div class="line-of-buttons">
+  <%= button_link_to(new_provider_api_subject_path(@provider), class: 'large green icon') do -%>
+    <%= icon_tag('add') %>
+    New API Account
+  <%- end -%>
+</div>

@@ -4,13 +4,15 @@
     <%= f.text_field :name %>
   <%- end -%>
 
-  <%= f.button(class: 'large green icon') do -%>
-    <%= icon_tag('checkmark') %>
-    <%= submit_label %>
-  <%- end -%>
+  <div class="line-of-buttons">
+    <%= f.button(class: 'large green icon') do -%>
+      <%= icon_tag('checkmark') %>
+      <%= submit_label %>
+    <%- end -%>
 
-  <%= button_link_to(provider_roles_path(@provider), class: 'large icon') do -%>
-    <%= icon_tag('cancel') %>
-    Cancel
-  <%- end -%>
+    <%= button_link_to(provider_roles_path(@provider), class: 'large icon') do -%>
+      <%= icon_tag('cancel') %>
+      Cancel
+    <%- end -%>
+  </div>
 <%- end -%>

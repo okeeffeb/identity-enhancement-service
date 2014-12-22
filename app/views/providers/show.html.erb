@@ -20,29 +20,31 @@
   </tbody>
 </table>
 
-<%= button_link_to([:edit, @provider], class: 'large icon') do -%>
-  <%= icon_tag('edit') %>
-  Edit
-<%- end -%>
+<div class="line-of-buttons">
+  <%= button_link_to([:edit, @provider], class: 'large icon') do -%>
+    <%= icon_tag('edit') %>
+    Edit
+  <%- end -%>
 
-<%= button_link_to([@provider, :roles], class: 'large icon') do -%>
-  <%= icon_tag('legal') %>
-  Roles
-<%- end -%>
+  <%= button_link_to([@provider, :roles], class: 'large icon') do -%>
+    <%= icon_tag('legal') %>
+    Roles
+  <%- end -%>
 
-<%= button_link_to([@provider, :permitted_attributes], class: 'large icon') do -%>
-  <%= icon_tag('tags') %>
-  Permitted Attributes
-<%- end -%>
+  <%= button_link_to([@provider, :permitted_attributes], class: 'large icon') do -%>
+    <%= icon_tag('tags') %>
+    Permitted Attributes
+  <%- end -%>
 
-<%= button_link_to([@provider, :provided_attributes], class: 'large icon') do -%>
-  <%= icon_tag('users') %>
-  Provided Attributes
-<%- end -%>
+  <%= button_link_to([@provider, :provided_attributes], class: 'large icon') do -%>
+    <%= icon_tag('users') %>
+    Provided Attributes
+  <%- end -%>
 
-<%= button_link_to([@provider, :api_subjects], class: 'large icon') do -%>
-  <%= icon_tag('privacy') %>
-  API Access
-<%- end -%>
+  <%= button_link_to([@provider, :api_subjects], class: 'large icon') do -%>
+    <%= icon_tag('privacy') %>
+    API Access
+  <%- end -%>
 
-<%= delete_button_tag(@provider, class: 'large') %>
+  <%= delete_button_tag(@provider, class: 'large') %>
+</div>

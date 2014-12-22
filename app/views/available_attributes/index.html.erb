@@ -40,12 +40,14 @@
   </tbody>
 </table>
 
-<%= button_link_to(new_available_attribute_path, class: 'large green icon') do -%>
-  <%= icon_tag('add') %>
-  Add
-<%- end -%>
+<div class="line-of-buttons">
+  <%= button_link_to(new_available_attribute_path, class: 'large green icon') do -%>
+    <%= icon_tag('add') %>
+    Add
+  <%- end -%>
 
-<%= button_link_to(audit_available_attributes_path, class: 'large icon') do -%>
-  <%= icon_tag('history') %>
-  Audit
-<%- end -%>
+  <%= button_link_to(audit_available_attributes_path, class: 'large icon') do -%>
+    <%= icon_tag('history') %>
+    Audit
+  <%- end -%>
+</div>
