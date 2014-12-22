@@ -1,9 +1,10 @@
 require 'rails_helper'
 
-RSpec.feature 'Roles Admin' do
+RSpec.feature 'Roles Admin', js: true do
   given(:user) { create(:subject, :authorized) }
 
-  given!(:role) { create(:role) }
+  given!(:permission) { create(:permission) }
+  given!(:role) { permission.role }
   given!(:provider) { role.provider }
   given!(:other_role) { create(:role) }
   given!(:assoc) { create(:subject_role_assignment, role: role) }
@@ -87,12 +88,45 @@ RSpec.feature 'Roles Admin' do
 
   scenario 'deleting a role' do
     within('tr', text: role.name) do
-      find('div.ui.button', text: 'Delete').click
-      click_link('Confirm Delete')
+      click_delete_button
     end
 
     expect(current_path).to eq("#{base_path}/roles")
     expect(page).to have_no_css('tr td', text: role.name)
+  end
+
+  scenario 'adding a permission to a role' do
+    within('tr', text: role.name) do
+      click_link('Permissions')
+    end
+
+    expect(current_path).to eq("#{base_path}/roles/#{role.id}/permissions")
+    attrs = attributes_for(:permission)
+
+    within('form') do
+      fill_in 'Permission', with: attrs[:value]
+      click_button('Add')
+    end
+
+    expect(current_path).to eq("#{base_path}/roles/#{role.id}/permissions")
+    expect(page).to have_css('.ui.message', text: 'Added permission')
+    expect(page).to have_css('tr', text: attrs[:value])
+  end
+
+  scenario 'removing a permission from a role' do
+    within('tr', text: role.name) do
+      click_link('Permissions')
+    end
+
+    expect(current_path).to eq("#{base_path}/roles/#{role.id}/permissions")
+
+    within('tr', text: permission.value) do
+      click_delete_button
+    end
+
+    expect(current_path).to eq("#{base_path}/roles/#{role.id}/permissions")
+    expect(page).to have_css('.ui.message', text: 'Removed permission')
+    expect(page).to have_no_css('tr', text: permission.value)
   end
 
   scenario 'assigning a role to a subject' do
@@ -124,8 +158,7 @@ RSpec.feature 'Roles Admin' do
 
     expect(current_path).to eq("#{base_path}/roles/#{role.id}")
     within('tr', text: other_subject.name) do
-      find('div.ui.button', text: 'Revoke').click
-      click_link('Confirm Delete')
+      click_delete_button(text: 'Revoke')
     end
 
     expect(current_path).to eq("#{base_path}/roles")
@@ -161,8 +194,7 @@ RSpec.feature 'Roles Admin' do
 
     expect(current_path).to eq("#{base_path}/roles/#{role.id}")
     within('tr', text: api_subject.x509_cn) do
-      find('div.ui.button', text: 'Revoke').click
-      click_link('Confirm Delete')
+      click_delete_button(text: 'Revoke')
     end
 
     expect(current_path).to eq("#{base_path}/roles")
