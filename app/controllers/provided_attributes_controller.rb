@@ -29,8 +29,10 @@ class ProvidedAttributesController < ApplicationController
     attrs.merge!(audit_comment: 'Provided attribute via web interface')
     @provided_attribute = permitted_attribute.provided_attributes
                           .create!(attrs)
+    @subject = @provided_attribute.subject
 
-    redirect_to provider_provided_attributes_path(@provider)
+    redirect_to new_provider_provided_attribute_path(@provider,
+                                                     subject_id: @subject.id)
   end
 
   def destroy
@@ -40,7 +42,10 @@ class ProvidedAttributesController < ApplicationController
     @provided_attribute = scope.find(params[:id])
     @provided_attribute.audit_comment = 'Revoked attribute via web interface'
     @provided_attribute.destroy!
-    redirect_to provider_provided_attributes_path(@provider)
+
+    @subject = @provided_attribute.subject
+    redirect_to new_provider_provided_attribute_path(@provider,
+                                                     subject_id: @subject.id)
   end
 
   private

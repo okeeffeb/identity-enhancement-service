@@ -89,7 +89,12 @@ RSpec.describe ProvidedAttributesController, type: :controller do
     context 'the response' do
       before { run }
       subject { response }
-      let(:url) { provider_provided_attributes_path(provider) }
+
+      let(:url) do
+        new_provider_provided_attribute_path(provider,
+                                             subject_id: other_object.id)
+      end
+
       it { is_expected.to redirect_to(url) }
 
       it 'sets the provided attribute' do
@@ -141,7 +146,11 @@ RSpec.describe ProvidedAttributesController, type: :controller do
     context 'the response' do
       before { run }
       subject { response }
-      let(:url) { provider_provided_attributes_path(provider) }
+
+      let(:url) do
+        new_provider_provided_attribute_path(provider, subject_id: object.id)
+      end
+
       it { is_expected.to redirect_to(url) }
 
       it 'sets the provided attribute' do

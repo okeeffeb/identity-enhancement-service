@@ -61,7 +61,7 @@ RSpec.feature 'Providing attributes to subjects', js: true do
       click_button('Add')
     end
 
-    expect(current_path).to eq("#{base_path}/provided_attributes")
+    expect(current_path).to eq("#{base_path}/provided_attributes/new")
     expect(page).to have_css('#provided-attributes tr', text: value)
   end
 
