@@ -53,9 +53,8 @@
       <tr>
         <th>Description</th>
         <th>Provided By</th>
-        <th>
-          Attribute Content&nbsp;&nbsp;
-        </th>
+        <th>Attribute Type</th>
+        <th/>
       </tr>
     </thead>
     <tbody>
@@ -64,16 +63,35 @@
           <td><%= attribute.permitted_attribute.available_attribute.description %></td>
           <td><%= attribute.permitted_attribute.provider.name %></td>
           <td>
-            <code><%= attribute.name %><br/><%= attribute.value %></code>
+            <%= attribute.name %>
+          </td>
+          <td>
             <%-
-              message = %q(This is the raw technical detail which is given to
-                           services who ask for more detail about your identity.
-                           It's only shown here for your information, <strong>
-                           you don't need to understand or remember it</strong>.
-                           )
+              message = %Q( <strong>Technical Details</strong>
+
+                            <table class="ui basic compact inverted green table">
+                              <tbody>
+                                <tr>
+                                  <td><strong>Provider:&nbsp;</strong></td>
+                                  <td>
+                                    #{attribute.permitted_attribute.provider.full_identifier}
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td><strong>Value:&nbsp;</strong></td>
+                                  <td>#{attribute.value}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+
+                            <p>This is the raw technical detail which is provided to
+                            federated services which you use.</p>
+
+                            <p>It's only shown here for your information, <strong>
+                            you don't need to understand or remember it</strong>.</p>)
             -%>
-            <%= button_tag(type: 'button', class: 'mini inverted red help', :'data-html' => message) do -%>
-              What's this?
+            <%= button_tag(type: 'button', class: 'mini basic green help', :'data-html' => message, :'data-variation' => 'wide') do -%>
+              Technical Details
             <%- end -%>
           </td>
         </tr>
