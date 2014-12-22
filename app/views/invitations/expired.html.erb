@@ -1,1 +1,13 @@
-Your invitation has expired.
+<div class="ui welcome message">
+  <h1>Welcome to AAF Identity Enhancement</h1>
+
+  <p>
+    You have been invited by <strong><%= @invitation.provider.name %></strong>,
+    so that they can enhance your identity for access to online services.
+  </p>
+
+  <p>
+    Your invitation expired <%= time_ago_in_words(@invitation.expires) %>
+    ago, sorry.
+  </p>
+</div>

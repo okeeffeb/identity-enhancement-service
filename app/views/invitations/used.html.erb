@@ -1,1 +1,28 @@
-Your invitation has already been used. Please visit the <%= link_to('Dashboard', root_url) %>
+<div class="ui welcome message">
+  <h1>Welcome to AAF Identity Enhancement</h1>
+
+  <p>
+    You were invited by <strong><%= @invitation.provider.name %></strong>, so
+    that they can enhance your identity for access to online services.
+  </p>
+
+  <p>
+    Your invitation has <strong>already been accepted</strong>, so you no longer
+    require the invitation link from the original email. If you arrived here
+    from a bookmark, you should update your bookmark after clicking the button
+    below.
+  </p>
+
+  <p>
+    If you did not accept your invitation, please send a copy of your invitation
+    email to <a href="mailto:support@aaf.edu.au">support@aaf.edu.au</a> and we
+    will investigate.
+  </p>
+
+  <div class="line-of-buttons">
+    <%= button_link_to(dashboard_path, class: 'massive blue icon') do -%>
+      <%= icon_tag('angle double right') %>
+      View Dashboard
+    <%- end -%>
+  </div>
+</div>
