@@ -28,6 +28,8 @@ group :development, :test do
   gem 'capybara'
   gem 'capybara-webkit'
   gem 'database_cleaner'
+  gem 'aaf-gumboot', git: 'https://github.com/ausaccessfed/aaf-gumboot',
+                     branch: 'develop'
 
   gem 'pry', require: false
   gem 'brakeman', '~> 2.6', require: false

@@ -1,6 +1,9 @@
 require 'rails_helper'
 
+require 'gumboot/shared_examples/api_subjects'
+
 RSpec.describe APISubject, type: :model do
+  include_examples 'API Subjects'
   it_behaves_like 'an audited model'
 
   context 'validations' do

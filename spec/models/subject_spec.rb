@@ -1,6 +1,9 @@
 require 'rails_helper'
 
+require 'gumboot/shared_examples/subjects'
+
 RSpec.describe Subject, type: :model do
+  include_examples 'Subjects'
   it_behaves_like 'an audited model'
 
   context 'validations' do
@@ -36,6 +39,18 @@ RSpec.describe Subject, type: :model do
     it 'only applies permissions from assigned roles' do
       role
       expect(subject.permits?('a:b:c')).to be_falsey
+    end
+  end
+
+  context '#functioning?' do
+    context 'when enabled' do
+      subject { create(:subject, enabled: true) }
+      it { is_expected.to be_functioning }
+    end
+
+    context 'when disabled' do
+      subject { create(:subject, enabled: false) }
+      it { is_expected.not_to be_functioning }
     end
   end
 

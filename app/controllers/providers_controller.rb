@@ -1,6 +1,4 @@
 class ProvidersController < ApplicationController
-  before_action :require_subject
-
   def index
     check_access!('providers:list')
     @providers = Provider.all

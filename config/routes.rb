@@ -1,3 +1,5 @@
+require 'api_constraints'
+
 Rails.application.routes.draw do
   mount RapidRack::Engine => '/auth'
   root to: 'welcome#index'
@@ -39,6 +41,13 @@ Rails.application.routes.draw do
 
     resources :providers, only: [] do
       resources :permitted_attributes, only: %i(index create destroy)
+    end
+  end
+
+  v1_constraints = APIConstraints.new(version: 1, default: true)
+  namespace :api, defaults: { format: 'json' } do
+    scope constraints: v1_constraints do
+      get 'attributes/:shared_token' => 'attributes#show'
     end
   end
 end

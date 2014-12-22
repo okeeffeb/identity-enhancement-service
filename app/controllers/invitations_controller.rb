@@ -1,5 +1,5 @@
 class InvitationsController < ApplicationController
-  before_action :require_subject, only: %i(index new create)
+  before_action :ensure_authenticated, except: %i(show accept)
 
   before_action do
     @provider = Provider.find(params[:provider_id]) if params[:provider_id]

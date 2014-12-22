@@ -1,7 +1,12 @@
 require 'rails_helper'
 
+require 'gumboot/shared_examples/application_controller'
+
 RSpec.describe ApplicationController, type: :controller do
+  include_examples 'Application controller'
+
   controller do
+    before_action :ensure_authenticated, except: :public
     def good
       check_access!('permit')
       render nothing: true
@@ -21,7 +26,6 @@ RSpec.describe ApplicationController, type: :controller do
       render nothing: true
     end
 
-    before_action :require_subject, only: :force_authn
     def force_authn
       public_action
       render nothing: true
@@ -80,11 +84,11 @@ RSpec.describe ApplicationController, type: :controller do
       expect(response).to have_http_status(:ok)
     end
 
-    it 'terminates the session if a subject disappears' do
+    it 'shows the unauthorized page when a subject is deleted' do
       user.audit_comment = 'Deleted for test case'
       user.destroy!
       get :force_authn
-      expect(response).to redirect_to('/auth/logout')
+      expect(response).to have_http_status(:unauthorized)
     end
   end
 end

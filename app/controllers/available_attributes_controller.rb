@@ -1,6 +1,4 @@
 class AvailableAttributesController < ApplicationController
-  before_action :require_subject
-
   def index
     check_access!('admin:attributes:list')
     @attributes = AvailableAttribute.all
