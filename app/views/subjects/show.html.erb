@@ -1,3 +1,11 @@
+<%=
+  breadcrumbs(
+    { 'Administration' => root_path },
+    { 'Subjects' => subjects_path },
+    @object.name
+  )
+%>
+
 <%= page_header('Subjects', 'View Subject') %>
 
 <table class="ui definition table">
@@ -24,11 +32,6 @@
     </tr>
   </tbody>
 </table>
-
-<%= button_link_to(available_attributes_path, class: 'large icon') do -%>
-  <%= icon_tag('left arrow') %>
-  Back to List
-<%- end -%>
 
 <%= button_link_to([:audit, @object], class: 'large icon') do -%>
   <%= icon_tag('history') %>

@@ -1,3 +1,12 @@
+<%=
+  breadcrumbs(
+    { 'Providers' => providers_path },
+    { @provider.name => provider_path(@provider) },
+    { 'Provided Attributes' => url_for([@provider, :provided_attributes]) },
+    @object.name
+  )
+%>
+
 <%= page_header(@provider.name, 'New Provided Attribute') %>
 
 <h3 class="ui header">Subject</h3>

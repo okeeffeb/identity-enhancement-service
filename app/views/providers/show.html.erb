@@ -1,3 +1,10 @@
+<%=
+  breadcrumbs(
+    { 'Providers' => providers_path },
+    @provider.name
+  )
+%>
+
 <%= page_header('Providers', 'View Provider') %>
 
 <table class="ui definition table">
@@ -12,11 +19,6 @@
     </tr>
   </tbody>
 </table>
-
-<%= button_link_to(providers_path, class: 'large icon') do -%>
-  <%= icon_tag('left arrow') %>
-  Back
-<%- end -%>
 
 <%= button_link_to([:edit, @provider], class: 'large icon') do -%>
   <%= icon_tag('edit') %>

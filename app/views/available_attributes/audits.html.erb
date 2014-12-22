@@ -1,3 +1,11 @@
+<%=
+  breadcrumbs(
+    { 'Administration' => root_path },
+    { 'Available Attributes' => available_attributes_path },
+    'Audit'
+  )
+%>
+
 <%= page_header('Available Attributes', 'Audit Log') %>
 
 <%- if @attribute -%>
@@ -24,8 +32,3 @@
 <%- end -%>
 
 <%= audit_table(@audits) %>
-
-<%= button_link_to(available_attributes_path, class: 'large icon') do -%>
-  <%= icon_tag('left arrow') %>
-  Back to List
-<%- end -%>

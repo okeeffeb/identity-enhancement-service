@@ -1,3 +1,11 @@
+<%=
+  breadcrumbs(
+    { 'Providers' => providers_path },
+    { @provider.name => provider_path(@provider) },
+    'API Accounts'
+  )
+%>
+
 <%= page_header(@provider.name, 'API Access') %>
 
 <%- if @api_subjects.empty? -%>

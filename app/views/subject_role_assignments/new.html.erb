@@ -1,3 +1,13 @@
+<%=
+  breadcrumbs(
+    { 'Providers' => providers_path },
+    { @provider.name => provider_path(@provider) },
+    { 'Roles' => provider_roles_path(@provider) },
+    { @role.name => provider_role_path(@provider, @role) },
+    'Add Subject'
+  )
+%>
+
 <%= page_header(@provider.name, 'Grant Role to Subject') %>
 
 <h3 class="ui header"><%= @role.name %></h3>

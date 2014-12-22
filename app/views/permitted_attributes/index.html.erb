@@ -1,3 +1,11 @@
+<%=
+  breadcrumbs(
+    { 'Providers' => providers_path },
+    { @provider.name => provider_path(@provider) },
+    'Permitted Attributes'
+  )
+%>
+
 <%= page_header(@provider.name, 'Permitted Attributes') %>
 
 <%- if @permitted_attributes.empty? -%>

@@ -1,3 +1,12 @@
+<%=
+  breadcrumbs(
+    { 'Providers' => providers_path },
+    { @provider.name => provider_path(@provider) },
+    { 'Provided Attributes' => url_for([@provider, :provided_attributes]) },
+    'New Subject'
+  )
+%>
+
 <%= page_header(@provider.name, 'Invite Subject') %>
 
 <%= form_for([@provider, @invitation]) do |f| -%>

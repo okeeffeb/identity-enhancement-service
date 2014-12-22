@@ -1,3 +1,11 @@
+<%=
+  breadcrumbs(
+    { 'Providers' => providers_path },
+    { @provider.name => provider_path(@provider) },
+    'Provided Attributes'
+  )
+%>
+
 <%= page_header(@provider.name, 'Provided Attributes') %>
 <%= flash[:success] %>
 
@@ -76,5 +84,5 @@
 
 <%= button_link_to(new_provider_invitation_path(@provider), class: 'large green icon') do -%>
   <%= icon_tag('add') %>
-  Invite Subject
+  New Subject
 <%- end -%>

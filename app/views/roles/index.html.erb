@@ -1,3 +1,11 @@
+<%=
+  breadcrumbs(
+    { 'Providers' => providers_path },
+    { @provider.name => provider_path(@provider) },
+    'Roles'
+  )
+%>
+
 <%= page_header(@provider.name, 'Roles') %>
 
 <table class="ui very basic compact table">

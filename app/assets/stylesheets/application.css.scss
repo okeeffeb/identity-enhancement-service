@@ -58,3 +58,7 @@
     margin-top: 0.5em;
   }
 }
+
+.ui.breadcrumb + .ui.header {
+  margin-top: 0px;
+}
