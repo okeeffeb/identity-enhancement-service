@@ -43,7 +43,7 @@
 </table>
 
 <div class="line-of-buttons">
-  <%- if permitted?("providers:#{@provider.id}:roles:update") -%>
+  <%- if permitted?('admin:roles:update') -%>
     <%= button_link_to(edit_provider_role_path(@provider, @role), class: 'large icon') do -%>
       <%= icon_tag('edit') %>
       Edit
