@@ -1,4 +1,6 @@
 class InvitationsController < ApplicationController
+  include CreateInvitation
+
   before_action :ensure_authenticated, except: %i(show accept)
 
   before_action do
@@ -18,7 +20,7 @@ class InvitationsController < ApplicationController
 
   def create
     check_access!("providers:#{@provider.id}:invitations:create")
-    create_invitation(params.require(:invitation).permit(:name, :mail))
+    create_invitation(@provider, invitation_params)
     redirect_to(provider_provided_attributes_path(@provider))
   end
 
@@ -40,48 +42,7 @@ class InvitationsController < ApplicationController
 
   private
 
-  def create_invitation(subject_attrs)
-    Invitation.transaction do
-      audit_attrs = {
-        audit_comment: 'Created incomplete Subject for Invitation'
-      }
-
-      subject = Subject.create!(subject_attrs.merge(audit_attrs))
-      invitation = @provider.invite(subject)
-      deliver(invitation)
-    end
-  end
-
-  def deliver(invitation)
-    Mail.deliver(to: invitation.mail,
-                 from: Rails.application.config.ide_service.mail[:from],
-                 subject: 'Invitation to AAF Identity Enhancement',
-                 body: email_message(invitation).render,
-                 content_type: 'text/html; charset=UTF-8')
-
-    self
-  end
-
-  def email_message(invitation)
-    Lipstick::EmailMessage.new(title: 'AAF Identity Enhancement',
-                               image_url: 'http://example.com',
-                               content: email_body(invitation))
-  end
-
-  EMAIL_BODY = <<-EOF.gsub(/^\s+\|/, '')
-    |You have been invited to AAF Identity Enhancement, so that your identity
-    |can be verified to provide access to more research services.
-    |
-    |Please visit the following link to accept the invite and get started:
-    |
-    |%{url}
-    |
-    |Regards,<br/>
-    |AAF Team
-  EOF
-
-  def email_body(invitation)
-    format(EMAIL_BODY,
-           url: accept_invitations_url(identifier: invitation.identifier))
+  def invitation_params
+    params.require(:invitation).permit(:name, :mail)
   end
 end
