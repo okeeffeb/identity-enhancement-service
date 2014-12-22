@@ -9,18 +9,16 @@
   <table class="ui very basic compact table">
     <thead>
       <tr>
-        <th>Name</th>
-        <th>Description</th>
         <th>X.509 CN</th>
+        <th>Description</th>
         <th>Actions</th>
       </tr>
     </thead>
     <tbody>
       <%- @api_subjects.each do |api_subject| -%>
         <tr>
-          <td><%= api_subject.name %></td>
-          <td><%= api_subject.description %></td>
           <td><%= api_subject.x509_cn %></td>
+          <td><%= api_subject.description %></td>
           <td>
             <%= button_link_to([:edit, @provider, api_subject], class: 'tiny icon') do -%>
               <%= icon_tag('edit') %>

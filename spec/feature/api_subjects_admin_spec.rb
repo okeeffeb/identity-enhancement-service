@@ -25,23 +25,22 @@ RSpec.feature 'API Subjects Admin', js: true do
   end
 
   scenario 'viewing the api subject list' do
-    expect(page).to have_css('tr td', text: api_subject.name)
+    expect(page).to have_css('tr td', text: api_subject.x509_cn)
   end
 
   scenario 'editing a api subject' do
-    within('tr', text: api_subject.name) do
+    within('tr', text: api_subject.x509_cn) do
       click_link('Edit')
     end
 
     expect(current_path)
       .to eq("#{base_path}/api_subjects/#{api_subject.id}/edit")
-    expect(page).to have_css('.header', text: api_subject.name)
+    expect(page).to have_css('.header', text: api_subject.x509_cn)
 
-    old_name = api_subject.name
+    old_cn = api_subject.x509_cn
     attrs = attributes_for(:api_subject)
 
     within('form') do
-      fill_in 'Descriptive Name', with: attrs[:name]
       fill_in 'Description', with: attrs[:description]
       fill_in 'X.509 CN', with: attrs[:x509_cn]
       fill_in 'Contact Name', with: attrs[:contact_name]
@@ -49,8 +48,8 @@ RSpec.feature 'API Subjects Admin', js: true do
       click_button('Save')
     end
 
-    expect(page).to have_css('tr td', text: attrs[:name])
-    expect(page).to have_no_css('tr td', text: old_name)
+    expect(page).to have_css('tr td', text: attrs[:x509_cn])
+    expect(page).to have_no_css('tr td', text: old_cn)
   end
 
   scenario 'creating a api subject' do
@@ -61,7 +60,6 @@ RSpec.feature 'API Subjects Admin', js: true do
     attrs = attributes_for(:api_subject)
 
     within('form') do
-      fill_in 'Descriptive Name', with: attrs[:name]
       fill_in 'Description', with: attrs[:description]
       fill_in 'X.509 CN', with: attrs[:x509_cn]
       fill_in 'Contact Name', with: attrs[:contact_name]
@@ -70,16 +68,15 @@ RSpec.feature 'API Subjects Admin', js: true do
     end
 
     expect(current_path).to eq("#{base_path}/api_subjects")
-    expect(page).to have_css('tr td', text: attrs[:name])
+    expect(page).to have_css('tr td', text: attrs[:x509_cn])
   end
 
   scenario 'deleting a api subject' do
-    within('tr', text: api_subject.name) do
-      find('div.ui.button', text: 'Delete').click
-      click_link('Confirm Delete')
+    within('tr', text: api_subject.x509_cn) do
+      click_delete_button
     end
 
     expect(current_path).to eq("#{base_path}/api_subjects")
-    expect(page).to have_no_css('tr td', text: api_subject.name)
+    expect(page).to have_no_css('tr td', text: api_subject.x509_cn)
   end
 end

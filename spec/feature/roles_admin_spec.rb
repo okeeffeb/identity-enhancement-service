@@ -42,7 +42,7 @@ RSpec.feature 'Roles Admin' do
     expect(current_path).to eq("#{base_path}/roles/#{role.id}")
     expect(page).to have_css('.header', text: role.name)
     expect(page).to have_css('td', text: assoc.subject.name)
-    expect(page).to have_css('td', text: api_assoc.api_subject.name)
+    expect(page).to have_css('td', text: api_assoc.api_subject.x509_cn)
 
     click_link('Back to List')
     expect(current_path).to eq("#{base_path}/roles")
@@ -135,17 +135,17 @@ RSpec.feature 'Roles Admin' do
     end
 
     expect(current_path).to eq("#{base_path}/roles/#{role.id}")
-    expect(page).to have_no_css('tr', text: api_subject.name)
+    expect(page).to have_no_css('tr', text: api_subject.x509_cn)
     click_link('Add API Account')
 
     expect(current_path).to eq("#{base_path}/roles/#{role.id}/api_members/new")
 
-    within('tr', text: api_subject.name) do
+    within('tr', text: api_subject.x509_cn) do
       click_button('Grant')
     end
 
     expect(current_path).to eq("#{base_path}/roles/#{role.id}")
-    expect(page).to have_css('tr', text: api_subject.name)
+    expect(page).to have_css('tr', text: api_subject.x509_cn)
   end
 
   scenario 'revoking a role from an api subject' do
@@ -157,12 +157,12 @@ RSpec.feature 'Roles Admin' do
     end
 
     expect(current_path).to eq("#{base_path}/roles/#{role.id}")
-    within('tr', text: api_subject.name) do
+    within('tr', text: api_subject.x509_cn) do
       find('div.ui.button', text: 'Revoke').click
       click_link('Confirm Delete')
     end
 
     expect(current_path).to eq("#{base_path}/roles")
-    expect(page).to have_no_css('tr', text: api_subject.name)
+    expect(page).to have_no_css('tr', text: api_subject.x509_cn)
   end
 end

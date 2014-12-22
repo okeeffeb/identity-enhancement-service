@@ -2,7 +2,6 @@ FactoryGirl.define do
   factory :api_subject, traits: %i(audited) do
     association :provider
     x509_cn { SecureRandom.urlsafe_base64 }
-    name { Faker::Company.name }
     description { Faker::Company.bs }
     contact_name { Faker::Name.name }
     contact_mail { Faker::Internet.email(contact_name) }
