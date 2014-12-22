@@ -9,6 +9,7 @@ RSpec.feature 'Roles Admin' do
   given!(:assoc) { create(:subject_role_assignment, role: role) }
   given!(:api_assoc) { create(:api_subject_role_assignment, role: role) }
   given!(:other_subject) { create(:subject) }
+  given!(:api_subject) { create(:api_subject) }
 
   given(:base_path) { "/providers/#{provider.id}" }
 
@@ -41,7 +42,7 @@ RSpec.feature 'Roles Admin' do
     expect(current_path).to eq("#{base_path}/roles/#{role.id}")
     expect(page).to have_css('.header', text: role.name)
     expect(page).to have_css('td', text: assoc.subject.name)
-    expect(page).to have_css('td', text: api_assoc.api_subject.name)
+    expect(page).to have_css('td', text: api_assoc.api_subject.x509_cn)
 
     click_link('Back to List')
     expect(current_path).to eq("#{base_path}/roles")
@@ -126,5 +127,42 @@ RSpec.feature 'Roles Admin' do
 
     expect(current_path).to eq("#{base_path}/roles")
     expect(page).to have_no_css('tr', text: other_subject.name)
+  end
+
+  scenario 'assigning a role to an api subject' do
+    within('tr', text: role.name) do
+      click_link('Members')
+    end
+
+    expect(current_path).to eq("#{base_path}/roles/#{role.id}")
+    expect(page).to have_no_css('tr', text: api_subject.x509_cn)
+    click_link('Add API Account')
+
+    expect(current_path).to eq("#{base_path}/roles/#{role.id}/api_members/new")
+
+    within('tr', text: api_subject.x509_cn) do
+      click_button('Grant')
+    end
+
+    expect(current_path).to eq("#{base_path}/roles/#{role.id}")
+    expect(page).to have_css('tr', text: api_subject.x509_cn)
+  end
+
+  scenario 'revoking a role from an api subject' do
+    api_subject.api_subject_role_assignments
+      .create!(role: role, audit_comment: 'Granted role for test case')
+
+    within('tr', text: role.name) do
+      click_link('Members')
+    end
+
+    expect(current_path).to eq("#{base_path}/roles/#{role.id}")
+    within('tr', text: api_subject.x509_cn) do
+      find('div.ui.button', text: 'Revoke').click
+      click_link('Confirm Delete')
+    end
+
+    expect(current_path).to eq("#{base_path}/roles")
+    expect(page).to have_no_css('tr', text: api_subject.x509_cn)
   end
 end

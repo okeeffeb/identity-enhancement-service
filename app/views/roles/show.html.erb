@@ -20,8 +20,10 @@
     <%- end -%>
     <%- @role.api_subject_role_assignments.each do |assoc| -%>
       <tr>
-        <td><%= assoc.api_subject.name %></td>
-        <td></td>
+        <td><%= assoc.api_subject.x509_cn %></td>
+        <td>
+          <%= delete_button_tag([@provider, @role, { api_member: assoc.id }], text: 'Revoke') %>
+        </td>
       </tr>
     <%- end -%>
   </tbody>
@@ -40,4 +42,9 @@
 <%= button_link_to(new_provider_role_member_path(@provider, @role), class: 'large green icon') do -%>
   <%= icon_tag('add') %>
   Add Subject
+<%- end -%>
+
+<%= button_link_to(new_provider_role_api_member_path(@provider, @role), class: 'large green icon') do -%>
+  <%= icon_tag('add') %>
+  Add API Account
 <%- end -%>

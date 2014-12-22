@@ -38,4 +38,9 @@
   Provided Attributes
 <%- end -%>
 
+<%= button_link_to([@provider, :api_subjects], class: 'large icon') do -%>
+  <%= icon_tag('privacy') %>
+  API Access
+<%- end -%>
+
 <%= delete_button_tag(@provider, class: 'large') %>

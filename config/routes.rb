@@ -8,10 +8,17 @@ Rails.application.routes.draw do
     resources :roles do
       resources :members, controller: 'subject_role_assignments',
                           only: %i(new create destroy)
+      resources :api_members, controller: 'api_subject_role_assignments',
+                              only: %i(new create destroy)
     end
 
     resources :provided_attributes
     resources :invitations, only: %i(new create)
+    resources :api_subjects do
+      member do
+        get 'audits' => 'api_subjects#audits', as: 'audit'
+      end
+    end
   end
 
   resources :invitations, only: [] do
