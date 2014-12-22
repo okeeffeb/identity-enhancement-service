@@ -26,7 +26,7 @@ RSpec.feature 'Visiting the invitation page', type: :feature do
 
     scenario 'attempting to accept the invitation' do
       visit "/invitations/#{invitation.identifier}"
-      expect(page).to have_content('invitation has already been used')
+      expect(page).to have_content('already been accepted')
     end
   end
 
@@ -35,7 +35,7 @@ RSpec.feature 'Visiting the invitation page', type: :feature do
 
     scenario 'attempting to accept the invitation' do
       visit "/invitations/#{invitation.identifier}"
-      expect(page).to have_content('invitation has expired')
+      expect(page).to have_content('invitation expired')
     end
   end
 end
