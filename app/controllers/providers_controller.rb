@@ -12,7 +12,10 @@ class ProvidersController < ApplicationController
   def create
     check_access!('providers:create')
     audit_attrs = { audit_comment: 'Created new provider from admin interface' }
-    @provider = Provider.create!(provider_params.merge(audit_attrs))
+    Provider.transaction do
+      @provider = Provider.create!(provider_params.merge(audit_attrs))
+      @provider.create_default_roles
+    end
 
     flash[:success] = "Created provider: #{@provider.name}"
 
