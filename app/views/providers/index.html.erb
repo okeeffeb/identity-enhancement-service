@@ -20,45 +20,6 @@
               View
             <%- end -%>
           <%- end -%>
-
-          <%- if permitted?("providers:#{provider.id}:update") -%>
-            <%= button_link_to([:edit, provider], class: 'tiny icon') do -%>
-              <%= icon_tag('edit') %>
-              Edit
-            <%- end -%>
-          <%- end -%>
-
-          <%- if permitted?("providers:#{provider.id}:roles:list") -%>
-            <%= button_link_to([provider, :roles], class: 'tiny icon') do -%>
-              <%= icon_tag('legal') %>
-              Roles
-            <%- end -%>
-          <%- end -%>
-
-          <%- if permitted?('admin:permitted_attributes:list') -%>
-            <%= button_link_to([provider, :permitted_attributes], class: 'tiny icon') do -%>
-              <%= icon_tag('tags') %>
-              Permitted Attributes
-            <%- end -%>
-          <%- end -%>
-
-          <%- if permitted?("providers:#{provider.id}:attributes:list") -%>
-            <%= button_link_to([provider, :provided_attributes], class: 'tiny icon') do -%>
-              <%= icon_tag('users') %>
-              Provided Attributes
-            <%- end -%>
-          <%- end -%>
-
-          <%- if permitted?("providers:#{provider.id}:api_subjects:list") -%>
-            <%= button_link_to([provider, :api_subjects], class: 'tiny icon') do -%>
-              <%= icon_tag('privacy') %>
-              API Accounts
-            <%- end -%>
-          <%- end -%>
-
-          <%- if permitted?("providers:#{provider.id}:delete") -%>
-            <%= delete_button_tag(provider) %>
-          <%- end -%>
         </td>
       </tr>
     <%- end -%>
