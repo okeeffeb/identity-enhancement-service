@@ -27,14 +27,14 @@
             <%- end -%>
           <%- end -%>
 
-          <%- if permitted?("providers:#{@provider.id}:update") -%>
+          <%- if permitted?('admin:roles:update') -%>
             <%= button_link_to([:edit, @provider, role], class: 'tiny icon') do -%>
               <%= icon_tag('edit') %>
               Edit
             <%- end -%>
           <%- end -%>
 
-          <%- if permitted?("providers:#{@provider.id}:delete") -%>
+          <%- if permitted?('admin:roles:delete') -%>
             <%= delete_button_tag([@provider, role]) %>
           <%- end -%>
         </td>
@@ -43,7 +43,7 @@
   </tbody>
 </table>
 
-<%- if permitted?("providers:#{@provider.id}:create") -%>
+<%- if permitted?('admin:roles:create') -%>
   <div class="line-of-buttons">
     <%= button_link_to(new_provider_role_path(@provider), class: 'large green icon') do -%>
       <%= icon_tag('add') %>
