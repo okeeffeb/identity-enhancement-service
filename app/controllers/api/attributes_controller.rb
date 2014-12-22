@@ -6,15 +6,10 @@ module API
       check_access!('api:attributes:read')
       @object = Subject.find_by_shared_token(params[:shared_token])
 
-      @provided_attributes =
-        @object.provided_attributes
-        .includes(permitted_attribute: [:available_attribute, :provider]).all
+      @provided_attributes = @object.provided_attributes
+                             .includes(permitted_attribute: :provider).all
 
-      @available_attributes = @provided_attributes.map do |a|
-        a.permitted_attribute.available_attribute
-      end
-
-      @available_attributes.uniq!
+      @attributes_map = map_attributes(@provided_attributes)
     end
 
     def create
@@ -32,6 +27,14 @@ module API
     end
 
     private
+
+    def map_attributes(provided_attributes)
+      # { [attr.name, attr.value] => [provider1, provider2, ...], ... }
+      provided_attributes.each_with_object({}) do |attr, map|
+        list = (map[[attr.name, attr.value]] ||= [])
+        list << attr.permitted_attribute.provider
+      end
+    end
 
     def update_attribute(provider, subject, opts)
       return destroy_attribute(provider, subject, opts) if opts[:_destroy]
