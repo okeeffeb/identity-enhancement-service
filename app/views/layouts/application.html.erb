@@ -19,7 +19,11 @@
   <body>
     <%= aaf_header(title: 'AAF Identity Enhancement', environment: environment_string) do -%>
       <%= nav_bar do -%>
-        <%= nav_item('Welcome', root_path) %>
+        <%- if @subject -%>
+          <%= nav_item('Dashboard', dashboard_path) %>
+        <%- else -%>
+          <%= nav_item('Welcome', root_path) %>
+        <%- end -%>
 
         <%= nav_collapsing_items do -%>
           <%- if permitted?('providers:list') -%>
