@@ -11,6 +11,8 @@ Rails.application.routes.draw do
                           only: %i(new create destroy)
       resources :api_members, controller: 'api_subject_role_assignments',
                               only: %i(new create destroy)
+
+      resources :permissions, only: %i(index create destroy)
     end
 
     resources :provided_attributes
