@@ -31,7 +31,7 @@ RSpec.feature 'Modifying Providers', js: true do
 
   scenario 'creating a provider' do
     visit '/providers'
-    click_link 'Add'
+    click_link 'New Provider'
 
     expect(current_path).to eq(new_provider_path)
     attrs = attributes_for(:provider)
@@ -132,7 +132,7 @@ RSpec.feature 'Modifying Providers', js: true do
   feature 'validations during creation' do
     background do
       visit '/providers'
-      click_link 'Add'
+      click_link 'New Provider'
 
       within('form') do
         fill_in 'Name', with: 'A Valid Name'
