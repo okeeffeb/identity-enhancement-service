@@ -20,7 +20,7 @@ RSpec.feature 'API Subjects Admin', js: true do
       click_link('View')
     end
 
-    click_link('API Access')
+    click_link('API Accounts')
     expect(current_path).to eq("#{base_path}/api_subjects")
   end
 
