@@ -31,7 +31,9 @@
           <td><%= attribute.name %></td>
           <td><%= attribute.value %></td>
           <td>
-            <%= delete_button_tag([@provider, permitted_attribute], text: 'Remove') %>
+            <%- if permitted?('admin:permitted_attributes:delete') -%>
+              <%= delete_button_tag([@provider, permitted_attribute], text: 'Remove') %>
+            <%- end -%>
           </td>
         </tr>
       <%- end -%>
@@ -63,14 +65,16 @@
           <td><%= attribute.name %></td>
           <td><%= attribute.value %></td>
           <td>
-            <%= form_tag(provider_permitted_attributes_path(@provider), method: 'post') do |f| -%>
-              <%= hidden_fields do -%>
-                <%= hidden_field_tag(:'permitted_attribute[available_attribute_id]', attribute.id) %>
-              <%- end -%>
+            <%- if permitted?('admin:permitted_attributes:create') -%>
+              <%= form_tag(provider_permitted_attributes_path(@provider), method: 'post') do |f| -%>
+                <%= hidden_fields do -%>
+                  <%= hidden_field_tag(:'permitted_attribute[available_attribute_id]', attribute.id) %>
+                <%- end -%>
 
-              <%= button_tag(class: 'tiny green icon', type: 'submit') do -%>
-                <%= icon_tag('add') %>
-                Add
+                <%= button_tag(class: 'tiny green icon', type: 'submit') do -%>
+                  <%= icon_tag('add') %>
+                  Add
+                <%- end -%>
               <%- end -%>
             <%- end -%>
           </td>

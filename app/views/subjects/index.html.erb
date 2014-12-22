@@ -30,12 +30,16 @@
           <%- end -%>
         </td>
         <td class="action-buttons">
-          <%= button_link_to(object, class: 'tiny icon') do -%>
-            <%= icon_tag('content') %>
-            View
+          <%- if permitted?('admin:subjects:read') -%>
+            <%= button_link_to(object, class: 'tiny icon') do -%>
+              <%= icon_tag('content') %>
+              View
+            <%- end -%>
           <%- end -%>
 
-          <%= delete_button_tag(object) %>
+          <%- if permitted?('admin:subjects:delete') -%>
+            <%= delete_button_tag(object) %>
+          <%- end -%>
         </td>
       </tr>
     <%- end -%>

@@ -26,14 +26,18 @@
 </table>
 
 <div class="line-of-buttons">
-  <%= button_link_to([:edit, @attribute], class: 'large icon') do -%>
-    <%= icon_tag('edit') %>
-    Edit
+  <%- if permitted?('admin:attributes:update') -%>
+    <%= button_link_to([:edit, @attribute], class: 'large icon') do -%>
+      <%= icon_tag('edit') %>
+      Edit
+    <%- end -%>
   <%- end -%>
 
-  <%= button_link_to([:audit, @attribute], class: 'large icon') do -%>
-    <%= icon_tag('history') %>
-    Audit
+  <%- if permitted?('admin:attributes:audit') -%>
+    <%= button_link_to([:audit, @attribute], class: 'large icon') do -%>
+      <%= icon_tag('history') %>
+      Audit
+    <%- end -%>
   <%- end -%>
 
   <%= delete_button_tag(@attribute, class: 'large') %>

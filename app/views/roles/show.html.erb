@@ -23,7 +23,9 @@
       <tr>
         <td><%= assoc.subject.name %></td>
         <td>
-          <%= delete_button_tag([@provider, @role, { member: assoc.id }], text: 'Revoke') %>
+          <%- if permitted?("providers:#{@provider.id}:roles:revoke") -%>
+            <%= delete_button_tag([@provider, @role, { member: assoc.id }], text: 'Revoke') %>
+          <%- end -%>
         </td>
       </tr>
     <%- end -%>
@@ -31,7 +33,9 @@
       <tr>
         <td><%= assoc.api_subject.x509_cn %></td>
         <td>
-          <%= delete_button_tag([@provider, @role, { api_member: assoc.id }], text: 'Revoke') %>
+          <%- if permitted?("providers:#{@provider.id}:roles:revoke") -%>
+            <%= delete_button_tag([@provider, @role, { api_member: assoc.id }], text: 'Revoke') %>
+          <%- end -%>
         </td>
       </tr>
     <%- end -%>
@@ -39,18 +43,24 @@
 </table>
 
 <div class="line-of-buttons">
-  <%= button_link_to(edit_provider_role_path(@provider, @role), class: 'large icon') do -%>
-    <%= icon_tag('edit') %>
-    Edit
+  <%- if permitted?("providers:#{@provider.id}:roles:update") -%>
+    <%= button_link_to(edit_provider_role_path(@provider, @role), class: 'large icon') do -%>
+      <%= icon_tag('edit') %>
+      Edit
+    <%- end -%>
   <%- end -%>
 
-  <%= button_link_to(new_provider_role_member_path(@provider, @role), class: 'large green icon') do -%>
-    <%= icon_tag('add') %>
-    Add Subject
+  <%- if permitted?("providers:#{@provider.id}:roles:grant") -%>
+    <%= button_link_to(new_provider_role_member_path(@provider, @role), class: 'large green icon') do -%>
+      <%= icon_tag('add') %>
+      Add Subject
+    <%- end -%>
   <%- end -%>
 
-  <%= button_link_to(new_provider_role_api_member_path(@provider, @role), class: 'large green icon') do -%>
-    <%= icon_tag('add') %>
-    Add API Account
+  <%- if permitted?("providers:#{@provider.id}:roles:grant") -%>
+    <%= button_link_to(new_provider_role_api_member_path(@provider, @role), class: 'large green icon') do -%>
+      <%= icon_tag('add') %>
+      Add API Account
+    <%- end -%>
   <%- end -%>
 </div>

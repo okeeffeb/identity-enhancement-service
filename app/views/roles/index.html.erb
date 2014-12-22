@@ -20,26 +20,34 @@
       <tr>
         <td><%= role.name %></td>
         <td>
-          <%= button_link_to([@provider, role], class: 'tiny icon') do -%>
-            <%= icon_tag('users') %>
-            Members
+          <%- if permitted?("providers:#{@provider.id}:read") -%>
+            <%= button_link_to([@provider, role], class: 'tiny icon') do -%>
+              <%= icon_tag('users') %>
+              Members
+            <%- end -%>
           <%- end -%>
 
-          <%= button_link_to([:edit, @provider, role], class: 'tiny icon') do -%>
-            <%= icon_tag('edit') %>
-            Edit
+          <%- if permitted?("providers:#{@provider.id}:update") -%>
+            <%= button_link_to([:edit, @provider, role], class: 'tiny icon') do -%>
+              <%= icon_tag('edit') %>
+              Edit
+            <%- end -%>
           <%- end -%>
 
-          <%= delete_button_tag([@provider, role]) %>
+          <%- if permitted?("providers:#{@provider.id}:delete") -%>
+            <%= delete_button_tag([@provider, role]) %>
+          <%- end -%>
         </td>
       </tr>
     <%- end -%>
   </tbody>
 </table>
 
-<div class="line-of-buttons">
-  <%= button_link_to(new_provider_role_path(@provider), class: 'large green icon') do -%>
-    <%= icon_tag('add') %>
-    New Role
-  <%- end -%>
-</div>
+<%- if permitted?("providers:#{@provider.id}:create") -%>
+  <div class="line-of-buttons">
+    <%= button_link_to(new_provider_role_path(@provider), class: 'large green icon') do -%>
+      <%= icon_tag('add') %>
+      New Role
+    <%- end -%>
+  </div>
+<%- end -%>

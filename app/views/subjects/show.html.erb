@@ -34,10 +34,14 @@
 </table>
 
 <div class="line-of-buttons">
-  <%= button_link_to([:audit, @object], class: 'large icon') do -%>
-    <%= icon_tag('history') %>
-    Audit
+  <%- if permitted?('admin:subjects:audit') -%>
+    <%= button_link_to([:audit, @object], class: 'large icon') do -%>
+      <%= icon_tag('history') %>
+      Audit
+    <%- end -%>
   <%- end -%>
 
-  <%= delete_button_tag(@object, class: 'large') %>
+  <%- if permitted?('admin:subjects:read') -%>
+    <%= delete_button_tag(@object, class: 'large') %>
+  <%- end -%>
 </div>

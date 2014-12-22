@@ -14,46 +14,62 @@
         <td><%= provider.name %></td>
         <td><%= provider.identifier %></td>
         <td class="action-buttons">
-          <%= button_link_to(provider, class: 'tiny icon') do -%>
-            <%= icon_tag('content') %>
-            View
+          <%- if permitted?("providers:#{provider.id}:read") -%>
+            <%= button_link_to(provider, class: 'tiny icon') do -%>
+              <%= icon_tag('content') %>
+              View
+            <%- end -%>
           <%- end -%>
 
-          <%= button_link_to([:edit, provider], class: 'tiny icon') do -%>
-            <%= icon_tag('edit') %>
-            Edit
+          <%- if permitted?("providers:#{provider.id}:update") -%>
+            <%= button_link_to([:edit, provider], class: 'tiny icon') do -%>
+              <%= icon_tag('edit') %>
+              Edit
+            <%- end -%>
           <%- end -%>
 
-          <%= button_link_to([provider, :roles], class: 'tiny icon') do -%>
-            <%= icon_tag('legal') %>
-            Roles
+          <%- if permitted?("providers:#{provider.id}:roles:list") -%>
+            <%= button_link_to([provider, :roles], class: 'tiny icon') do -%>
+              <%= icon_tag('legal') %>
+              Roles
+            <%- end -%>
           <%- end -%>
 
-          <%= button_link_to([provider, :permitted_attributes], class: 'tiny icon') do -%>
-            <%= icon_tag('tags') %>
-            Permitted Attributes
+          <%- if permitted?('admin:permitted_attributes:list') -%>
+            <%= button_link_to([provider, :permitted_attributes], class: 'tiny icon') do -%>
+              <%= icon_tag('tags') %>
+              Permitted Attributes
+            <%- end -%>
           <%- end -%>
 
-          <%= button_link_to([provider, :provided_attributes], class: 'tiny icon') do -%>
-            <%= icon_tag('users') %>
-            Provided Attributes
+          <%- if permitted?("providers:#{provider.id}:attributes:list") -%>
+            <%= button_link_to([provider, :provided_attributes], class: 'tiny icon') do -%>
+              <%= icon_tag('users') %>
+              Provided Attributes
+            <%- end -%>
           <%- end -%>
 
-          <%= button_link_to([provider, :api_subjects], class: 'tiny icon') do -%>
-            <%= icon_tag('privacy') %>
-            API Accounts
+          <%- if permitted?("providers:#{provider.id}:api_subjects:list") -%>
+            <%= button_link_to([provider, :api_subjects], class: 'tiny icon') do -%>
+              <%= icon_tag('privacy') %>
+              API Accounts
+            <%- end -%>
           <%- end -%>
 
-          <%= delete_button_tag(provider) %>
+          <%- if permitted?("providers:#{provider.id}:delete") -%>
+            <%= delete_button_tag(provider) %>
+          <%- end -%>
         </td>
       </tr>
     <%- end -%>
   </tbody>
 </table>
 
-<div class="line-of-buttons">
-  <%= button_link_to(new_provider_path, class: 'large green icon') do -%>
-    <%= icon_tag('add') %>
-    Add
-  <%- end -%>
-</div>
+<%- if permitted?('providers:create') -%>
+  <div class="line-of-buttons">
+    <%= button_link_to(new_provider_path, class: 'large green icon') do -%>
+      <%= icon_tag('add') %>
+      Add
+    <%- end -%>
+  </div>
+<%- end -%>
