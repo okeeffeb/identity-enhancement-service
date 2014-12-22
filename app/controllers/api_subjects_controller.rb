@@ -10,7 +10,7 @@ class APISubjectsController < ApplicationController
     check_access!("providers:#{@provider.id}:api_subjects:create")
     @api_subject = @provider.api_subjects.new
     @api_subject.contact_name = @subject.name
-    @api_subject.mail = @subject.mail
+    @api_subject.contact_mail = @subject.mail
   end
 
   def create
@@ -57,6 +57,6 @@ class APISubjectsController < ApplicationController
 
   def api_subject_params
     params.require(:api_subject)
-      .permit(:x509_cn, :name, :description, :contact_name, :mail)
+      .permit(:x509_cn, :name, :description, :contact_name, :contact_mail)
   end
 end

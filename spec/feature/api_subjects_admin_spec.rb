@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.feature 'API Subjects Admin' do
+RSpec.feature 'API Subjects Admin', js: true do
   given(:user) { create(:subject, :authorized) }
 
   given!(:api_subject) { create(:api_subject) }
@@ -41,11 +41,11 @@ RSpec.feature 'API Subjects Admin' do
     attrs = attributes_for(:api_subject)
 
     within('form') do
-      fill_in 'Name', with: attrs[:name]
+      fill_in 'Descriptive Name', with: attrs[:name]
       fill_in 'Description', with: attrs[:description]
       fill_in 'X.509 CN', with: attrs[:x509_cn]
       fill_in 'Contact Name', with: attrs[:contact_name]
-      fill_in 'Contact Email Address', with: attrs[:mail]
+      fill_in 'Contact Email Address', with: attrs[:contact_mail]
       click_button('Save')
     end
 
@@ -61,11 +61,11 @@ RSpec.feature 'API Subjects Admin' do
     attrs = attributes_for(:api_subject)
 
     within('form') do
-      fill_in 'Name', with: attrs[:name]
+      fill_in 'Descriptive Name', with: attrs[:name]
       fill_in 'Description', with: attrs[:description]
       fill_in 'X.509 CN', with: attrs[:x509_cn]
       fill_in 'Contact Name', with: attrs[:contact_name]
-      fill_in 'Contact Email Address', with: attrs[:mail]
+      fill_in 'Contact Email Address', with: attrs[:contact_mail]
       click_button('Create')
     end
 
