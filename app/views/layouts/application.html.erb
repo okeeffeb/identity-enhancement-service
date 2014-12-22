@@ -22,11 +22,11 @@
         <%= nav_item('Welcome', root_path) %>
 
         <%= nav_collapsing_items do -%>
-          <%- if_permitted('providers:list') do -%>
+          <%- if permitted?('providers:list') -%>
             <%= nav_item('Providers', providers_path) %>
           <%- end -%>
 
-          <%- if_permitted('admin') do -%>
+          <%- if permitted?('admin') -%>
             <%= nav_dropdown('Administration') do -%>
               <%= nav_item('Invitations', invitations_path) %>
               <%= nav_item('Subjects', subjects_path) %>
