@@ -18,6 +18,7 @@ class APISubjectsController < ApplicationController
     audit_attrs = { audit_comment: 'Created from providers interface' }
     @api_subject = @provider.api_subjects.create!(
       api_subject_params.merge(audit_attrs))
+    flash[:success] = "Created new API Account: #{@api_subject.x509_cn}"
     redirect_to([@provider, :api_subjects])
   end
 
@@ -31,6 +32,7 @@ class APISubjectsController < ApplicationController
     audit_attrs = { audit_comment: 'Updated from providers interface' }
     @api_subject = @provider.api_subjects.find(params[:id])
     @api_subject.update_attributes!(api_subject_params.merge(audit_attrs))
+    flash[:success] = "Updated API Account: #{@api_subject.x509_cn}"
     redirect_to([@provider, :api_subjects])
   end
 
@@ -44,6 +46,7 @@ class APISubjectsController < ApplicationController
     @api_subject = @provider.api_subjects.find(params[:id])
     @api_subject.audit_comment = 'Deleted from provider interface'
     @api_subject.destroy!
+    flash[:success] = "Deleted API Account: #{@api_subject.x509_cn}"
     redirect_to(provider_api_subjects_path(@provider))
   end
 

@@ -15,6 +15,9 @@ class RolesController < ApplicationController
     check_access!("providers:#{@provider.id}:roles:create")
     audit_attrs = { audit_comment: 'Created from providers interface' }
     @role = @provider.roles.create!(role_params.merge(audit_attrs))
+
+    flash[:success] = "Created role #{@role.name} at #{@provider.name}"
+
     redirect_to([@provider, :roles])
   end
 
@@ -28,6 +31,9 @@ class RolesController < ApplicationController
     audit_attrs = { audit_comment: 'Updated from providers interface' }
     @role = @provider.roles.find(params[:id])
     @role.update_attributes!(role_params.merge(audit_attrs))
+
+    flash[:success] = "Updated role #{@role.name} at #{@provider.name}"
+
     redirect_to([@provider, :roles])
   end
 
@@ -41,6 +47,9 @@ class RolesController < ApplicationController
     @role = @provider.roles.find(params[:id])
     @role.audit_comment = 'Deleted from providers interface'
     @role.destroy!
+
+    flash[:success] = "Deleted role #{@role.name} from #{@provider.name}"
+
     redirect_to([@provider, :roles])
   end
 

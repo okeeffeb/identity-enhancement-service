@@ -1,0 +1,11 @@
+<%- if flash[:success] -%>
+  <%= success_message('Success') do -%>
+    <%= flash[:success] %>
+  <%- end -%>
+<%- end -%>
+
+<%- if flash[:error] -%>
+  <%= error_message('Error') do -%>
+    <%= flash[:error] %>
+  <%- end -%>
+<%- end -%>

@@ -52,6 +52,10 @@
     <%- end -%>
 
     <section class="content">
+      <section class="flash">
+        <%= render(partial: 'layouts/flashes') %>
+      </section>
+
       <main><%= yield %></main>
     </section>
 

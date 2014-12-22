@@ -20,7 +20,10 @@ class InvitationsController < ApplicationController
 
   def create
     check_access!("providers:#{@provider.id}:invitations:create")
-    create_invitation(@provider, invitation_params)
+    subject = create_invitation(@provider, invitation_params)
+
+    flash[:success] = "Invitation to #{subject.name} has been sent"
+
     redirect_to(provider_provided_attributes_path(@provider))
   end
 

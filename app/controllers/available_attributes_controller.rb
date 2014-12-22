@@ -14,6 +14,10 @@ class AvailableAttributesController < ApplicationController
     audit_attrs = { audit_comment: 'Created attribute from admin interface' }
     @attribute = AvailableAttribute.create!(
       audit_attrs.merge(available_attribute_params))
+
+    flash[:success] = "Created attribute with name: #{@attribute.name} and " \
+                      "value #{@attribute.value}"
+
     redirect_to available_attributes_path
   end
 
@@ -27,6 +31,10 @@ class AvailableAttributesController < ApplicationController
     @attribute = AvailableAttribute.find(params[:id])
     audit_attrs = { audit_comment: 'Edited attribute from admin interface' }
     @attribute.update_attributes!(audit_attrs.merge(available_attribute_params))
+
+    flash[:success] = "Updated attribute with name: #{@attribute.name} and " \
+                      "value #{@attribute.value}"
+
     redirect_to(available_attributes_path)
   end
 
@@ -40,6 +48,10 @@ class AvailableAttributesController < ApplicationController
     @attribute = AvailableAttribute.find(params[:id])
     @attribute.audit_comment = 'Deleted attribute from admin interface'
     @attribute.destroy!
+
+    flash[:success] = "Deleted attribute with name: #{@attribute.name} and " \
+                      "value #{@attribute.value}"
+
     redirect_to available_attributes_path
   end
 
