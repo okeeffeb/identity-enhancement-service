@@ -157,7 +157,23 @@ RSpec.feature 'Modifying Available Attributes', js: true do
     it_behaves_like 'a validated available_attribute form'
   end
 
+  scenario 'deleting an available_attribute which is in use' do
+    create(:permitted_attribute, available_attribute: attribute)
+
+    visit '/admin/available_attributes'
+    expect(page).to have_css('tr td', text: attribute.value)
+
+    within('table tr', text: attribute.name) do
+      click_delete_button
+    end
+
+    expect(current_path).to eq(available_attributes_path)
+    expect(page).to have_css('.ui.message', text: 'Unable to delete')
+  end
+
   scenario 'deleting an available_attribute' do
+    attribute.permitted_attributes.destroy_all
+
     visit '/admin/available_attributes'
     expect(page).to have_css('tr td', text: attribute.value)
 

@@ -33,7 +33,7 @@ class AvailableAttributesController < ApplicationController
     @attribute.update_attributes!(audit_attrs.merge(available_attribute_params))
 
     flash[:success] = "Updated attribute with name: #{@attribute.name} and " \
-                      "value #{@attribute.value}"
+                      "value: #{@attribute.value}"
 
     redirect_to(available_attributes_path)
   end
@@ -47,10 +47,12 @@ class AvailableAttributesController < ApplicationController
     check_access!('admin:attributes:delete')
     @attribute = AvailableAttribute.find(params[:id])
     @attribute.audit_comment = 'Deleted attribute from admin interface'
-    @attribute.destroy!
-
-    flash[:success] = "Deleted attribute with name: #{@attribute.name} and " \
-                      "value #{@attribute.value}"
+    if @attribute.destroy
+      flash[:success] = "Deleted attribute with name: #{@attribute.name} and " \
+                        "value: #{@attribute.value}"
+    else
+      flash[:error] = 'Unable to delete an available attribute while in use'
+    end
 
     redirect_to available_attributes_path
   end

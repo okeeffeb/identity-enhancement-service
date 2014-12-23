@@ -4,10 +4,10 @@ class Subject < ActiveRecord::Base
 
   include Accession::Principal
 
-  has_many :subject_role_assignments
+  has_many :subject_role_assignments, dependent: :destroy
   has_many :roles, through: :subject_role_assignments
-  has_many :provided_attributes
-  has_many :invitations
+  has_many :provided_attributes, dependent: :destroy
+  has_many :invitations, dependent: :destroy
 
   validates :name, :mail, presence: true
   validates :targeted_id, :shared_token, presence: true, if: :complete?

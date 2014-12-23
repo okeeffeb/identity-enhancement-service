@@ -1,7 +1,7 @@
 class AvailableAttribute < ActiveRecord::Base
   audited comment_required: true
 
-  has_many :permitted_attributes
+  has_many :permitted_attributes, dependent: :restrict_with_error
 
   validates :description, presence: true
   validates :name, presence: true, inclusion: { in: %w(eduPersonEntitlement) }

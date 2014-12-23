@@ -4,9 +4,9 @@ class Role < ActiveRecord::Base
 
   belongs_to :provider
 
-  has_many :permissions
-  has_many :subject_role_assignments
-  has_many :api_subject_role_assignments
+  has_many :permissions, dependent: :destroy
+  has_many :subject_role_assignments, dependent: :destroy
+  has_many :api_subject_role_assignments, dependent: :destroy
 
   has_many :subjects, through: :subject_role_assignments
   has_many :api_subjects, through: :api_subject_role_assignments
