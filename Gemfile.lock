@@ -16,7 +16,7 @@ GIT
 
 GIT
   remote: https://github.com/ausaccessfed/aaf-lipstick
-  revision: c605ce2a9b19eb7ba36a45500a31dd2e938c0902
+  revision: 4b36680e006232d897c98c96ba00332ec1f1ff50
   branch: private/ide-integration
   specs:
     aaf-lipstick (0.0.1)
@@ -134,7 +134,7 @@ GEM
     highline (1.6.21)
     hike (1.2.3)
     hitimes (1.2.2)
-    i18n (0.6.11)
+    i18n (0.7.0)
     jbuilder (2.2.5)
       activesupport (>= 3.0.0, < 5)
       multi_json (~> 1.2)
