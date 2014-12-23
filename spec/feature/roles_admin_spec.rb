@@ -161,7 +161,7 @@ RSpec.feature 'Roles Admin', js: true do
       click_delete_button(text: 'Revoke')
     end
 
-    expect(current_path).to eq("#{base_path}/roles")
+    expect(current_path).to eq("#{base_path}/roles/#{role.id}")
     expect(page).to have_no_css('tr', text: other_subject.name)
   end
 
@@ -197,7 +197,7 @@ RSpec.feature 'Roles Admin', js: true do
       click_delete_button(text: 'Revoke')
     end
 
-    expect(current_path).to eq("#{base_path}/roles")
+    expect(current_path).to eq("#{base_path}/roles/#{role.id}")
     expect(page).to have_no_css('tr', text: api_subject.x509_cn)
   end
 end
