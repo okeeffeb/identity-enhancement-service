@@ -1,0 +1,37 @@
+<%=
+  breadcrumbs(
+    { 'Administration' => root_path },
+    'Invitations'
+  )
+%>
+
+<%= page_header('Invitations') %>
+
+<table class="ui basic compact table">
+  <thead>
+    <tr>
+      <th>Identifier</th>
+      <th>Name</th>
+      <th>Email</th>
+      <th>Used</th>
+      <th>Expires</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%- @invitations.each do |invitation| -%>
+      <tr>
+        <td><%= invitation.identifier %></td>
+        <td><%= invitation.name %></td>
+        <td><%= invitation.mail %></td>
+        <td><%= yes_no_string invitation.used? %></td>
+        <%- time_string = invitation.expires.strftime('%d/%m/%Y') -%>
+        <%- if invitation.expired? -%>
+          <td class="negative"><%= time_string %></td>
+        <%- else -%>
+          <td class="positive"><%= time_string %></td>
+        <%- end -%>
+      </tr>
+    <%- end -%>
+  </tbody>
+</table>

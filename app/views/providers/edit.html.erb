@@ -1,0 +1,11 @@
+<%=
+  breadcrumbs(
+    { 'Providers' => providers_path },
+    { @provider.name => provider_path(@provider) },
+    'Edit'
+  )
+%>
+
+<%= page_header('Providers', 'Edit Provider') %>
+
+<%= render(partial: 'form', locals: { submit_label: 'Save' }) %>

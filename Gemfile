@@ -1,9 +1,21 @@
 source 'https://rubygems.org'
+source 'https://rails-assets.org'
 
-gem 'rails', '4.1.7'
+gem 'rails', '~> 4.1.8'
+gem 'sass-rails', '~> 4.0.3'
+gem 'jbuilder'
+gem 'jquery-rails'
 gem 'mysql2'
 gem 'redis'
 gem 'redis-rails'
+gem 'audited-activerecord'
+gem 'rapid-rack', git: 'https://github.com/ausaccessfed/rapid-rack',
+                  branch: 'private/ide-integration'
+gem 'accession'
+gem 'aaf-lipstick', git: 'https://github.com/ausaccessfed/aaf-lipstick',
+                    branch: 'private/ide-integration'
+gem 'rails-assets-semantic-ui', '~> 1.0'
+gem 'rails-assets-jquery', '~> 1.11'
 
 gem 'unicorn', require: false
 gem 'god', require: false
@@ -12,7 +24,13 @@ group :development, :test do
   gem 'rspec-rails', '~> 3.1'
   gem 'factory_girl_rails'
   gem 'faker'
+  gem 'shoulda-matchers'
   gem 'timecop'
+  gem 'capybara'
+  gem 'capybara-webkit'
+  gem 'database_cleaner'
+  gem 'aaf-gumboot', git: 'https://github.com/ausaccessfed/aaf-gumboot',
+                     branch: 'develop'
 
   gem 'pry', require: false
   gem 'brakeman', '~> 2.6', require: false
@@ -23,5 +41,7 @@ group :development, :test do
   gem 'guard-rspec', require: false
   gem 'guard-bundler', require: false
   gem 'guard-brakeman', require: false
+  gem 'guard-unicorn', require: false, ref: 'ca5177dd',
+                       github: 'andreimaxim/guard-unicorn'
   gem 'terminal-notifier-guard', require: false
 end

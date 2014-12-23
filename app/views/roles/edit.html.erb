@@ -1,0 +1,15 @@
+<%=
+  breadcrumbs(
+    { 'Providers' => providers_path },
+    { @provider.name => provider_path(@provider) },
+    { 'Roles' => provider_roles_path(@provider) },
+    { @role.name => provider_role_path(@provider, @role) },
+    'Edit'
+  )
+%>
+
+<%= page_header(@provider.name, 'Edit Role') %>
+
+<h3 class="ui header"><%= @role.name %></h3>
+
+<%= render(partial: 'form', locals: { submit_label: 'Save' }) %>

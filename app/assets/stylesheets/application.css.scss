@@ -1,0 +1,76 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the bottom of the
+ * compiled file so the styles you add here take precedence over styles defined in any styles
+ * defined in the other CSS/SCSS files in this directory. It is generally better to create a new
+ * file per style scope.
+ *
+ *= require semantic-ui
+ *= require aaf-layout
+ *= require_tree .
+ *= require_self
+ */
+
+.audit.table td.negative {
+  text-decoration: line-through;
+}
+
+.action-buttons {
+  white-space: nowrap;
+}
+
+.ui.welcome.message {
+  padding: 5%;
+
+  @media only screen and (min-width: 960px) {
+    padding: 5em;
+  }
+
+  h1 {
+    color: #555555;
+  }
+
+  p {
+    font-size: 1.3em;
+  }
+
+  .ui.grid {
+    margin-top: 5em;
+  }
+
+  .button.column {
+    text-align: center;
+  }
+}
+
+#provided-attributes td {
+  code, .help.button {
+    float: left;
+  }
+
+  .help.button {
+    margin-left: 2em;
+    margin-top: 0.5em;
+  }
+}
+
+.ui.breadcrumb + .ui.header {
+  margin-top: 0px;
+}
+
+.line-of-buttons {
+  margin-top: 3em;
+}
+
+.ui.button.basic.mini {
+  font-weight: 600;
+}
+
+#new-permission input {
+  font-family: monospace;
+}

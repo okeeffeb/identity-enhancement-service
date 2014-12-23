@@ -6,6 +6,7 @@ guard :rspec, cmd: 'bundle exec rspec' do
   watch(/^spec\/.+_spec\.rb$/)
   watch(/^lib\/(.+)\.rb$/) { |m| "spec/lib/#{m[1]}_spec.rb" }
   watch('spec/spec_helper.rb') { 'spec' }
+  watch('spec/rails_helper.rb') { 'spec' }
   watch(%r{spec/factories(/.+)\.rb})  { 'spec' }
 
   watch(/^app\/(.+)\.rb$/) { |m| "spec/#{m[1]}_spec.rb" }
@@ -36,4 +37,9 @@ guard 'brakeman', run_on_start: true, quiet: true do
   watch(/^config\/.+\.rb$/)
   watch(/^lib\/.+\.rb$/)
   watch('Gemfile')
+end
+
+guard 'unicorn', daemonized: true, config_file: 'config/dev_unicorn.rb' do
+  watch('Gemfile.lock')
+  watch(/^config\/.+\.rb$/)
 end

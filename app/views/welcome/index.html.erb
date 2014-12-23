@@ -1,0 +1,43 @@
+<div class="ui welcome message">
+  <h1>Welcome to AAF Identity Enhancement</h1>
+  <h2>Which best describes you?</h2>
+
+  <div class="ui two column relaxed grid">
+    <div class="divided row">
+      <div class="column">
+        <%= image_tag('research.png', class: 'ui rounded centered image') %>
+
+        <p>I have an account that lets me access services connected to the AAF.</p>
+        <p>I would like to gain wider service access by enhancing my identity.</p>
+      </div>
+
+      <div class="column">
+        <%= image_tag('operational.png', class: 'ui rounded centered image') %>
+
+        <p>
+        I belong to a research organisation or project and have been given access
+        to enhance identities.</p>
+        <p>
+        I would like to provide wider service access by enhancing the identities
+        of research staff.
+        </p>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="button column">
+        <%= button_link_to('/auth/login', class: 'large green icon') do -%>
+          <%= icon_tag('privacy') %>
+          Manage my identity
+        <%- end -%>
+      </div>
+
+      <div class="button column">
+        <%= button_link_to('/auth/login', class: 'large blue icon') do -%>
+          <%= icon_tag('users') %>
+          Manage others identities
+        <%- end -%>
+      </div>
+    </div>
+  </div>
+</div>

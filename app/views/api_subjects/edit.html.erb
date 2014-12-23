@@ -1,0 +1,15 @@
+<%=
+  breadcrumbs(
+    { 'Providers' => providers_path },
+    { @provider.name => provider_path(@provider) },
+    { 'API Accounts' => provider_api_subjects_path(@provider) },
+    { @api_subject.x509_cn => provider_api_subject_path(@provider, @api_subject) },
+    'Edit'
+  )
+%>
+
+<%= page_header(@provider.name, 'Edit API Account') %>
+
+<h3 class="ui header"><%= @api_subject.x509_cn %></h3>
+
+<%= render(partial: 'form', locals: { submit_label: 'Save' }) %>

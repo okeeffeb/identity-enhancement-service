@@ -1,0 +1,100 @@
+<h1>Welcome to AAF Identity Enhancement</h1>
+
+<%- if @provider_roles.any? -%>
+  <h3>Providers</h3>
+
+  <p>You have been granted administrative access at the following providers:</p>
+
+  <table class="ui very basic compact table">
+    <thead>
+      <tr>
+        <th>Provider</th>
+        <th>Roles</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <%- @provider_roles.keys.sort_by(&:name).each do |provider| -%>
+        <tr>
+          <td><%= provider.name %></td>
+          <td>
+            <%- @provider_roles[provider].sort_by(&:name).each do |role| -%>
+              <div><%= role.name %></div>
+            <%- end -%>
+          </td>
+          <td>
+            <%= button_link_to(provider, class: 'tiny icon') do -%>
+              <%= icon_tag('content') %>
+              View
+            <%- end -%>
+          </td>
+      <%- end -%>
+    </tbody>
+  </table>
+
+  <%= divider_tag %>
+<%- end -%>
+
+<h3>Attributes</h3>
+
+<%- if @subject.provided_attributes.empty? -%>
+  <%= info_message('No Attributes') do -%>
+    <p>Your identity is currently not being enhanced by AAF Identity Enhancement.</p>
+    <p>Please contact the administrator at your organisation to request this.</p>
+  <%- end -%>
+<%- else -%>
+  <p class="large">
+  The following attributes are provided to approved services who request information about your identity:
+  </p>
+
+  <table class="ui very basic compact table" id="provided-attributes">
+    <thead>
+      <tr>
+        <th>Description</th>
+        <th>Provided By</th>
+        <th>Attribute Type</th>
+        <th/>
+      </tr>
+    </thead>
+    <tbody>
+      <%- @subject.provided_attributes.each do |attribute| -%>
+        <tr>
+          <td><%= attribute.permitted_attribute.available_attribute.description %></td>
+          <td><%= attribute.permitted_attribute.provider.name %></td>
+          <td>
+            <%= attribute.name %>
+          </td>
+          <td>
+            <%-
+              message = %Q( <strong>Technical Details</strong>
+
+                            <table class="ui basic compact inverted green table">
+                              <tbody>
+                                <tr>
+                                  <td><strong>Provider:&nbsp;</strong></td>
+                                  <td>
+                                    #{attribute.permitted_attribute.provider.full_identifier}
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td><strong>Value:&nbsp;</strong></td>
+                                  <td>#{attribute.value}</td>
+                                </tr>
+                              </tbody>
+                            </table>
+
+                            <p>This is the raw technical detail which is provided to
+                            federated services which you use.</p>
+
+                            <p>It's only shown here for your information, <strong>
+                            you don't need to understand or remember it</strong>.</p>)
+            -%>
+            <%= button_tag(type: 'button', class: 'mini basic green help', :'data-html' => message, :'data-variation' => 'wide') do -%>
+              Technical Details
+            <%- end -%>
+          </td>
+        </tr>
+      <%- end -%>
+    </tbody>
+  </table>
+<%- end -%>

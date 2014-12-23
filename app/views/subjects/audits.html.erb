@@ -1,0 +1,41 @@
+<%=
+  breadcrumbs(
+    { 'Administration' => root_path },
+    { 'Subjects' => subjects_path },
+    { @object.name => subject_path(@object) },
+    'Audit'
+  )
+%>
+
+<%= page_header('Subjects', 'Audit Log') %>
+
+<h3 class="ui header">Current Record</h3>
+
+<table class="ui definition table">
+  <tbody>
+    <tr>
+      <td>Display Name</td>
+      <td><%= @object.name %></td>
+    </tr>
+    <tr>
+      <td>Email Address</td>
+      <td><%= @object.mail %></td>
+    </tr>
+    <tr>
+      <td>Shared Token</td>
+      <td><%= @object.shared_token %></td>
+    </tr>
+    <tr>
+      <td>Targeted ID</td>
+      <td><%= @object.targeted_id %></td>
+    </tr>
+    <tr>
+      <td>Complete</td>
+      <td><%= yes_no_string(@object.complete?) %></td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 class="ui header">History</h3>
+
+<%= audit_table(@audits) %>
