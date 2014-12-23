@@ -21,7 +21,7 @@ RSpec.feature 'Inviting a new subject', js: true do
   end
 
   scenario 'creating an invitation' do
-    click_link('New Subject')
+    click_link('Send invitation to new user')
     expect(current_path).to eq("/providers/#{provider.id}/invitations/new")
 
     within('form') do
