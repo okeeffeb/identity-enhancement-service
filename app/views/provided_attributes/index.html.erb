@@ -9,8 +9,6 @@
 <%= page_header(@provider.name, 'Provided Attributes') %>
 <%= flash[:success] %>
 
-<h3 class="ui header">Current Provided Attributes</h3>
-
 <%- if @provided_attributes.empty? -%>
   <%= info_message('No Provided Attributes') do -%>
     <p>
