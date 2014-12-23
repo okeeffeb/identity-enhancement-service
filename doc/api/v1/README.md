@@ -1,6 +1,6 @@
 # Overview
 
-This describes the resources that make up the AAF Identity Enhancement service API v1 (IdE). 
+This describes the resources that make up the AAF Identity Enhancement service API v1 (IdE).
 
 If you have any problems please contact [AAF support](mailto:support@aaf.edu.au?subject=IdE API v1 help).
 
@@ -15,10 +15,10 @@ You **MUST** supply an Accept header with all API requests. It **MUST** specify 
 This document specifies interactions for API v1. Clients **MUST** send the following with all requests:
 
 	Accept: application/vnd.aaf.ide.v1+json
-	
-Change *within* a version number will only be **by extension**, either with additional endpoints being made available or *additional JSON content being added to currently documented responses*. 
 
-Either of these changes should not impact well behaved clients that correctly parse and use JSON as intended. 
+Change *within* a version number will only be **by extension**, either with additional endpoints being made available or *additional JSON content being added to currently documented responses*.
+
+Either of these changes should not impact well behaved clients that correctly parse and use JSON as intended.
 
 All clients **MUST** be well behaved, extensions to the API will not be broadcast in advance.
 
@@ -78,7 +78,7 @@ There are three possible types of client errors on API calls that receive reques
     ```
     HTTP/1.1 400 Bad Request
      Content-Length: 35
-    
+
      {"message":"Provided data not of correct type."}
     ```
 
@@ -98,4 +98,4 @@ The information supplied thus far is applicable to **all endpoints provided** by
 
 Specific details on interacting with supplied endpoint categories are provided in the following documents:
 
-1. [Attributes](attributes.md)
+1. [Subjects](subjects.md)
