@@ -24,7 +24,8 @@
         <td><%= assoc.subject.name %></td>
         <td>
           <%- if permitted?("providers:#{@provider.id}:roles:revoke") -%>
-            <%= delete_button_tag([@provider, @role, { member: assoc.id }], text: 'Revoke') %>
+            <%= delete_button_tag(provider_role_member_path(@provider, @role, assoc),
+                                  text: 'Revoke') %>
           <%- end -%>
         </td>
       </tr>
@@ -34,7 +35,8 @@
         <td><%= assoc.api_subject.x509_cn %></td>
         <td>
           <%- if permitted?("providers:#{@provider.id}:roles:revoke") -%>
-            <%= delete_button_tag([@provider, @role, { api_member: assoc.id }], text: 'Revoke') %>
+            <%= delete_button_tag(provider_role_api_member_path(@provider, @role, assoc),
+                                  text: 'Revoke') %>
           <%- end -%>
         </td>
       </tr>
