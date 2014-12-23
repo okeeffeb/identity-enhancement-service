@@ -68,6 +68,16 @@ RSpec.describe APISubjectsController, type: :controller do
       it 'assigns the api subject' do
         expect(assigns[:api_subject]).to be_an(APISubject)
       end
+
+      context 'with invalid attributes' do
+        let(:attrs) { attributes_for(:api_subject, x509_cn: 'not valid') }
+
+        it { is_expected.to render_template('new') }
+
+        it 'sets the flash message' do
+          expect(flash[:error]).not_to be_nil
+        end
+      end
     end
 
     context 'as a non-admin' do
@@ -122,6 +132,16 @@ RSpec.describe APISubjectsController, type: :controller do
     it { is_expected.to redirect_to(provider_api_subjects_path(provider)) }
     it { is_expected.to have_assigned(:provider, provider) }
     it { is_expected.to have_assigned(:api_subject, api_subject) }
+
+    context 'with invalid attributes' do
+      let(:attrs) { attributes_for(:api_subject, x509_cn: 'not valid') }
+
+      it { is_expected.to render_template('edit') }
+
+      it 'sets the flash message' do
+        expect(flash[:error]).not_to be_nil
+      end
+    end
 
     context 'the api subject' do
       subject { api_subject.reload }

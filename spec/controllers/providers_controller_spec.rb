@@ -56,6 +56,15 @@ RSpec.describe ProvidersController, type: :controller do
       subject { response }
 
       it { is_expected.to redirect_to(providers_path) }
+
+      context 'with invalid attributes' do
+        let(:attrs) { attributes_for(:provider, identifier: 'not valid') }
+
+        it { is_expected.to render_template('new') }
+        it 'sets the flash message' do
+          expect(flash[:error]).not_to be_nil
+        end
+      end
     end
 
     context 'as a non-admin' do
@@ -106,6 +115,15 @@ RSpec.describe ProvidersController, type: :controller do
 
     it { is_expected.to redirect_to(providers_path) }
     it { is_expected.to have_assigned(:provider, provider) }
+
+    context 'with invalid attributes' do
+      let(:attrs) { attributes_for(:provider, identifier: 'not valid') }
+
+      it { is_expected.to render_template('edit') }
+      it 'sets the flash message' do
+        expect(flash[:error]).not_to be_nil
+      end
+    end
 
     context 'the provider' do
       subject { provider.reload }

@@ -14,8 +14,7 @@ class ProvidersController < ApplicationController
     Provider.transaction do
       @provider = create_provider
       unless @provider.persisted?
-        form_error('new', 'Unable to create Provider', @provider)
-        fail(ActiveRecord::Rollback)
+        return form_error('new', 'Unable to create the Provider', @provider)
       end
     end
 
@@ -38,7 +37,7 @@ class ProvidersController < ApplicationController
 
     @provider = Provider.find(params[:id])
     unless update_provider(@provider)
-      return form_error('new', 'Unable to create Provider', @provider)
+      return form_error('edit', 'Unable to save the Provider', @provider)
     end
 
     flash[:success] = "Updated provider: #{@provider.name}"
