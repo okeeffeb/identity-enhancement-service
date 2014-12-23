@@ -3,11 +3,11 @@
     { 'Providers' => providers_path },
     { @provider.name => provider_path(@provider) },
     { 'Provided Attributes' => url_for([@provider, :provided_attributes]) },
-    'New Subject'
+    'Invite new user'
   )
 %>
 
-<%= page_header(@provider.name, 'Invite Subject') %>
+<%= page_header(@provider.name, 'Invite new user') %>
 
 <%= form_for([@provider, @invitation]) do |f| -%>
   <%= field_block do -%>

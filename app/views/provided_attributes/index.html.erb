@@ -47,7 +47,7 @@
   </table>
 <%- end -%>
 
-<h3 class="ui header">Available Subjects</h3>
+<h3 class="ui header">Available Identities</h3>
 
 <table class="ui basic compact five column table" id="available-subjects">
   <thead>
@@ -95,8 +95,8 @@
 <%- if permitted?("providers:#{@provider.id}:invitations:create") -%>
   <div class="line-of-buttons">
     <%= button_link_to(new_provider_invitation_path(@provider), class: 'large green icon') do -%>
-      <%= icon_tag('add') %>
-      Invite Subject
+      <%= icon_tag('send') %>
+      Send invitation to new user
     <%- end -%>
   </div>
 <%- end -%>
