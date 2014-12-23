@@ -24,6 +24,49 @@
   white-space: nowrap;
 }
 
-#available-subjects .action-buttons {
-  padding-left: 0.5em;
+.ui.welcome.message {
+  padding: 5%;
+
+  @media only screen and (min-width: 960px) {
+    padding: 5em;
+  }
+
+  h1 {
+    color: #555555;
+  }
+
+  p {
+    font-size: 1.3em;
+  }
+
+  .ui.grid {
+    margin-top: 5em;
+  }
+
+  .button.column {
+    text-align: center;
+  }
+}
+
+#provided-attributes td {
+  code, .help.button {
+    float: left;
+  }
+
+  .help.button {
+    margin-left: 2em;
+    margin-top: 0.5em;
+  }
+}
+
+.ui.breadcrumb + .ui.header {
+  margin-top: 0px;
+}
+
+.line-of-buttons {
+  margin-top: 3em;
+}
+
+.ui.button.basic.mini {
+  font-weight: 600;
 }

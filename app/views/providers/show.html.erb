@@ -1,3 +1,10 @@
+<%=
+  breadcrumbs(
+    { 'Providers' => providers_path },
+    @provider.name
+  )
+%>
+
 <%= page_header('Providers', 'View Provider') %>
 
 <table class="ui definition table">
@@ -13,34 +20,43 @@
   </tbody>
 </table>
 
-<%= button_link_to(providers_path, class: 'large icon') do -%>
-  <%= icon_tag('left arrow') %>
-  Back
-<%- end -%>
+<div class="line-of-buttons">
+  <%- if permitted?("providers:#{@provider.id}:update") -%>
+    <%= button_link_to([:edit, @provider], class: 'large icon') do -%>
+      <%= icon_tag('edit') %>
+      Edit
+    <%- end -%>
+  <%- end -%>
 
-<%= button_link_to([:edit, @provider], class: 'large icon') do -%>
-  <%= icon_tag('edit') %>
-  Edit
-<%- end -%>
+  <%- if permitted?("providers:#{@provider.id}:roles:list") -%>
+    <%= button_link_to([@provider, :roles], class: 'large icon') do -%>
+      <%= icon_tag('legal') %>
+      Roles
+    <%- end -%>
+  <%- end -%>
 
-<%= button_link_to([@provider, :roles], class: 'large icon') do -%>
-  <%= icon_tag('legal') %>
-  Roles
-<%- end -%>
+  <%- if permitted?('admin:permitted_attributes:list') -%>
+    <%= button_link_to([@provider, :permitted_attributes], class: 'large icon') do -%>
+      <%= icon_tag('tags') %>
+      Permitted Attributes
+    <%- end -%>
+  <%- end -%>
 
-<%= button_link_to([@provider, :permitted_attributes], class: 'large icon') do -%>
-  <%= icon_tag('tags') %>
-  Permitted Attributes
-<%- end -%>
+  <%- if permitted?("providers:#{@provider.id}:attributes:list") -%>
+    <%= button_link_to([@provider, :provided_attributes], class: 'large icon') do -%>
+      <%= icon_tag('users') %>
+      Provided Attributes
+    <%- end -%>
+  <%- end -%>
 
-<%= button_link_to([@provider, :provided_attributes], class: 'large icon') do -%>
-  <%= icon_tag('users') %>
-  Provided Attributes
-<%- end -%>
+  <%- if permitted?("providers:#{@provider.id}:api_subjects:list") -%>
+    <%= button_link_to([@provider, :api_subjects], class: 'large icon') do -%>
+      <%= icon_tag('privacy') %>
+      API Accounts
+    <%- end -%>
+  <%- end -%>
 
-<%= button_link_to([@provider, :api_subjects], class: 'large icon') do -%>
-  <%= icon_tag('privacy') %>
-  API Access
-<%- end -%>
-
-<%= delete_button_tag(@provider, class: 'large') %>
+  <%- if permitted?("providers:#{@provider.id}:delete") -%>
+    <%= delete_button_tag(@provider, class: 'large') %>
+  <%- end -%>
+</div>

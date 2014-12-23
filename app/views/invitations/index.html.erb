@@ -1,6 +1,13 @@
-<%= page_header('Invitations', 'All Invitations') %>
+<%=
+  breadcrumbs(
+    { 'Administration' => root_path },
+    'Invitations'
+  )
+%>
 
-<table class="ui very basic compact table">
+<%= page_header('Invitations') %>
+
+<table class="ui basic compact table">
   <thead>
     <tr>
       <th>Identifier</th>

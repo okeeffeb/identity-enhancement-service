@@ -1,12 +1,21 @@
+<%=
+  breadcrumbs(
+    { 'Providers' => providers_path },
+    { @provider.name => provider_path(@provider) },
+    { 'Roles' => provider_roles_path(@provider) },
+    @role.name
+  )
+%>
+
 <%= page_header(@provider.name, 'View Role') %>
 
 <h3 class="ui header"><%= @role.name %></h3>
 
-<table class="ui very basic compact table">
+<table class="ui basic compact table">
   <thead>
     <tr>
       <th>Member</th>
-      <th>Actions</th>
+      <th/>
     </tr>
   </thead>
   <tbody>
@@ -14,7 +23,9 @@
       <tr>
         <td><%= assoc.subject.name %></td>
         <td>
-          <%= delete_button_tag([@provider, @role, { member: assoc.id }], text: 'Revoke') %>
+          <%- if permitted?("providers:#{@provider.id}:roles:revoke") -%>
+            <%= delete_button_tag([@provider, @role, { member: assoc.id }], text: 'Revoke') %>
+          <%- end -%>
         </td>
       </tr>
     <%- end -%>
@@ -22,29 +33,34 @@
       <tr>
         <td><%= assoc.api_subject.x509_cn %></td>
         <td>
-          <%= delete_button_tag([@provider, @role, { api_member: assoc.id }], text: 'Revoke') %>
+          <%- if permitted?("providers:#{@provider.id}:roles:revoke") -%>
+            <%= delete_button_tag([@provider, @role, { api_member: assoc.id }], text: 'Revoke') %>
+          <%- end -%>
         </td>
       </tr>
     <%- end -%>
   </tbody>
 </table>
 
-<%= button_link_to(provider_roles_path(@provider), class: 'large icon') do -%>
-  <%= icon_tag('left arrow') %>
-  Back to List
-<%- end -%>
+<div class="line-of-buttons">
+  <%- if permitted?("providers:#{@provider.id}:roles:update") -%>
+    <%= button_link_to(edit_provider_role_path(@provider, @role), class: 'large icon') do -%>
+      <%= icon_tag('edit') %>
+      Edit
+    <%- end -%>
+  <%- end -%>
 
-<%= button_link_to(edit_provider_role_path(@provider, @role), class: 'large icon') do -%>
-  <%= icon_tag('edit') %>
-  Edit
-<%- end -%>
+  <%- if permitted?("providers:#{@provider.id}:roles:grant") -%>
+    <%= button_link_to(new_provider_role_member_path(@provider, @role), class: 'large green icon') do -%>
+      <%= icon_tag('add') %>
+      Add Subject
+    <%- end -%>
+  <%- end -%>
 
-<%= button_link_to(new_provider_role_member_path(@provider, @role), class: 'large green icon') do -%>
-  <%= icon_tag('add') %>
-  Add Subject
-<%- end -%>
-
-<%= button_link_to(new_provider_role_api_member_path(@provider, @role), class: 'large green icon') do -%>
-  <%= icon_tag('add') %>
-  Add API Account
-<%- end -%>
+  <%- if permitted?("providers:#{@provider.id}:roles:grant") -%>
+    <%= button_link_to(new_provider_role_api_member_path(@provider, @role), class: 'large green icon') do -%>
+      <%= icon_tag('add') %>
+      Add API Account
+    <%- end -%>
+  <%- end -%>
+</div>

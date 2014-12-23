@@ -1,3 +1,10 @@
+<%=
+  breadcrumbs(
+    { 'Providers' => providers_path },
+    'New Provider'
+  )
+%>
+
 <%= page_header('Providers', 'New Provider') %>
 
 <%= render(partial: 'form', locals: { submit_label: 'Create' }) %>

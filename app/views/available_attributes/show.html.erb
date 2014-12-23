@@ -1,3 +1,11 @@
+<%=
+  breadcrumbs(
+    { 'Administration' => root_path },
+    { 'Available Attributes' => available_attributes_path },
+    @attribute.name
+  )
+%>
+
 <%= page_header('Available Attributes', 'View Available Attribute') %>
 
 <table class="ui definition table">
@@ -17,19 +25,20 @@
   </tbody>
 </table>
 
-<%= button_link_to(available_attributes_path, class: 'large icon') do -%>
-  <%= icon_tag('left arrow') %>
-  Back to List
-<%- end -%>
+<div class="line-of-buttons">
+  <%- if permitted?('admin:attributes:update') -%>
+    <%= button_link_to([:edit, @attribute], class: 'large icon') do -%>
+      <%= icon_tag('edit') %>
+      Edit
+    <%- end -%>
+  <%- end -%>
 
-<%= button_link_to([:edit, @attribute], class: 'large icon') do -%>
-  <%= icon_tag('edit') %>
-  Edit
-<%- end -%>
+  <%- if permitted?('admin:attributes:audit') -%>
+    <%= button_link_to([:audit, @attribute], class: 'large icon') do -%>
+      <%= icon_tag('history') %>
+      Audit
+    <%- end -%>
+  <%- end -%>
 
-<%= button_link_to([:audit, @attribute], class: 'large icon') do -%>
-  <%= icon_tag('history') %>
-  Audit
-<%- end -%>
-
-<%= delete_button_tag(@attribute, class: 'large') %>
+  <%= delete_button_tag(@attribute, class: 'large') %>
+</div>

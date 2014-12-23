@@ -16,6 +16,9 @@ class SubjectRoleAssignmentsController < ApplicationController
     audit_attrs = { audit_comment: 'Granted role from providers interface' }
     @assoc = @role.subject_role_assignments
              .create!(assoc_params.merge(audit_attrs))
+
+    flash[:success] = creation_message(@assoc)
+
     redirect_to(provider_role_path(@provider, @role))
   end
 
@@ -24,6 +27,9 @@ class SubjectRoleAssignmentsController < ApplicationController
     @assoc = @role.subject_role_assignments.find(params[:id])
     @assoc.audit_comment = 'Revoked role from providers interface'
     @assoc.destroy!
+
+    flash[:success] = deletion_message(@assoc)
+
     redirect_to(provider_role_path(@provider, @role))
   end
 
@@ -31,5 +37,13 @@ class SubjectRoleAssignmentsController < ApplicationController
 
   def assoc_params
     params.require(:subject_role_assignment).permit(:subject_id)
+  end
+
+  def creation_message(assoc)
+    "Granted #{@role.name} at #{@provider.name} to #{assoc.subject.name}"
+  end
+
+  def deletion_message(assoc)
+    "Revoked #{@role.name} at #{@provider.name} from #{assoc.subject.name}"
   end
 end

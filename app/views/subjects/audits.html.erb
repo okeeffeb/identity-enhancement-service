@@ -1,3 +1,12 @@
+<%=
+  breadcrumbs(
+    { 'Administration' => root_path },
+    { 'Subjects' => subjects_path },
+    { @object.name => subject_path(@object) },
+    'Audit'
+  )
+%>
+
 <%= page_header('Subjects', 'Audit Log') %>
 
 <h3 class="ui header">Current Record</h3>
@@ -30,8 +39,3 @@
 <h3 class="ui header">History</h3>
 
 <%= audit_table(@audits) %>
-
-<%= button_link_to(subjects_path, class: 'large icon') do -%>
-  <%= icon_tag('left arrow') %>
-  Back to List
-<%- end -%>

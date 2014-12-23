@@ -1,3 +1,12 @@
+<%=
+  breadcrumbs(
+    { 'Providers' => providers_path },
+    { @provider.name => provider_path(@provider) },
+    { 'API Accounts' => provider_api_subjects_path(@provider) },
+    'New API Account'
+  )
+%>
+
 <%= page_header(@provider.name, 'New API Account') %>
 
 <%= render(partial: 'form', locals: { submit_label: 'Create' }) %>

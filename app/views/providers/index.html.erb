@@ -1,11 +1,11 @@
 <%= page_header('Providers') %>
 
-<table class="ui very basic compact table">
+<table class="ui basic compact table">
   <thead>
     <tr>
       <th>Name</th>
       <th>Identifier</th>
-      <th>Actions</th>
+      <th/>
     </tr>
   </thead>
   <tbody>
@@ -14,44 +14,23 @@
         <td><%= provider.name %></td>
         <td><%= provider.identifier %></td>
         <td class="action-buttons">
-          <%= button_link_to(provider, class: 'tiny icon') do -%>
-            <%= icon_tag('content') %>
-            View
+          <%- if permitted?("providers:#{provider.id}:read") -%>
+            <%= button_link_to(provider, class: 'tiny icon') do -%>
+              <%= icon_tag('content') %>
+              View
+            <%- end -%>
           <%- end -%>
-
-          <%= button_link_to([:edit, provider], class: 'tiny icon') do -%>
-            <%= icon_tag('edit') %>
-            Edit
-          <%- end -%>
-
-          <%= button_link_to([provider, :roles], class: 'tiny icon') do -%>
-            <%= icon_tag('legal') %>
-            Roles
-          <%- end -%>
-
-          <%= button_link_to([provider, :permitted_attributes], class: 'tiny icon') do -%>
-            <%= icon_tag('tags') %>
-            Permitted Attributes
-          <%- end -%>
-
-          <%= button_link_to([provider, :provided_attributes], class: 'tiny icon') do -%>
-            <%= icon_tag('users') %>
-            Provided Attributes
-          <%- end -%>
-
-          <%= button_link_to([provider, :api_subjects], class: 'tiny icon') do -%>
-            <%= icon_tag('privacy') %>
-            API Access
-          <%- end -%>
-
-          <%= delete_button_tag(provider) %>
         </td>
       </tr>
     <%- end -%>
   </tbody>
 </table>
 
-<%= button_link_to(new_provider_path, class: 'large green icon') do -%>
-  <%= icon_tag('add') %>
-  Add
+<%- if permitted?('providers:create') -%>
+  <div class="line-of-buttons">
+    <%= button_link_to(new_provider_path, class: 'large green icon') do -%>
+      <%= icon_tag('add') %>
+      New Provider
+    <%- end -%>
+  </div>
 <%- end -%>

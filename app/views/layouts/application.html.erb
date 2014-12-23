@@ -19,18 +19,26 @@
   <body>
     <%= aaf_header(title: 'AAF Identity Enhancement', environment: environment_string) do -%>
       <%= nav_bar do -%>
-        <%= nav_item('Dashboard', root_path) %>
+        <%- if @subject -%>
+          <%= nav_item('Dashboard', dashboard_path) %>
+        <%- else -%>
+          <%= nav_item('Welcome', root_path) %>
+        <%- end -%>
 
         <%= nav_collapsing_items do -%>
-          <%= nav_item('Providers', providers_path) %>
+          <%- if permitted?('providers:list') -%>
+            <%= nav_item('Providers', providers_path) %>
+          <%- end -%>
 
-          <%- if_permitted('admin') do -%>
+          <%- if permitted?('admin') -%>
             <%= nav_dropdown('Administration') do -%>
               <%= nav_item('Invitations', invitations_path) %>
               <%= nav_item('Subjects', subjects_path) %>
               <%= nav_item('Available Attributes', available_attributes_path) %>
             <%- end -%>
           <%- end -%>
+
+          <%= nav_item('Support', 'http://support.aaf.edu.au') %>
 
           <%= nav_items_right do -%>
             <%- if @subject -%>
@@ -44,6 +52,10 @@
     <%- end -%>
 
     <section class="content">
+      <section class="flash">
+        <%= render(partial: 'layouts/flashes') %>
+      </section>
+
       <main><%= yield %></main>
     </section>
 
@@ -60,7 +72,7 @@
         <strong>MVP</strong>
         <br/>
         Developed for the <a href="http://www.aaf.edu.au">Australian Access Federation</a>
-        by Shaun Mangelsdorf
+        by Shaun Mangelsdorf and Bradley Beddoes
       </p>
     <%- end -%>
   </body>

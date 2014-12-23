@@ -1,12 +1,19 @@
+<%=
+  breadcrumbs(
+    { 'Administration' => root_path },
+    'Available Attributes'
+  )
+%>
+
 <%= page_header('Available Attributes') %>
 
-<table class="ui very basic compact table">
+<table class="ui basic compact table">
   <thead>
     <tr>
       <th>Name</th>
       <th>Value</th>
       <th>Description</th>
-      <th>Actions</th>
+      <th/>
     </tr>
   </thead>
   <tbody>
@@ -16,29 +23,41 @@
         <td><%= attribute.value %></td>
         <td><%= attribute.description %></td>
         <td class="action-buttons">
-          <%= button_link_to(attribute, class: 'tiny icon') do -%>
-            <%= icon_tag('content') %>
-            View
+          <%- if permitted?('admin:attributes:read') -%>
+            <%= button_link_to(attribute, class: 'tiny icon') do -%>
+              <%= icon_tag('content') %>
+              View
+            <%- end -%>
           <%- end -%>
 
-          <%= button_link_to([:edit, attribute], class: 'tiny icon') do -%>
-            <%= icon_tag('edit') %>
-            Edit
+          <%- if permitted?('admin:attributes:update') -%>
+            <%= button_link_to([:edit, attribute], class: 'tiny icon') do -%>
+              <%= icon_tag('edit') %>
+              Edit
+            <%- end -%>
           <%- end -%>
 
-          <%= delete_button_tag(attribute) %>
+          <%- if permitted?('admin:attributes:delete') -%>
+            <%= delete_button_tag(attribute) %>
+          <%- end -%>
         </td>
       </tr>
     <%- end -%>
   </tbody>
 </table>
 
-<%= button_link_to(new_available_attribute_path, class: 'large green icon') do -%>
-  <%= icon_tag('add') %>
-  Add
-<%- end -%>
+<div class="line-of-buttons">
+  <%- if permitted?('admin:attributes:create') -%>
+    <%= button_link_to(new_available_attribute_path, class: 'large green icon') do -%>
+      <%= icon_tag('add') %>
+      New Available Attribute
+    <%- end -%>
+  <%- end -%>
 
-<%= button_link_to(audit_available_attributes_path, class: 'large icon') do -%>
-  <%= icon_tag('history') %>
-  Audit
-<%- end -%>
+  <%- if permitted?('admin:attributes:audit') -%>
+    <%= button_link_to(audit_available_attributes_path, class: 'large icon') do -%>
+      <%= icon_tag('history') %>
+      Audit
+    <%- end -%>
+  <%- end -%>
+</div>

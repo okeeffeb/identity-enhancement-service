@@ -1,3 +1,12 @@
+<%=
+  breadcrumbs(
+    { 'Providers' => providers_path },
+    { @provider.name => provider_path(@provider) },
+    { 'Provided Attributes' => url_for([@provider, :provided_attributes]) },
+    @object.name
+  )
+%>
+
 <%= page_header(@provider.name, 'New Provided Attribute') %>
 
 <h3 class="ui header">Subject</h3>
@@ -23,12 +32,12 @@
     identity of <strong><%= @object.name %></strong>
   <%- end -%>
 <%- else -%>
-  <table class="ui very basic compact table">
+  <table class="ui basic compact table" id="provided-attributes">
     <thead>
       <tr>
         <th>Name</th>
         <th>Value</th>
-        <th>Actions</th>
+        <th/>
       </tr>
     </thead>
     <tbody>
@@ -37,7 +46,9 @@
           <td><%= provided_attribute.name %></td>
           <td><%= provided_attribute.value %></td>
           <td>
-            <%= delete_button_tag(provider_provided_attribute_path(@provider, provided_attribute)) %>
+            <%- if permitted?("providers:#{@provider.id}:attributes:delete") -%>
+              <%= delete_button_tag(provider_provided_attribute_path(@provider, provided_attribute)) %>
+            <%- end -%>
           </td>
         </tr>
       <%- end -%>
@@ -54,12 +65,12 @@
     of <strong><%= @object.name %></strong>
   <%- end -%>
 <%- else -%>
-  <table class="ui very basic compact table">
+  <table class="ui basic compact table">
     <thead>
       <tr>
         <th>Name</th>
         <th>Value</th>
-        <th>Actions</th>
+        <th/>
       </tr>
     </thead>
     <tbody>
@@ -69,15 +80,17 @@
           <td><%= attribute.name %></td>
           <td><%= attribute.value %></td>
           <td>
-            <%= form_tag(provider_provided_attributes_path(@provider)) do -%>
-              <%= hidden_fields do -%>
-                <%= hidden_field_tag(:'provided_attribute[subject_id]', @object.id) %>
-                <%= hidden_field_tag(:'provided_attribute[permitted_attribute_id]', permitted_attribute.id) %>
-              <%- end -%>
+            <%- if permitted?("providers:#{@provider.id}:attributes:create") -%>
+              <%= form_tag(provider_provided_attributes_path(@provider)) do -%>
+                <%= hidden_fields do -%>
+                  <%= hidden_field_tag(:'provided_attribute[subject_id]', @object.id) %>
+                  <%= hidden_field_tag(:'provided_attribute[permitted_attribute_id]', permitted_attribute.id) %>
+                <%- end -%>
 
-              <%= button_tag(type: 'submit', class: 'tiny green icon') do -%>
-                <%= icon_tag('add') %>
-                Add
+                <%= button_tag(type: 'submit', class: 'tiny green icon') do -%>
+                  <%= icon_tag('add') %>
+                  Add
+                <%- end -%>
               <%- end -%>
             <%- end -%>
           </td>

@@ -39,7 +39,7 @@ RSpec.feature 'Modifying Available Attributes', js: true do
 
   scenario 'creating an available_attribute' do
     visit '/admin/available_attributes'
-    click_link 'Add'
+    click_link 'New Available Attribute'
 
     expect(current_path).to eq(new_available_attribute_path)
     attrs = attributes_for(:available_attribute)
@@ -144,7 +144,7 @@ RSpec.feature 'Modifying Available Attributes', js: true do
   feature 'validations during creation' do
     background do
       visit '/admin/available_attributes'
-      click_link 'Add'
+      click_link 'New Available Attribute'
 
       within('form') do
         fill_in 'Name', with: 'A Valid Name'

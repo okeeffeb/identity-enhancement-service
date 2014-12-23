@@ -44,7 +44,10 @@ RSpec.feature 'Roles Admin' do
     expect(page).to have_css('td', text: assoc.subject.name)
     expect(page).to have_css('td', text: api_assoc.api_subject.x509_cn)
 
-    click_link('Back to List')
+    within('.breadcrumb') do
+      click_link('Roles')
+    end
+
     expect(current_path).to eq("#{base_path}/roles")
   end
 

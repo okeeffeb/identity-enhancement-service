@@ -1,5 +1,24 @@
-You have been invited! Click the button.
+<div class="ui welcome message">
+  <h1>Welcome to AAF Identity Enhancement</h1>
 
-<%= form_tag(method: :post) do -%>
-  <%= submit_tag('Accept') %>
-<%- end -%>
+  <p>
+    You have been invited to this service by <strong><%= @invitation.provider.name %></strong>.
+  </p>
+
+  <p>
+    By accepting this invitation your identity at federated services will be enhanced providing you to access a much wider range of resources.
+  </p>
+
+  <p>
+  After clicking the <em>Accept Invitation</em> button below you will be asked to log in via the Australian Access Federation to prove your identity.
+  </p>
+
+  <div class="line-of-buttons">
+    <%= form_tag(method: :post) do -%>
+      <%= button_tag(type: 'submit', class: 'massive green icon') do -%>
+        <%= icon_tag('checkmark') %>
+        Accept Invitation
+      <%- end -%>
+    <%- end -%>
+  </div>
+</div>

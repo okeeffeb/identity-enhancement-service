@@ -1,7 +1,13 @@
+<%=
+  breadcrumbs(
+    { 'Providers' => providers_path },
+    { @provider.name => provider_path(@provider) },
+    'Provided Attributes'
+  )
+%>
+
 <%= page_header(@provider.name, 'Provided Attributes') %>
 <%= flash[:success] %>
-
-<h3 class="ui header">Current Provided Attributes</h3>
 
 <%- if @provided_attributes.empty? -%>
   <%= info_message('No Provided Attributes') do -%>
@@ -11,14 +17,14 @@
     </p>
   <%- end -%>
 <%- else -%>
-  <table class="ui very basic compact table" id="provided-attributes">
+  <table class="ui basic compact five column table" id="provided-attributes">
     <thead>
       <tr>
         <th>Name</th>
         <th>Email</th>
         <th>Attribute</th>
         <th>Value</th>
-        <th>Actions</th>
+        <th/>
       </tr>
     </thead>
 
@@ -30,8 +36,10 @@
           <td><%= attribute.name %></td>
           <td><%= attribute.value %></td>
           <td>
-            <%= delete_button_tag(
-                  provider_provided_attribute_path(@provider, attribute)) %>
+            <%- if permitted?("providers:#{@provider.id}:attributes:delete") -%>
+              <%= delete_button_tag(
+                    provider_provided_attribute_path(@provider, attribute)) %>
+            <%- end -%>
           </td>
         </tr>
       <%- end -%>
@@ -39,15 +47,16 @@
   </table>
 <%- end -%>
 
-<h3 class="ui header">Available Subjects</h3>
+<h3 class="ui header">Available Identities</h3>
 
-<table class="ui basic compact table" id="available-subjects">
+<table class="ui basic compact five column table" id="available-subjects">
   <thead>
     <tr>
       <th>Name</th>
       <th>Email</th>
       <th>State</th>
-      <th>Actions</th>
+      <th>Functioning</th>
+      <th/>
     </tr>
   </thead>
   <tbody>
@@ -62,11 +71,20 @@
             <%= icon_tag('yellow warning sign') %> Pending
           <%- end -%>
         </td>
+        <td>
+          <%- if object.functioning? -%>
+            <%= icon_tag('green checkmark') %> Yes
+          <%- else -%>
+            <%= icon_tag('yellow warning sign') %> No
+          <%- end -%>
+        </td>
         <td class="action-buttons">
-          <%= button_link_to(new_provider_provided_attribute_path(@provider, subject_id: object.id),
-                             class: 'tiny green icon') do -%>
-            <%= icon_tag('add') %>
-            Provide Attribute
+          <%- if permitted?("providers:#{@provider.id}:attributes:create") -%>
+            <%= button_link_to(new_provider_provided_attribute_path(@provider, subject_id: object.id),
+                               class: 'tiny green icon') do -%>
+              <%= icon_tag('add') %>
+              Provide Attribute
+            <%- end -%>
           <%- end -%>
         </td>
       </tr>
@@ -74,7 +92,11 @@
   </tbody>
 </table>
 
-<%= button_link_to(new_provider_invitation_path(@provider), class: 'large green icon') do -%>
-  <%= icon_tag('add') %>
-  Invite Subject
+<%- if permitted?("providers:#{@provider.id}:invitations:create") -%>
+  <div class="line-of-buttons">
+    <%= button_link_to(new_provider_invitation_path(@provider), class: 'large green icon') do -%>
+      <%= icon_tag('send') %>
+      Send invitation to new user
+    <%- end -%>
+  </div>
 <%- end -%>

@@ -16,6 +16,9 @@ class SubjectsController < ApplicationController
     @object = Subject.find(params[:id])
     @object.audit_comment = 'Deleted from admin interface'
     @object.destroy!
+
+    flash[:success] = "Deleted subject #{@object.name}"
+
     redirect_to(subjects_path)
   end
 

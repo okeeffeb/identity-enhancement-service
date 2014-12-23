@@ -1,4 +1,13 @@
-<%= page_header(@provider.name, 'Invite Subject') %>
+<%=
+  breadcrumbs(
+    { 'Providers' => providers_path },
+    { @provider.name => provider_path(@provider) },
+    { 'Provided Attributes' => url_for([@provider, :provided_attributes]) },
+    'Invite New User'
+  )
+%>
+
+<%= page_header(@provider.name, 'Invite New User') %>
 
 <%= form_for([@provider, @invitation]) do |f| -%>
   <%= field_block do -%>
@@ -11,13 +20,17 @@
     <%= f.text_field(:mail) %>
   <%- end -%>
 
-  <%= button_tag(type: 'submit', class: 'large green icon') do -%>
-    <%= icon_tag('checkmark') %>
-    Send Invitation
-  <%- end -%>
+  <div class="line-of-buttons">
+    <%- if permitted?("providers:#{@provider.name}:invitations:create") -%>
+      <%= button_tag(type: 'submit', class: 'large green icon') do -%>
+        <%= icon_tag('checkmark') %>
+        Send Invitation
+      <%- end -%>
+    <%- end -%>
 
-  <%= button_link_to(provider_provided_attributes_path(@provider), class: 'large icon') do -%>
-    <%= icon_tag('cancel') %>
-    Cancel
-  <%- end -%>
+    <%= button_link_to(provider_provided_attributes_path(@provider), class: 'large icon') do -%>
+      <%= icon_tag('cancel') %>
+      Cancel
+    <%- end -%>
+  </div>
 <%- end -%>

@@ -28,15 +28,17 @@
     <%= f.text_field :description %>
   <%- end -%>
 
-  <%= f.button(class: 'large green icon') do -%>
-    <%= icon_tag('checkmark') %>
-    <%= submit_label %>
-  <%- end -%>
+  <div class="line-of-buttons">
+    <%= f.button(class: 'large green icon') do -%>
+      <%= icon_tag('checkmark') %>
+      <%= submit_label %>
+    <%- end -%>
 
-  <%= button_link_to(providers_path, class: 'large icon') do -%>
-    <%= icon_tag('cancel') %>
-    Cancel
-  <%- end -%>
+    <%= button_link_to(providers_path, class: 'large icon') do -%>
+      <%= icon_tag('cancel') %>
+      Cancel
+    <%- end -%>
+  </div>
 
   <%= error_messages_tag %>
 <%- end -%>

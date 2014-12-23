@@ -11,8 +11,11 @@ class PermittedAttributesController < ApplicationController
   def create
     check_access!('admin:permitted_attributes:create')
     audit_attrs = { audit_comment: 'Added via admin interface' }
-    @provider.permitted_attributes
-      .create!(permitted_attribute_params.merge(audit_attrs))
+    record = @provider.permitted_attributes
+             .create!(permitted_attribute_params.merge(audit_attrs))
+
+    flash[:success] = creation_message(record)
+
     redirect_to provider_permitted_attributes_path(@provider)
   end
 
@@ -21,6 +24,9 @@ class PermittedAttributesController < ApplicationController
     @permitted_attribute = @provider.permitted_attributes.find(params[:id])
     @permitted_attribute.audit_comment = 'Removed via admin interface'
     @permitted_attribute.destroy!
+
+    flash[:success] = deletion_message(@permitted_attribute)
+
     redirect_to provider_permitted_attributes_path(@provider)
   end
 
@@ -28,5 +34,17 @@ class PermittedAttributesController < ApplicationController
 
   def permitted_attribute_params
     params.require(:permitted_attribute).permit(:available_attribute_id)
+  end
+
+  def creation_message(permitted_attribute)
+    attr = permitted_attribute.available_attribute
+    flash[:success] = "Added permitted attribute to #{@provider.name} with " \
+                      "name: #{attr.name} and value #{attr.value}"
+  end
+
+  def deletion_message(permitted_attribute)
+    attr = permitted_attribute.available_attribute
+    flash[:success] = "Removed permitted attribute from #{@provider.name} " \
+                      "with name: #{attr.name} and value #{attr.value}"
   end
 end

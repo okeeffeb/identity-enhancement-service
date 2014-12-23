@@ -1,3 +1,11 @@
+<%=
+  breadcrumbs(
+    { 'Providers' => providers_path },
+    { @provider.name => provider_path(@provider) },
+    'API Accounts'
+  )
+%>
+
 <%= page_header(@provider.name, 'API Access') %>
 
 <%- if @api_subjects.empty? -%>
@@ -6,12 +14,13 @@
     created.
   <%- end -%>
 <%- else -%>
-  <table class="ui very basic compact table">
+  <table class="ui basic compact table">
     <thead>
       <tr>
         <th>X.509 CN</th>
         <th>Description</th>
-        <th>Actions</th>
+        <th>Functioning</th>
+        <th/>
       </tr>
     </thead>
     <tbody>
@@ -19,6 +28,13 @@
         <tr>
           <td><%= api_subject.x509_cn %></td>
           <td><%= api_subject.description %></td>
+          <td>
+            <%- if api_subject.functioning? -%>
+              <%= icon_tag('green checkmark') %> Yes
+            <%- else -%>
+              <%= icon_tag('yellow warning sign') %> No
+            <%- end -%>
+          </td>
           <td>
             <%= button_link_to([:edit, @provider, api_subject], class: 'tiny icon') do -%>
               <%= icon_tag('edit') %>
@@ -33,7 +49,11 @@
   </table>
 <%- end -%>
 
-<%= button_link_to(new_provider_api_subject_path(@provider), class: 'large green icon') do -%>
-  <%= icon_tag('add') %>
-  New API Account
+<%- if permitted?("providers:#{@provider.id}:api_subjects:create") -%>
+  <div class="line-of-buttons">
+    <%= button_link_to(new_provider_api_subject_path(@provider), class: 'large green icon') do -%>
+      <%= icon_tag('add') %>
+      New API Account
+    <%- end -%>
+  </div>
 <%- end -%>

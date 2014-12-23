@@ -31,7 +31,7 @@ RSpec.feature 'Modifying Providers', js: true do
 
   scenario 'creating a provider' do
     visit '/providers'
-    click_link 'Add'
+    click_link 'New Provider'
 
     expect(current_path).to eq(new_provider_path)
     attrs = attributes_for(:provider)
@@ -49,8 +49,10 @@ RSpec.feature 'Modifying Providers', js: true do
   scenario 'editing a provider' do
     visit '/providers'
     within('table tr', text: provider.name) do
-      click_link 'Edit'
+      click_link 'View'
     end
+
+    click_link 'Edit'
 
     new_name = "New Name #{provider.name}"
 
@@ -121,8 +123,10 @@ RSpec.feature 'Modifying Providers', js: true do
       visit '/providers'
 
       within('table tr', text: provider.name) do
-        click_link 'Edit'
+        click_link 'View'
       end
+
+      click_link 'Edit'
     end
 
     given(:button) { 'Save' }
@@ -132,7 +136,7 @@ RSpec.feature 'Modifying Providers', js: true do
   feature 'validations during creation' do
     background do
       visit '/providers'
-      click_link 'Add'
+      click_link 'New Provider'
 
       within('form') do
         fill_in 'Name', with: 'A Valid Name'
@@ -150,8 +154,10 @@ RSpec.feature 'Modifying Providers', js: true do
     expect(page).to have_css('table tr td', text: provider.name)
 
     within('table tr', text: provider.name) do
-      click_delete_button
+      click_link 'View'
     end
+
+    click_delete_button
 
     expect(current_path).to eq(providers_path)
     expect(page).to have_no_css('table tr td', text: provider.name)
