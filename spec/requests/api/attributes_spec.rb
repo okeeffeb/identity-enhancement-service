@@ -25,9 +25,9 @@ module API
     #     ],
     #   }]
     # }
-    context 'get /api/attributes/:shared_token' do
+    context 'get /api/subjects/:shared_token/attributes' do
       def run
-        get "/api/attributes/#{object.shared_token}", nil, headers
+        get "/api/subjects/#{object.shared_token}/attributes", nil, headers
       end
 
       let(:json) { JSON.parse(response.body, symbolize_names: true) }
@@ -158,7 +158,7 @@ module API
       end
     end
 
-    context 'post /api/attributes' do
+    context 'post /api/subjects/attributes' do
       # There's no response body to inspect, so this would be a duplicate of
       # spec/controllers/api/attributes_controller_spec.rb
     end
