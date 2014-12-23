@@ -2,10 +2,10 @@ require 'rails_helper'
 
 RSpec.describe AvailableAttributesController, type: :controller do
   let(:user) { create(:subject, :authorized, permission: 'admin:attributes:*') }
-  let(:attrs) { attributes_for(:available_attribute) }
   let(:attribute) { create_attribute }
 
   def create_attribute
+    attrs = attributes_for(:available_attribute)
     AvailableAttribute.create_with(audit_comment: 'test')
       .find_or_create_by!(attrs.except(:audit_comment))
   end
@@ -65,6 +65,16 @@ RSpec.describe AvailableAttributesController, type: :controller do
       subject { response }
 
       it { is_expected.to redirect_to(available_attributes_path) }
+
+      context 'with invalid attributes' do
+        let(:attrs) { attributes_for(:available_attribute, value: 'not valid') }
+
+        it { is_expected.to render_template('new') }
+
+        it 'sets the flash message' do
+          expect(flash[:error]).not_to be_nil
+        end
+      end
     end
 
     context 'as a non-admin' do
@@ -115,6 +125,16 @@ RSpec.describe AvailableAttributesController, type: :controller do
 
     it { is_expected.to redirect_to(available_attributes_path) }
     it { is_expected.to have_assigned(:attribute, attribute) }
+
+    context 'with invalid attributes' do
+      let(:attrs) { attributes_for(:available_attribute, value: 'not valid') }
+
+      it { is_expected.to render_template('edit') }
+
+      it 'sets the flash message' do
+        expect(flash[:error]).not_to be_nil
+      end
+    end
 
     context 'the available_attribute' do
       subject { attribute.reload }

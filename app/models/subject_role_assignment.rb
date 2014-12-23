@@ -5,4 +5,5 @@ class SubjectRoleAssignment < ActiveRecord::Base
   belongs_to :role
 
   validates :subject, :role, presence: true
+  validates :role, uniqueness: { scope: :subject }
 end

@@ -8,6 +8,7 @@ RSpec.describe Provider, type: :model do
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:description) }
     it { is_expected.to validate_presence_of(:identifier) }
+    it { is_expected.to validate_uniqueness_of(:identifier) }
 
     %W(aaf abcd1234_- #{'x' * 40}).each do |identifier|
       it { is_expected.to allow_value(identifier).for(:identifier) }

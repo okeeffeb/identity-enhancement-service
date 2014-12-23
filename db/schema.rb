@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141222031312) do
+ActiveRecord::Schema.define(version: 20141223032056) do
 
   create_table "api_subject_role_assignments", force: true do |t|
     t.integer  "api_subject_id", null: false
@@ -19,6 +19,8 @@ ActiveRecord::Schema.define(version: 20141222031312) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "api_subject_role_assignments", ["api_subject_id", "role_id"], name: "index_api_subject_role_assignments_on_api_subject_id_and_role_id", unique: true, using: :btree
 
   create_table "api_subjects", force: true do |t|
     t.integer  "provider_id",                 null: false
@@ -30,6 +32,8 @@ ActiveRecord::Schema.define(version: 20141222031312) do
     t.datetime "updated_at"
     t.boolean  "enabled",      default: true, null: false
   end
+
+  add_index "api_subjects", ["x509_cn"], name: "index_api_subjects_on_x509_cn", unique: true, using: :btree
 
   create_table "audits", force: true do |t|
     t.integer  "auditable_id"
@@ -62,6 +66,8 @@ ActiveRecord::Schema.define(version: 20141222031312) do
     t.datetime "updated_at"
   end
 
+  add_index "available_attributes", ["name", "value"], name: "index_available_attributes_on_name_and_value", unique: true, using: :btree
+
   create_table "invitations", force: true do |t|
     t.integer  "provider_id",                 null: false
     t.integer  "subject_id",                  null: false
@@ -92,7 +98,7 @@ ActiveRecord::Schema.define(version: 20141222031312) do
     t.datetime "updated_at"
   end
 
-  add_index "permitted_attributes", ["provider_id"], name: "index_permitted_attributes_on_provider_id", using: :btree
+  add_index "permitted_attributes", ["provider_id", "available_attribute_id"], name: "permitted_attributes_unique_attribute", unique: true, using: :btree
 
   create_table "provided_attributes", force: true do |t|
     t.integer  "permitted_attribute_id", null: false
@@ -103,7 +109,7 @@ ActiveRecord::Schema.define(version: 20141222031312) do
     t.datetime "updated_at"
   end
 
-  add_index "provided_attributes", ["subject_id"], name: "index_provided_attributes_on_subject_id", using: :btree
+  add_index "provided_attributes", ["subject_id", "permitted_attribute_id"], name: "provided_attributes_unique_attribute", unique: true, using: :btree
 
   create_table "providers", force: true do |t|
     t.string   "name",                     null: false
@@ -112,6 +118,8 @@ ActiveRecord::Schema.define(version: 20141222031312) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "providers", ["identifier"], name: "index_providers_on_identifier", unique: true, using: :btree
 
   create_table "roles", force: true do |t|
     t.integer  "provider_id"
@@ -129,6 +137,8 @@ ActiveRecord::Schema.define(version: 20141222031312) do
     t.datetime "updated_at"
   end
 
+  add_index "subject_role_assignments", ["subject_id", "role_id"], name: "index_subject_role_assignments_on_subject_id_and_role_id", unique: true, using: :btree
+
   create_table "subjects", force: true do |t|
     t.string   "name",                         null: false
     t.string   "mail",                         null: false
@@ -140,6 +150,7 @@ ActiveRecord::Schema.define(version: 20141222031312) do
     t.boolean  "enabled",      default: true,  null: false
   end
 
+  add_index "subjects", ["mail"], name: "index_subjects_on_mail", unique: true, using: :btree
   add_index "subjects", ["shared_token"], name: "index_subjects_on_shared_token", unique: true, using: :btree
   add_index "subjects", ["targeted_id"], name: "index_subjects_on_targeted_id", using: :btree
 

@@ -10,15 +10,19 @@ RSpec.describe Subject, type: :model do
     subject { build(:subject, complete: false) }
 
     it { is_expected.to validate_presence_of(:name) }
+    it { is_expected.to validate_uniqueness_of(:name) }
     it { is_expected.to validate_presence_of(:mail) }
+    it { is_expected.to validate_uniqueness_of(:mail) }
     it { is_expected.not_to validate_presence_of(:targeted_id) }
     it { is_expected.not_to validate_presence_of(:shared_token) }
+    it { is_expected.to validate_uniqueness_of(:shared_token) }
 
     context 'with a complete subject' do
       subject { build(:subject, complete: true) }
 
       it { is_expected.to validate_presence_of(:targeted_id) }
       it { is_expected.to validate_presence_of(:shared_token) }
+      it { is_expected.to validate_uniqueness_of(:shared_token) }
     end
   end
 
@@ -86,5 +90,19 @@ RSpec.describe Subject, type: :model do
       end
     end
     let!(:other) { create(:provider) }
+  end
+
+  context 'associated objects' do
+    context 'subject_role_assignments' do
+      let(:child) { create(:subject_role_assignment) }
+      subject { child.subject }
+      it_behaves_like 'an association which cascades delete'
+    end
+
+    context 'provided_attributes' do
+      let!(:child) { create(:provided_attribute) }
+      subject { child.subject }
+      it_behaves_like 'an association which cascades delete'
+    end
   end
 end

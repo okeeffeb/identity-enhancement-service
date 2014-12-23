@@ -2,13 +2,13 @@ class Provider < ActiveRecord::Base
   audited comment_required: true
   has_associated_audits
 
-  has_many :roles
-  has_many :permitted_attributes
-  has_many :provided_attributes
-  has_many :api_subjects
+  has_many :roles, dependent: :destroy
+  has_many :permitted_attributes, dependent: :destroy
+  has_many :api_subjects, dependent: :destroy
 
   validates :name, :description, presence: true
-  validates :identifier, presence: true, format: { with: /\A[\w-]{1,40}\z/ }
+  validates :identifier, presence: true, uniqueness: true,
+                         format: { with: /\A[\w-]{1,40}\z/ }
 
   has_many :invitations
 

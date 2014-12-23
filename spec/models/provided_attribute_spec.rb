@@ -15,6 +15,15 @@ RSpec.describe ProvidedAttribute, type: :model do
     it { is_expected.not_to allow_value(attr.name + 'a').for(:name) }
     it { is_expected.to allow_value(attr.value).for(:value) }
     it { is_expected.not_to allow_value(attr.value + 'a').for(:value) }
+
+    it 'requires permitted_attribute to be unique per subject' do
+      subject.save!
+      other = build(:provided_attribute,
+                    permitted_attribute: subject.permitted_attribute,
+                    subject: subject.subject)
+
+      expect(other).not_to be_valid
+    end
   end
 
   context '::for_provider' do

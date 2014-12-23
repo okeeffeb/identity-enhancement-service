@@ -56,4 +56,10 @@ class ApplicationController < ActionController::Base
   def bad_request
     render 'errors/bad_request', status: :bad_request
   end
+
+  def form_error(view, message, object)
+    flash.now[:error] =
+      [message, object.errors.full_messages.join("\n")].join("\n\n")
+    render(view)
+  end
 end

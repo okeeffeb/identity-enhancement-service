@@ -5,6 +5,7 @@ class ProvidedAttribute < ActiveRecord::Base
   belongs_to :subject
 
   validates :permitted_attribute, :subject, :name, :value, presence: true
+  validates :permitted_attribute, uniqueness: { scope: :subject }
   validate :must_match_permitted_attribute
 
   def self.for_provider(provider)
