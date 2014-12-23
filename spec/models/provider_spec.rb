@@ -72,4 +72,22 @@ RSpec.describe Provider, type: :model do
       expect(run).to be_an(Invitation)
     end
   end
+
+  context '#create_default_roles' do
+    let(:provider) { create(:provider) }
+
+    def run
+      provider.create_default_roles
+    end
+
+    it 'creates the roles' do
+      expect { run }.to change(provider.roles, :count)
+    end
+
+    it 'replaces PROVIDER_ID with the actual id' do
+      run
+      expect(provider.roles.find_by_name('api_rw').permissions.map(&:value))
+        .to include("providers:#{provider.id}:attributes:create")
+    end
+  end
 end

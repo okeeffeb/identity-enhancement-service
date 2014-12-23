@@ -1,11 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe RolesController, type: :controller do
-  let(:user) do
-    create(:subject, :authorized,
-           permission: "providers:#{provider.id}:roles:*")
-  end
-
+  let(:user) { create(:subject, :authorized, permission: 'admin:roles:*') }
   let(:orig_attrs) { attributes_for(:role).except(:audit_comment, :provider) }
   let(:provider) { create(:provider) }
   let(:role) { create(:role, orig_attrs.merge(provider: provider)) }
@@ -15,6 +11,11 @@ RSpec.describe RolesController, type: :controller do
   context 'get :index' do
     let!(:role) { create(:role, provider: provider) }
     before { get :index, provider_id: provider.id }
+
+    let(:user) do
+      create(:subject, :authorized,
+             permission: "providers:#{provider.id}:roles:*")
+    end
 
     it { is_expected.to have_http_status(:ok) }
     it { is_expected.to render_template('roles/index') }
@@ -80,6 +81,11 @@ RSpec.describe RolesController, type: :controller do
 
   context 'get :show' do
     before { get :show, provider_id: provider.id, id: role.id }
+
+    let(:user) do
+      create(:subject, :authorized,
+             permission: "providers:#{provider.id}:roles:*")
+    end
 
     it { is_expected.to have_http_status(:ok) }
     it { is_expected.to render_template('roles/show') }
