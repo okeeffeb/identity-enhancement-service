@@ -13,6 +13,7 @@
       <th>Name</th>
       <th>Email Address</th>
       <th>State</th>
+      <th>Functioning</th>
       <th/>
     </tr>
   </thead>
@@ -27,6 +28,13 @@
             <%= icon_tag('green checkmark') %> Active
           <%- else -%>
             <%= icon_tag('yellow warning sign') %> Pending
+          <%- end -%>
+        </td>
+        <td>
+          <%- if object.functioning? -%>
+            <%= icon_tag('green checkmark') %> Yes
+          <%- else -%>
+            <%= icon_tag('yellow warning sign') %> No
           <%- end -%>
         </td>
         <td class="action-buttons">
