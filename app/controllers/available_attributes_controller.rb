@@ -12,8 +12,12 @@ class AvailableAttributesController < ApplicationController
   def create
     check_access!('admin:attributes:create')
     audit_attrs = { audit_comment: 'Created attribute from admin interface' }
-    @attribute = AvailableAttribute.create!(
+    @attribute = AvailableAttribute.new(
       audit_attrs.merge(available_attribute_params))
+
+    unless @attribute.save
+      return form_error('new', 'Unable to create attribute', @attribute)
+    end
 
     flash[:success] = "Created attribute with name: #{@attribute.name} and " \
                       "value #{@attribute.value}"
@@ -28,9 +32,11 @@ class AvailableAttributesController < ApplicationController
 
   def update
     check_access!('admin:attributes:update')
+
     @attribute = AvailableAttribute.find(params[:id])
-    audit_attrs = { audit_comment: 'Edited attribute from admin interface' }
-    @attribute.update_attributes!(audit_attrs.merge(available_attribute_params))
+    unless update_available_attribute(@attribute)
+      return form_error('edit', 'Unable to save attribute', @attribute)
+    end
 
     flash[:success] = "Updated attribute with name: #{@attribute.name} and " \
                       "value: #{@attribute.value}"
@@ -71,5 +77,10 @@ class AvailableAttributesController < ApplicationController
 
   def available_attribute_params
     params.require(:available_attribute).permit(:name, :value, :description)
+  end
+
+  def update_available_attribute(attribute)
+    audit_attrs = { audit_comment: 'Edited attribute from admin interface' }
+    attribute.update_attributes(audit_attrs.merge(available_attribute_params))
   end
 end

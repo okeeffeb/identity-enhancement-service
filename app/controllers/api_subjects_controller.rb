@@ -16,8 +16,13 @@ class APISubjectsController < ApplicationController
   def create
     check_access!("providers:#{@provider.id}:api_subjects:create")
     audit_attrs = { audit_comment: 'Created from providers interface' }
-    @api_subject = @provider.api_subjects.create!(
+    @api_subject = @provider.api_subjects.build(
       api_subject_params.merge(audit_attrs))
+
+    unless @api_subject.save
+      return form_error('new', 'Unable to create API Subject', @api_subject)
+    end
+
     flash[:success] = "Created new API Account: #{@api_subject.x509_cn}"
     redirect_to([@provider, :api_subjects])
   end
@@ -31,7 +36,11 @@ class APISubjectsController < ApplicationController
     check_access!("providers:#{@provider.id}:api_subjects:update")
     audit_attrs = { audit_comment: 'Updated from providers interface' }
     @api_subject = @provider.api_subjects.find(params[:id])
-    @api_subject.update_attributes!(api_subject_params.merge(audit_attrs))
+
+    unless @api_subject.update_attributes(api_subject_params.merge(audit_attrs))
+      return form_error('edit', 'Unable to save API Subject', @api_subject)
+    end
+
     flash[:success] = "Updated API Account: #{@api_subject.x509_cn}"
     redirect_to([@provider, :api_subjects])
   end
