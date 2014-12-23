@@ -19,4 +19,12 @@ RSpec.describe APISubject, type: :model do
     it { is_expected.not_to allow_value('abcd!').for(:x509_cn) }
     it { is_expected.not_to allow_value("abc\ndef").for(:x509_cn) }
   end
+
+  context 'associated objects' do
+    context 'api_subject_role_assignments' do
+      let(:child) { create(:api_subject_role_assignment) }
+      subject { child.api_subject }
+      it_behaves_like 'an association which cascades delete'
+    end
+  end
 end

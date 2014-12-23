@@ -87,4 +87,18 @@ RSpec.describe Subject, type: :model do
     end
     let!(:other) { create(:provider) }
   end
+
+  context 'associated objects' do
+    context 'subject_role_assignments' do
+      let(:child) { create(:subject_role_assignment) }
+      subject { child.subject }
+      it_behaves_like 'an association which cascades delete'
+    end
+
+    context 'provided_attributes' do
+      let!(:child) { create(:provided_attribute) }
+      subject { child.subject }
+      it_behaves_like 'an association which cascades delete'
+    end
+  end
 end

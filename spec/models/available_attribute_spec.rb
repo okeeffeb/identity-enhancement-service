@@ -34,4 +34,17 @@ RSpec.describe AvailableAttribute, type: :model do
     subject { AvailableAttribute.audits.all }
     it { is_expected.to include(attribute.audits.last) }
   end
+
+  context 'associated objects' do
+    context 'permitted_attributes' do
+      let(:child) { create(:permitted_attribute) }
+      subject { child.available_attribute }
+
+      it 'prevents delete when a child object exists' do
+        subject.audit_comment = 'Deleted to test association error'
+        expect { subject.destroy! }
+          .to raise_error(ActiveRecord::RecordNotDestroyed)
+      end
+    end
+  end
 end
