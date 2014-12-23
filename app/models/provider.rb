@@ -7,7 +7,8 @@ class Provider < ActiveRecord::Base
   has_many :api_subjects, dependent: :destroy
 
   validates :name, :description, presence: true
-  validates :identifier, presence: true, format: { with: /\A[\w-]{1,40}\z/ }
+  validates :identifier, presence: true, uniqueness: true,
+                         format: { with: /\A[\w-]{1,40}\z/ }
 
   has_many :invitations
 

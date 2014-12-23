@@ -12,6 +12,7 @@ class Subject < ActiveRecord::Base
   validates :name, :mail, presence: true
   validates :targeted_id, :shared_token, presence: true, if: :complete?
   validates :complete, :enabled, inclusion: { in: [true, false] }
+  validates :name, :mail, :shared_token, uniqueness: { allow_blank: true }
 
   def permissions
     subject_role_assignments.flat_map { |ra| ra.role.permissions.map(&:value) }

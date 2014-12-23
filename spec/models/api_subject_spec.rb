@@ -11,6 +11,7 @@ RSpec.describe APISubject, type: :model do
 
     it { is_expected.to validate_presence_of(:provider) }
     it { is_expected.to validate_presence_of(:x509_cn) }
+    it { is_expected.to validate_uniqueness_of(:x509_cn) }
     it { is_expected.to validate_presence_of(:description) }
     it { is_expected.to validate_presence_of(:contact_name) }
     it { is_expected.to validate_presence_of(:contact_mail) }

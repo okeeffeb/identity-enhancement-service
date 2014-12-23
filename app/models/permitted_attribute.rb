@@ -7,4 +7,5 @@ class PermittedAttribute < ActiveRecord::Base
   has_many :provided_attributes, dependent: :destroy
 
   validates :provider, :available_attribute, presence: true
+  validates :available_attribute, uniqueness: { scope: :provider }
 end

@@ -6,7 +6,7 @@ class AvailableAttribute < ActiveRecord::Base
   validates :description, presence: true
   validates :name, presence: true, inclusion: { in: %w(eduPersonEntitlement) }
 
-  validates :value, presence: true, format: {
+  validates :value, presence: true, uniqueness: { scope: :name }, format: {
     with: /\Aurn:mace:aaf\.edu\.au:ide:([\w\.-]+:)*[\w\.-]+\z/ }
 
   def initialize(*)
