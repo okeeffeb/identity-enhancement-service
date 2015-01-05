@@ -3,6 +3,8 @@ source 'https://rails-assets.org'
 
 gem 'rails', '~> 4.1.8'
 gem 'sass-rails', '~> 4.0.3'
+gem 'uglifier'
+gem 'therubyracer'
 gem 'jbuilder'
 gem 'jquery-rails'
 gem 'mysql2'

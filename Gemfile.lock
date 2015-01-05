@@ -100,6 +100,7 @@ GEM
     diff-lcs (1.2.5)
     docile (1.1.5)
     erubis (2.7.0)
+    execjs (2.2.2)
     factory_girl (4.5.0)
       activesupport (>= 3.0.0)
     factory_girl_rails (4.5.0)
@@ -150,6 +151,7 @@ GEM
       url_safe_base64
     kgio (2.9.2)
     kramdown (1.5.0)
+    libv8 (3.16.14.7)
     listen (2.8.3)
       celluloid (>= 0.15.2)
       rb-fsevent (>= 0.9.3)
@@ -219,6 +221,7 @@ GEM
       redis-store (~> 1.1.0)
     redis-store (1.1.4)
       redis (>= 2.2)
+    ref (1.0.5)
     rspec (3.1.0)
       rspec-core (~> 3.1.0)
       rspec-expectations (~> 3.1.0)
@@ -282,6 +285,9 @@ GEM
     temple (0.6.10)
     terminal-notifier-guard (1.6.4)
     terminal-table (1.4.5)
+    therubyracer (0.12.1)
+      libv8 (~> 3.16.14.0)
+      ref
     thor (0.19.1)
     thread_safe (0.3.4)
     tilt (1.4.1)
@@ -290,6 +296,9 @@ GEM
       hitimes
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    uglifier (2.5.3)
+      execjs (>= 0.3.0)
+      json (>= 1.8.0)
     unicorn (4.8.3)
       kgio (~> 2.6)
       rack
@@ -334,5 +343,7 @@ DEPENDENCIES
   shoulda-matchers
   simplecov
   terminal-notifier-guard
+  therubyracer
   timecop
+  uglifier
   unicorn
