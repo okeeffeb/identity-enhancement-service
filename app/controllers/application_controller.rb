@@ -22,10 +22,9 @@ class ApplicationController < ActionController::Base
   def ensure_authenticated
     return redirect_to('/auth/login') unless session[:subject_id]
 
-    @subject = Subject.find(session[:subject_id])
+    @subject = Subject.find_by(id: session[:subject_id])
+    fail(Unauthorized, 'Subject invalid') unless @subject
     fail(Unauthorized, 'Subject not functional') unless @subject.functioning?
-  rescue ActiveRecord::RecordNotFound
-    raise(Unauthorized, 'Subject invalid')
   end
 
   def ensure_access_checked
