@@ -1,4 +1,6 @@
 module CreateInvitation
+  delegate :image_url, to: :view_context
+
   def create_invitation(provider, subject_attrs)
     Invitation.transaction do
       audit_attrs = {
@@ -26,7 +28,7 @@ module CreateInvitation
 
   def email_message(invitation)
     Lipstick::EmailMessage.new(title: 'AAF Identity Enhancement',
-                               image_url: 'http://example.com',
+                               image_url: image_url('email_branding.png'),
                                content: email_body(invitation))
   end
 
