@@ -16,9 +16,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 ```
 
-**Current Release:** 0.1-MVP (23/12/2014)
+**Current Release:** 0.1.1-MVP (19/01/2014)
 
-IdE enhances existing institution identities for users undertaking research activities in the Australian Higher Education sector by specifically identifying these users as a â€˜researchersâ€™.
+IdE enhances existing institution identities for users undertaking research activities in the Australian Higher Education sector by specifically identifying these users as a "researchers".
 
 NeCTAR funded Virtual Laboratories (VL) and other AAF connected services will be able to use this information to make informed access control decisions specifically for researchers.
 
