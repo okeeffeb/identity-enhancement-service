@@ -4,7 +4,7 @@ module ApplicationHelper
   include Lipstick::Helpers::FormHelper
 
   def environment_string
-    'Development'
+    Rails.application.config.ide_service.environment_string
   end
 
   def markdown_to_html(input)

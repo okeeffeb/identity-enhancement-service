@@ -3,17 +3,18 @@ source 'https://rails-assets.org'
 
 gem 'rails', '~> 4.1.8'
 gem 'sass-rails', '~> 4.0.3'
+gem 'uglifier'
+gem 'therubyracer'
 gem 'jbuilder'
 gem 'jquery-rails'
 gem 'mysql2'
 gem 'redis'
 gem 'redis-rails'
 gem 'audited-activerecord'
-gem 'rapid-rack', git: 'https://github.com/ausaccessfed/rapid-rack',
-                  branch: 'private/ide-integration'
+gem 'rapid-rack'
 gem 'accession'
 gem 'aaf-lipstick', git: 'https://github.com/ausaccessfed/aaf-lipstick',
-                    branch: 'private/ide-integration'
+                    branch: 'develop'
 gem 'rails-assets-semantic-ui', '~> 1.0'
 gem 'rails-assets-jquery', '~> 1.11'
 
