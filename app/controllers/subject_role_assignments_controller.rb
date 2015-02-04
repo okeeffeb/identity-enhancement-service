@@ -24,12 +24,14 @@ class SubjectRoleAssignmentsController < ApplicationController
 
   def destroy
     check_access!("providers:#{@provider.id}:roles:revoke")
+
     @assoc = @role.subject_role_assignments.find(params[:id])
+    return unless validate_revocation
+
     @assoc.audit_comment = 'Revoked role from providers interface'
     @assoc.destroy!
 
     flash[:success] = deletion_message(@assoc)
-
     redirect_to(provider_role_path(@provider, @role))
   end
 
@@ -45,5 +47,13 @@ class SubjectRoleAssignmentsController < ApplicationController
 
   def deletion_message(assoc)
     "Revoked #{@role.name} at #{@provider.name} from #{assoc.subject.name}"
+  end
+
+  def validate_revocation
+    return true unless @assoc.subject == subject
+
+    flash[:error] = 'Administrators cannot revoke their own membership'
+    redirect_to(provider_role_path(@provider, @role))
+    false
   end
 end

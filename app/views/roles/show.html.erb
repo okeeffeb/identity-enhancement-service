@@ -15,6 +15,8 @@
   <thead>
     <tr>
       <th>Member</th>
+      <th>Email Address</th>
+      <th>Targeted ID</th>
       <th/>
     </tr>
   </thead>
@@ -22,10 +24,15 @@
     <%- @role.subject_role_assignments.each do |assoc| -%>
       <tr>
         <td><%= assoc.subject.name %></td>
+        <td><%= mail_to assoc.subject.mail %></td>
+        <td><%= assoc.subject.targeted_id %></td>
         <td>
-          <%- if permitted?("providers:#{@provider.id}:roles:revoke") -%>
-            <%= delete_button_tag(provider_role_member_path(@provider, @role, assoc),
-                                  text: 'Revoke') %>
+          <%- if permitted?("providers:#{@provider.id}:roles:revoke") %>
+            <%- if(assoc.subject != @subject) %>
+              <%= delete_button_tag(provider_role_member_path(@provider, @role, assoc), text: 'Revoke') %>
+            <%- else %>
+              <i class="icon ban"></i><strong>current account</strong>
+            <%- end -%>
           <%- end -%>
         </td>
       </tr>
