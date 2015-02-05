@@ -18,14 +18,22 @@ class InvitationsController < ApplicationController
     @invitation = Invitation.new
   end
 
+  # rubocop:disable Metrics/AbcSize
   def create
     check_access!("providers:#{@provider.id}:invitations:create")
-    subject = create_invitation(@provider, invitation_params)
 
-    flash[:success] = "Invitation to #{subject.name} has been sent"
+    if Subject.exists?(invitation_params.slice(:mail))
+      flash[:error] = 'Invitation cannot be sent as an account for '\
+                      "#{invitation_params[:mail]} already exists."
+    else
+      create_invitation(@provider, invitation_params)
+      flash[:success] = "Invitation to #{invitation_params[:name]} "\
+                        'has been sent.'
+    end
 
     redirect_to(provider_provided_attributes_path(@provider))
   end
+  # rubocop:enable Metrics/AbcSize
 
   def show
     public_action
