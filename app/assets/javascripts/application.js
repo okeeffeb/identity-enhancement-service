@@ -6,7 +6,9 @@
 jQuery(function($) {
   $('.popup').popup({ inline: true, position: 'right center' });
 
-  $('.help.button').popup();
+  $('.help.button').popup({
+    position : 'top center'
+  });
 
   $.fn.form.settings.rules['urlsafe_base64'] = function(value) {
     return value.match(/^[\w-]*$/);
