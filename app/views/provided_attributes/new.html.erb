@@ -32,7 +32,7 @@
     identity of <strong><%= @object.name %></strong>
   <%- end -%>
 <%- else -%>
-  <table class="ui basic compact table" id="provided-attributes">
+  <table class="ui striped compact table" id="provided-attributes">
     <thead>
       <tr>
         <th>Name</th>
@@ -45,7 +45,7 @@
         <tr>
           <td><%= provided_attribute.name %></td>
           <td><%= provided_attribute.value %></td>
-          <td>
+          <td class="right aligned">
             <%- if permitted?("providers:#{@provider.id}:attributes:delete") -%>
               <%= delete_button_tag(provider_provided_attribute_path(@provider, provided_attribute)) %>
             <%- end -%>
@@ -65,7 +65,7 @@
     of <strong><%= @object.name %></strong>
   <%- end -%>
 <%- else -%>
-  <table class="ui basic compact table">
+  <table class="ui striped compact table">
     <thead>
       <tr>
         <th>Name</th>
@@ -79,7 +79,7 @@
         <tr>
           <td><%= attribute.name %></td>
           <td><%= attribute.value %></td>
-          <td>
+          <td class="right aligned">
             <%- if permitted?("providers:#{@provider.id}:attributes:create") -%>
               <%= form_tag(provider_provided_attributes_path(@provider)) do -%>
                 <%= hidden_fields do -%>

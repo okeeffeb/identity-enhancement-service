@@ -13,7 +13,7 @@
 <h3 class="ui header"><%= @role.name %></h3>
 
 <%- if @api_subjects.present? %>
-  <table class="ui basic compact table">
+  <table class="ui striped compact table">
     <thead>
       <tr>
         <th>X.509 CN</th>
@@ -26,7 +26,7 @@
         <tr>
           <td><%= api_subject.x509_cn %></td>
           <td><%= api_subject.description %></td>
-          <td>
+          <td class="right aligned">
             <%= form_for([@provider, @role, @assoc], url: provider_role_api_members_path(@provider, @role),
                                                      html: { class: 'inline' }) do |f| -%>
 
