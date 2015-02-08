@@ -23,7 +23,7 @@ RSpec.describe DashboardController, type: :controller do
       expect(assigns[:provided_attributes]).to include(attribute)
     end
 
-    context 'with api ony roles' do
+    context 'with api only roles' do
       let(:api_role) do
         create(:role, provider: role.provider).tap do |role|
           create(:permission, value: 'api:attributes:read', role: role)
