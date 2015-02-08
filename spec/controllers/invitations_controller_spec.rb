@@ -81,6 +81,11 @@ RSpec.describe InvitationsController, type: :controller do
         expect { run }.to change(Invitation, :count).by(1)
       end
 
+      it 'sets flash success' do
+        run
+        expect(flash[:success]).to be_present
+      end
+
       it do
         run
         expect(response)
@@ -108,6 +113,26 @@ RSpec.describe InvitationsController, type: :controller do
 
         it 'does not create a invitation' do
           expect { run }.to raise_error.and not_change(Invitation, :count)
+        end
+      end
+
+      context 'when subject with provided email already exists' do
+        let(:attrs) do
+          attributes_for(:subject, mail: user.mail).slice(:name, :mail)
+            .merge(provider_id: provider.id)
+        end
+
+        it 'does not create a subject' do
+          expect { run }.to not_change(Subject, :count)
+        end
+
+        it 'does not create a invitation' do
+          expect { run }.to not_change(Invitation, :count)
+        end
+
+        it 'sets flash error' do
+          run
+          expect(flash[:error]).to be_present
         end
       end
     end

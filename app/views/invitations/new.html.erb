@@ -21,7 +21,7 @@
   <%- end -%>
 
   <div class="line-of-buttons">
-    <%- if permitted?("providers:#{@provider.name}:invitations:create") -%>
+    <%- if permitted?("providers:#{@provider.id}:invitations:create") -%>
       <%= button_tag(type: 'submit', class: 'large green icon') do -%>
         <%= icon_tag('checkmark') %>
         Send Invitation
