@@ -13,6 +13,7 @@ gem 'audited-activerecord'
 gem 'rapid-rack'
 gem 'accession'
 gem 'aaf-lipstick'
+gem 'valhammer'
 
 gem 'unicorn', require: false
 gem 'god', require: false
