@@ -32,6 +32,10 @@ module NoTransactionalFixtures
 end
 
 RSpec.configure do |config|
+  config.before(:each, type: :feature, js: true) do
+    page.driver.block_unknown_urls
+  end
+
   config.use_transactional_fixtures = true
   config.include ControllerMatchers, type: :controller
   config.include AliasedMatchers
