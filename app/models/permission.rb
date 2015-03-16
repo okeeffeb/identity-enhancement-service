@@ -9,6 +9,6 @@ class Permission < ActiveRecord::Base
   # "word" in the url-safe base64 alphabet, or single '*'
   SEGMENT = /([\w-]+|\*)/
   private_constant :SEGMENT
-  validates :value, presence: true,
+  validates :value, presence: true, uniqueness: { scope: :role },
                     format: { with: /\A(#{SEGMENT}:)*#{SEGMENT}\z/ }
 end

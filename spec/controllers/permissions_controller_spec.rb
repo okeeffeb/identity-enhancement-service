@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe PermissionsController, type: :controller do
   let(:user) { create(:subject, :authorized, permission: 'admin:roles:*') }
-  let(:permission) { create(:permission) }
+  let(:permission) { create(:permission, value: 'a:*') }
   let(:role) { permission.role }
   let(:provider) { role.provider }
 
@@ -43,7 +43,7 @@ RSpec.describe PermissionsController, type: :controller do
   end
 
   context 'post :create' do
-    let(:attrs) { attributes_for(:permission) }
+    let(:attrs) { attributes_for(:permission, value: 'b:*') }
 
     def run
       post :create, provider_id: provider.id, role_id: role.id,
