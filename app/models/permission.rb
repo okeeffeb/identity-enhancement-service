@@ -6,8 +6,5 @@ class Permission < ActiveRecord::Base
 
   valhammer
 
-  # "word" in the url-safe base64 alphabet, or single '*'
-  SEGMENT = /([\w-]+|\*)/
-  private_constant :SEGMENT
-  validates :value, format: /\A(#{SEGMENT}:)*#{SEGMENT}\z/
+  validates :value, format: Accession::Permission.regexp
 end
