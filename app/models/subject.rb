@@ -9,10 +9,9 @@ class Subject < ActiveRecord::Base
   has_many :provided_attributes, dependent: :destroy
   has_many :invitations, dependent: :destroy
 
-  validates :name, :mail, presence: true
+  valhammer
+
   validates :targeted_id, :shared_token, presence: true, if: :complete?
-  validates :complete, :enabled, inclusion: { in: [true, false] }
-  validates :mail, :shared_token, uniqueness: { allow_blank: true }
 
   def permissions
     subject_role_assignments.flat_map { |ra| ra.role.permissions.map(&:value) }

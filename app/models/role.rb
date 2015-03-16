@@ -11,5 +11,5 @@ class Role < ActiveRecord::Base
   has_many :subjects, through: :subject_role_assignments
   has_many :api_subjects, through: :api_subject_role_assignments
 
-  validates :provider, :name, presence: true
+  valhammer
 end

@@ -4,11 +4,10 @@ class Permission < ActiveRecord::Base
   belongs_to :role
   delegate :provider, to: :role
 
-  validates :role, presence: true
+  valhammer
 
   # "word" in the url-safe base64 alphabet, or single '*'
   SEGMENT = /([\w-]+|\*)/
   private_constant :SEGMENT
-  validates :value, presence: true, uniqueness: { scope: :role },
-                    format: { with: /\A(#{SEGMENT}:)*#{SEGMENT}\z/ }
+  validates :value, format: /\A(#{SEGMENT}:)*#{SEGMENT}\z/
 end
