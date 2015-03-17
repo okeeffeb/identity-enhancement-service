@@ -11,14 +11,19 @@ jQuery(function($) {
   });
 
   $.fn.form.settings.rules['urlsafe_base64'] = function(value) {
-    return value.match(/^[\w-]*$/);
+    return value == '' || value.match(/^[\w-]*$/);
   };
 
   $.fn.form.settings.rules['attribute_name'] = function(value) {
-    return value == 'eduPersonEntitlement';
+    return value == '' || value == 'eduPersonEntitlement';
   };
 
   $.fn.form.settings.rules['attribute_value'] = function(value) {
-    return value.match(/^urn:mace:aaf\.edu\.au:ide:([\w\.-]+:)*[\w\.-]+$/);
+    return value == '' ||
+      value.match(/^urn:mace:aaf\.edu\.au:ide:([\w\.-]+:)*[\w\.-]+$/);
+  };
+
+  $.fn.form.settings.rules['accession_permission_value'] = function(value) {
+    return value == '' || value.match(/^([\w\.-]+:)*[\w\.-]+$/);
   };
 });

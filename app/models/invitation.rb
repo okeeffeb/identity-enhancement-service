@@ -1,4 +1,6 @@
 class Invitation < ActiveRecord::Base
+  include Lipstick::AutoValidation
+
   audited comment_required: true
 
   belongs_to :provider

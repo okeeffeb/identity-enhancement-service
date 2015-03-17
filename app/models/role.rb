@@ -1,4 +1,6 @@
 class Role < ActiveRecord::Base
+  include Lipstick::AutoValidation
+
   audited comment_required: true, associated_with: :provider
   has_associated_audits
 

@@ -1,4 +1,6 @@
 class AvailableAttribute < ActiveRecord::Base
+  include Lipstick::AutoValidation
+
   audited comment_required: true
 
   has_many :permitted_attributes, dependent: :restrict_with_error

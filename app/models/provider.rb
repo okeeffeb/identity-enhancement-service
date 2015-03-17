@@ -1,4 +1,6 @@
 class Provider < ActiveRecord::Base
+  include Lipstick::AutoValidation
+
   audited comment_required: true
   has_associated_audits
 

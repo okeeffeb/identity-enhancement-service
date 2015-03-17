@@ -1,5 +1,6 @@
 class APISubject < ActiveRecord::Base
   include Accession::Principal
+  include Lipstick::AutoValidation
 
   audited comment_required: true
   has_associated_audits
@@ -12,6 +13,8 @@ class APISubject < ActiveRecord::Base
   valhammer
 
   validates :x509_cn, format: /\A[\w-]+\z/
+
+  @lipstick_field_names = { x509_cn: 'X.509 CN' }
 
   def permissions
     roles.flat_map { |role| role.permissions.map(&:value) }
