@@ -41,4 +41,11 @@
     <%= icon_tag('add') %>
     Add
   <%- end -%>
+
+  <%= error_messages_tag %>
+<%- end -%>
+
+<%= validate_form('#new-permission', :permission) do -%>
+  <%= auto_validate(@new_permission, :value) %>
+  <%= validate_field(:value, accession_permission_value: 'Please enter a valid permission value') %>
 <%- end -%>

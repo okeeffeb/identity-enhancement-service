@@ -12,7 +12,9 @@ gem 'redis-rails'
 gem 'audited-activerecord'
 gem 'rapid-rack'
 gem 'accession'
-gem 'aaf-lipstick'
+gem 'aaf-lipstick', git: 'https://github.com/ausaccessfed/aaf-lipstick',
+                    branch: 'develop'
+gem 'valhammer'
 
 gem 'unicorn', require: false
 gem 'god', require: false
