@@ -24,6 +24,6 @@ jQuery(function($) {
   };
 
   $.fn.form.settings.rules['accession_permission_value'] = function(value) {
-    return value == '' || value.match(/^([\w\.-]+:)*[\w\.-]+$/);
+    return value == '' || value.match(/^(([\w\.-]+|\*):)*([\w\.-]+|\*)$/);
   };
 });

@@ -10,7 +10,7 @@ class Provider < ActiveRecord::Base
 
   valhammer
 
-  validates :identifier, format: /\A[\w-]{1,40}\z/
+  validates :identifier, format: /\A[\w-]{1,40}\z/, length: { maximum: 40 }
 
   has_many :invitations
 
