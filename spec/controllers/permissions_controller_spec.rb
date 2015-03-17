@@ -60,6 +60,18 @@ RSpec.describe PermissionsController, type: :controller do
       let(:url) { provider_role_permissions_path(provider, role) }
       it { is_expected.to redirect_to(url) }
 
+      it 'sets the flash message' do
+        expect(flash[:success]).to match('Added permission: b:*')
+      end
+
+      context 'with a failed save' do
+        let(:attrs) { attributes_for(:permission, value: 'a:*') }
+
+        it 'sets the flash message' do
+          expect(flash[:error]).to match(/Unable to add permission: a:\*/)
+        end
+      end
+
       context 'as a non-admin' do
         let(:user) { create(:subject) }
         it { is_expected.to have_http_status(:forbidden) }
