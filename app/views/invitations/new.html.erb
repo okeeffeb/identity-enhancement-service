@@ -20,6 +20,11 @@
     <%= f.text_field(:mail) %>
   <%- end -%>
 
+  <%= field_block do -%>
+    <%= f.label(:expires) %>
+    <%= f.date_field(:expires) %>
+  <%- end -%>
+
   <div class="line-of-buttons">
     <%- if permitted?("providers:#{@provider.id}:invitations:create") -%>
       <%= button_tag(type: 'submit', class: 'large green icon') do -%>

@@ -53,6 +53,10 @@ RSpec.describe InvitationsController, type: :controller do
       it 'assigns the invitation' do
         expect(assigns[:invitation]).to be_a_new(Invitation)
       end
+
+      it 'defaults to 4 week expiry' do
+        expect(assigns[:invitation].expires).to eq(4.weeks.from_now.to_date)
+      end
     end
   end
 
@@ -62,7 +66,8 @@ RSpec.describe InvitationsController, type: :controller do
 
     let(:attrs) do
       attributes_for(:subject).slice(:name, :mail)
-        .merge(provider_id: provider.id)
+        .merge(provider_id: provider.id,
+               expires: 1.week.from_now.to_date.xmlschema)
     end
 
     def run
@@ -79,6 +84,11 @@ RSpec.describe InvitationsController, type: :controller do
 
       it 'creates the invitation' do
         expect { run }.to change(Invitation, :count).by(1)
+      end
+
+      it 'sets the expiry' do
+        run
+        expect(Invitation.last.expires).to eq(Time.parse(attrs[:expires]))
       end
 
       it 'sets flash success' do

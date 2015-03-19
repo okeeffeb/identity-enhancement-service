@@ -1,14 +1,14 @@
 module CreateInvitation
   delegate :image_url, to: :view_context
 
-  def create_invitation(provider, subject_attrs)
+  def create_invitation(provider, subject_attrs, expires)
     Invitation.transaction do
       audit_attrs = {
         audit_comment: 'Created incomplete Subject for Invitation'
       }
 
       subject = Subject.create!(subject_attrs.merge(audit_attrs))
-      invitation = provider.invite(subject)
+      invitation = provider.invite(subject, expires)
       deliver(invitation)
       subject
     end

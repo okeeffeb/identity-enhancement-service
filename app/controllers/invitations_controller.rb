@@ -15,13 +15,15 @@ class InvitationsController < ApplicationController
 
   def new
     check_access!("providers:#{@provider.id}:invitations:create")
-    @invitation = Invitation.new
+    @invitation = Invitation.new(expires: 4.weeks.from_now.to_date)
   end
 
   def create
     check_access!("providers:#{@provider.id}:invitations:create")
 
-    create_invitation(@provider, invitation_params)
+    attrs = invitation_params
+    expires = attrs.delete(:expires)
+    create_invitation(@provider, attrs, expires)
     redirect_to(provider_provided_attributes_path(@provider))
   end
 
@@ -44,10 +46,10 @@ class InvitationsController < ApplicationController
   private
 
   def invitation_params
-    params.require(:invitation).permit(:name, :mail)
+    params.require(:invitation).permit(:name, :mail, :expires)
   end
 
-  def create_invitation(provider, attrs)
+  def create_invitation(provider, attrs, expires)
     if Subject.exists?(attrs.slice(:mail))
       flash[:error] = 'Invitation cannot be sent as an account for ' \
                       "#{attrs[:mail]} already exists."
