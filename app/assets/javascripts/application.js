@@ -1,6 +1,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require semantic-ui
+//= require pickadate
 //= require aaf-layout
 
 jQuery(function($) {

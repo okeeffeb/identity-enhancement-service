@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/ausaccessfed/aaf-lipstick
-  revision: 8e80387cbec8217cea6bb07d4a28a5d9c0619b03
+  revision: 4e1c240b2adf512900b0e365433d9f044d215ab9
   branch: develop
   specs:
     aaf-lipstick (1.1.0)
@@ -201,6 +201,8 @@ GEM
       railties (= 4.2.0)
       sprockets-rails
     rails-assets-jquery (1.11.2)
+    rails-assets-pickadate (3.5.4)
+      rails-assets-jquery (>= 1.7)
     rails-assets-semantic-ui (1.11.4)
       rails-assets-jquery (>= 1.8)
     rails-deprecated_sanitizer (1.0.3)
@@ -361,6 +363,7 @@ DEPENDENCIES
   pry
   rails (~> 4.2.0)
   rails-assets-jquery (~> 1.11)!
+  rails-assets-pickadate (~> 3.5, != 3.5.5)!
   rails-assets-semantic-ui (~> 1.0)!
   rapid-rack
   redis
