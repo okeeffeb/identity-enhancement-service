@@ -32,20 +32,11 @@ module CreateInvitation
                                content: email_body(invitation))
   end
 
-  EMAIL_BODY = <<-EOF.gsub(/^\s+\|/, '')
-    |You have been invited to AAF Identity Enhancement, so that your identity
-    |can be verified to provide access to more research services.
-    |
-    |Please visit the following link to accept the invite and get started:
-    |
-    |%{url}
-    |
-    |Regards,<br/>
-    |AAF Team
-  EOF
+  EMAIL_BODY = File.read(Rails.root.join('config/invitation.md')).freeze
 
   def email_body(invitation)
     format(EMAIL_BODY,
-           url: accept_invitations_url(identifier: invitation.identifier))
+           url: accept_invitations_url(identifier: invitation.identifier),
+           expires: invitation.expires.strftime('%d/%m/%Y'))
   end
 end
