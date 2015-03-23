@@ -81,6 +81,21 @@ RSpec.describe Subject, type: :model do
     it 'marks the subject as complete' do
       expect { run }.to change { subject.reload.complete? }.to be_truthy
     end
+
+    context 'when a merge is required' do
+      let(:other) { create(:subject) }
+      let(:invitation) { create(:invitation, subject: other).reload }
+
+      it 'reassigns the invitation' do
+        expect { run }.to change { invitation.reload.subject }.to(subject)
+      end
+
+      it 'merges the subjects' do
+        expect(subject).to receive(:merge).with(other).and_call_original
+        run
+        expect { other.reload }.to raise_error
+      end
+    end
   end
 
   context '#providers' do
@@ -149,13 +164,13 @@ RSpec.describe Subject, type: :model do
       let!(:attr) { create(:provided_attribute, subject: other) }
 
       it 'moves the provided attributes' do
-        expect { object.merge(other.reload) }
+        expect { object.merge(other) }
           .to change { object.provided_attributes(true).to_a }
           .to include(have_attributes(name: attr.name, value: attr.value))
       end
 
       it 'removes the existing provided attribute' do
-        expect { object.merge(other.reload) }
+        expect { object.merge(other) }
           .to change { other.provided_attributes(true).to_a }
           .to not_include(have_attributes(name: attr.name, value: attr.value))
       end
@@ -173,7 +188,7 @@ RSpec.describe Subject, type: :model do
         end
 
         it 'still removes the existing provided attribute' do
-          expect { object.merge(other.reload) }
+          expect { object.merge(other) }
             .to change { other.provided_attributes(true).to_a }
             .to not_include(have_attributes(name: attr.name, value: attr.value))
         end

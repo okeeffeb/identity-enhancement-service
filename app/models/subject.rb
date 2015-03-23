@@ -22,8 +22,12 @@ class Subject < ActiveRecord::Base
       message = 'Provisioned account via invitation'
       update_attributes!(attrs.merge(audit_comment: message, complete: true))
 
-      invitation.update_attributes!(used: true,
+      invited_subject = invitation.subject
+
+      invitation.update_attributes!(used: true, subject: self,
                                     audit_comment: "Accepted by #{name}")
+
+      merge(invited_subject) if invited_subject != self
     end
   end
 
