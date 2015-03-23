@@ -168,13 +168,6 @@ RSpec.describe InvitationsController, type: :controller do
       it { is_expected.to have_assigned(:invitation, invitation) }
     end
 
-    context 'for an expired invite' do
-      let(:invitation) { create(:invitation, expires: 1.month.ago) }
-      before { run }
-      it { is_expected.to render_template('invitations/expired') }
-      it { is_expected.to have_assigned(:invitation, invitation) }
-    end
-
     context 'for a valid invite' do
       before { run }
       it { is_expected.to render_template('invitations/show') }
