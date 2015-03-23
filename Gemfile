@@ -32,7 +32,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'timecop'
   gem 'capybara'
-  gem 'capybara-webkit'
+  gem 'poltergeist'
   gem 'database_cleaner'
   gem 'aaf-gumboot', git: 'https://github.com/ausaccessfed/aaf-gumboot',
                      branch: 'develop'

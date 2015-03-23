@@ -3,6 +3,7 @@ require 'spec_helper'
 require File.expand_path('../../config/environment', __FILE__)
 require 'rspec/rails'
 require 'capybara/rspec'
+require 'capybara/poltergeist'
 
 ActiveRecord::Migration.maintain_test_schema!
 
@@ -32,10 +33,6 @@ module NoTransactionalFixtures
 end
 
 RSpec.configure do |config|
-  config.before(:each, type: :feature, js: true) do
-    page.driver.block_unknown_urls
-  end
-
   config.use_transactional_fixtures = true
   config.include ControllerMatchers, type: :controller
   config.include AliasedMatchers
@@ -52,7 +49,7 @@ RSpec.configure do |config|
     end
   end
 
-  Capybara.javascript_driver = :webkit
+  Capybara.javascript_driver = :poltergeist
 
   config.before(:suite) { DatabaseCleaner.strategy = :truncation }
   config.before(:each, type: :feature) { DatabaseCleaner.start }
