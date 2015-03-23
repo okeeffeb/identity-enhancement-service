@@ -165,6 +165,21 @@ module Authentication
           expect(obj.audits.last.user).to eq(obj)
         end
 
+        context 'when a merge is required' do
+          let!(:object) { create(:subject, attrs.merge(complete: false)) }
+
+          it 'deletes the invited subject' do
+            expect { subject.subject(env, attrs) }
+              .to change(Subject, :count).by(-1)
+          end
+
+          it 'reassigns the invitation' do
+            expect { subject.subject(env, attrs) }
+              .to change { invitation.reload.subject }
+              .to(object)
+          end
+        end
+
         context 'when the invitation fails to save' do
           before do
             allow_any_instance_of(Invitation).to receive(:update_attributes!)

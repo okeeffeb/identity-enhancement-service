@@ -28,11 +28,12 @@ module Authentication
       invitation = Invitation.where(identifier: session[:invite])
                    .available.first!
 
-      Audited.audit_class.as_user(invitation.subject) do
-        invitation.subject.accept(invitation, attrs)
+      subject = subject_scope(attrs).first || invitation.subject
+      Audited.audit_class.as_user(subject) do
+        subject.accept(invitation, attrs)
       end
 
-      invitation.subject
+      subject
     end
 
     def update_subject(subject, attrs)
