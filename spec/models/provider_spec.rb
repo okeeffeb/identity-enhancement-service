@@ -46,7 +46,7 @@ RSpec.describe Provider, type: :model do
   context '#invite' do
     let(:user) { create(:subject) }
     let(:provider) { create(:provider) }
-    let(:expires) { rand(10).weeks.from_now }
+    let(:expires) { (1 + rand(10)).weeks.from_now }
 
     def run
       provider.invite(user, expires)

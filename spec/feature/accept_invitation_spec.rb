@@ -31,11 +31,13 @@ RSpec.feature 'Visiting the invitation page', type: :feature do
   end
 
   context 'with an expired invitation' do
-    given(:invitation) { create(:invitation, expires: 1.day.ago) }
+    given!(:invitation) { create(:invitation, expires: 1.second.from_now) }
 
     scenario 'attempting to accept the invitation' do
-      visit "/invitations/#{invitation.identifier}"
-      expect(page).to have_content('invitation expired')
+      Timecop.travel(1.minute) do
+        visit "/invitations/#{invitation.identifier}"
+        expect(page).to have_content('invitation expired')
+      end
     end
   end
 end
