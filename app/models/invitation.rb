@@ -10,10 +10,17 @@ class Invitation < ActiveRecord::Base
 
   validates :identifier, format: /\A[\w-]+\z/
 
+  validate :must_not_be_preexpired
+
   scope :current, -> { where(arel_table[:expires].gt(Time.now)) }
   scope :available, -> { current.where(used: false) }
 
   def expired?
-    expires < Time.now
+    expires && expires < Time.now
+  end
+
+  def must_not_be_preexpired
+    return if persisted?
+    errors.add(:expires, 'must be in the future') if expired?
   end
 end

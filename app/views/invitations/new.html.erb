@@ -44,4 +44,5 @@
 
 <%= validate_form('#new_invitation', :invitation) do -%>
   <%= auto_validate(@invitation, :name, :mail, :expires) %>
+  <%= validate_field(:expires, future_date: 'Please enter an expiry date in the future') %>
 <%- end -%>
