@@ -43,5 +43,5 @@
 <%- end -%>
 
 <%= validate_form('#new_invitation', :invitation) do -%>
-  <%= auto_validate(@invitation, :name, :mail) %>
+  <%= auto_validate(@invitation, :name, :mail, :expires) %>
 <%- end -%>
