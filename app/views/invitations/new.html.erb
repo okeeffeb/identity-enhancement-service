@@ -20,6 +20,11 @@
     <%= f.text_field(:mail) %>
   <%- end -%>
 
+  <%= field_block do -%>
+    <%= f.label(:expires) %>
+    <%= f.date_field(:expires) %>
+  <%- end -%>
+
   <div class="line-of-buttons">
     <%- if permitted?("providers:#{@provider.id}:invitations:create") -%>
       <%= button_tag(type: 'submit', class: 'large green icon') do -%>
@@ -38,5 +43,6 @@
 <%- end -%>
 
 <%= validate_form('#new_invitation', :invitation) do -%>
-  <%= auto_validate(@invitation, :name, :mail) %>
+  <%= auto_validate(@invitation, :name, :mail, :expires) %>
+  <%= validate_field(:expires, future_date: 'Please enter an expiry date in the future') %>
 <%- end -%>

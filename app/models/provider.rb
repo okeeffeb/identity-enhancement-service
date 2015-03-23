@@ -27,14 +27,14 @@ class Provider < ActiveRecord::Base
     [Provider.identifier_prefix, identifier].join(':')
   end
 
-  def invite(subject)
+  def invite(subject, expires)
     identifier = SecureRandom.urlsafe_base64(19)
 
     message = "Created invitation for #{subject.name}"
 
     attrs = { subject_id: subject.id, identifier: identifier,
               name: subject.name, mail: subject.mail,
-              expires: 1.month.from_now, audit_comment: message }
+              expires: expires, audit_comment: message }
 
     invitations.create!(attrs)
   end

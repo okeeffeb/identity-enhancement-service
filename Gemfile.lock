@@ -8,7 +8,7 @@ GIT
 
 GIT
   remote: https://github.com/ausaccessfed/aaf-lipstick
-  revision: 8e80387cbec8217cea6bb07d4a28a5d9c0619b03
+  revision: 4e1c240b2adf512900b0e365433d9f044d215ab9
   branch: develop
   specs:
     aaf-lipstick (1.1.0)
@@ -85,11 +85,9 @@ GEM
       rack (>= 1.0.0)
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
-    capybara-webkit (1.4.1)
-      capybara (>= 2.3.0, < 2.5.0)
-      json
     celluloid (0.16.0)
       timers (~> 4.0.0)
+    cliver (0.3.2)
     coderay (1.1.0)
     database_cleaner (1.4.1)
     diff-lcs (1.2.5)
@@ -181,6 +179,11 @@ GEM
       shellany (~> 0.0)
     parser (2.2.0.3)
       ast (>= 1.1, < 3.0)
+    poltergeist (1.6.0)
+      capybara (~> 2.1)
+      cliver (~> 0.3.1)
+      multi_json (~> 1.0)
+      websocket-driver (>= 0.2.0)
     powerpack (0.1.0)
     pry (0.10.1)
       coderay (~> 1.1.0)
@@ -201,6 +204,8 @@ GEM
       railties (= 4.2.0)
       sprockets-rails
     rails-assets-jquery (1.11.2)
+    rails-assets-pickadate (3.5.4)
+      rails-assets-jquery (>= 1.7)
     rails-assets-semantic-ui (1.11.4)
       rails-assets-jquery (>= 1.8)
     rails-deprecated_sanitizer (1.0.3)
@@ -331,6 +336,9 @@ GEM
     url_safe_base64 (0.2.2)
     valhammer (0.1.2)
       activerecord (~> 4.1)
+    websocket-driver (0.5.3)
+      websocket-extensions (>= 0.1.0)
+    websocket-extensions (0.1.2)
     xpath (2.0.0)
       nokogiri (~> 1.3)
 
@@ -344,7 +352,6 @@ DEPENDENCIES
   audited-activerecord
   brakeman (~> 2.6)
   capybara
-  capybara-webkit
   database_cleaner
   factory_girl_rails
   faker
@@ -358,9 +365,11 @@ DEPENDENCIES
   jbuilder
   jquery-rails
   mysql2
+  poltergeist
   pry
   rails (~> 4.2.0)
   rails-assets-jquery (~> 1.11)!
+  rails-assets-pickadate (~> 3.5, != 3.5.5)!
   rails-assets-semantic-ui (~> 1.0)!
   rapid-rack
   redis

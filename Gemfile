@@ -22,6 +22,7 @@ gem 'god', require: false
 source 'https://rails-assets.org' do
   gem 'rails-assets-semantic-ui', '~> 1.0'
   gem 'rails-assets-jquery', '~> 1.11'
+  gem 'rails-assets-pickadate', '~> 3.5', '!= 3.5.5'
 end
 
 group :development, :test do
@@ -31,7 +32,7 @@ group :development, :test do
   gem 'shoulda-matchers'
   gem 'timecop'
   gem 'capybara'
-  gem 'capybara-webkit'
+  gem 'poltergeist'
   gem 'database_cleaner'
   gem 'aaf-gumboot', git: 'https://github.com/ausaccessfed/aaf-gumboot',
                      branch: 'develop'

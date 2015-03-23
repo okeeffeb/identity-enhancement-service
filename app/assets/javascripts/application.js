@@ -1,6 +1,7 @@
 //= require jquery
 //= require jquery_ujs
 //= require semantic-ui
+//= require pickadate
 //= require aaf-layout
 
 jQuery(function($) {
@@ -25,5 +26,12 @@ jQuery(function($) {
 
   $.fn.form.settings.rules['accession_permission_value'] = function(value) {
     return value == '' || value.match(/^(([\w\.-]+|\*):)*([\w\.-]+|\*)$/);
+  };
+
+
+  $.fn.form.settings.rules['future_date'] = function(value) {
+    if (value == '') return true;
+    var now = new Date().getTime();
+    return (now < Date.parse(value));
   };
 });
