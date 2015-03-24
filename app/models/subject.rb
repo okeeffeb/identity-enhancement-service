@@ -36,7 +36,6 @@ class Subject < ActiveRecord::Base
       merge_roles(other)
       merge_attributes(other)
 
-      other.reload # HACK: Why is this needed? Tests fail without it.
       other.audit_comment = "Merged into Subject #{id}"
       other.destroy!
     end
@@ -50,9 +49,6 @@ class Subject < ActiveRecord::Base
 
   def merge_roles(other)
     other.subject_role_assignments.each do |role_assoc|
-      role_assoc.audit_comment = "Merged role into Subject #{id}"
-      role_assoc.destroy!
-
       next if role_ids.include?(role_assoc.role_id)
 
       subject_role_assignments
@@ -63,9 +59,6 @@ class Subject < ActiveRecord::Base
 
   def merge_attributes(other)
     other.provided_attributes.each do |other_attr|
-      other_attr.audit_comment = "Merged attribute into Subject #{id}"
-      other_attr.destroy!
-
       attrs = other_attr.attributes
               .slice(*%w(name value permitted_attribute_id))
 
