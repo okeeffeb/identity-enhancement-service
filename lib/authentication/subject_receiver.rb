@@ -59,7 +59,6 @@ module Authentication
     def check_subject(subject, attrs)
       require_nil_or_equal(subject.targeted_id, attrs[:targeted_id])
       require_nil_or_equal(subject.shared_token, attrs[:shared_token])
-      subject
     end
 
     def require_nil_or_equal(actual, expected)
