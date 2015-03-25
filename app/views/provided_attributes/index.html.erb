@@ -46,48 +46,12 @@
   </table>
 <%- end -%>
 
-<h3 class="ui header">Available Identities</h3>
-
-<table class="ui striped compact table" id="available-subjects">
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th class="center aligned">State</th>
-      <th/>
-    </tr>
-  </thead>
-  <tbody>
-    <%- @objects.each do |object| -%>
-      <tr>
-        <td><%= object.name %></td>
-        <td><%= object.mail %></td>
-        <td class="center aligned">
-          <%- if object.complete? -%>
-            <%= icon_tag('green checkmark') %> Active
-          <%- else -%>
-            <%= icon_tag('yellow warning sign') %> Pending
-          <%- end -%>
-        </td>
-        <td class="action-buttons right aligned">
-          <%- if permitted?("providers:#{@provider.id}:attributes:create") -%>
-            <%= button_link_to(new_provider_provided_attribute_path(@provider, subject_id: object.id),
-                               class: 'tiny green icon') do -%>
-              <%= icon_tag('add') %>
-              Provide Attribute
-            <%- end -%>
-          <%- end -%>
-        </td>
-      </tr>
-    <%- end -%>
-  </tbody>
-</table>
-
 <%- if permitted?("providers:#{@provider.id}:invitations:create") -%>
   <div class="line-of-buttons">
-    <%= button_link_to(new_provider_invitation_path(@provider), class: 'large green icon') do -%>
-      <%= icon_tag('send') %>
-      Send invitation to new user
+    <%= button_link_to(url_for([:select_subject, @provider, :provided_attributes]),
+                       class: 'large green icon') do -%>
+      <%= icon_tag('add') %>
+      Enhance an Identity
     <%- end -%>
   </div>
 <%- end -%>

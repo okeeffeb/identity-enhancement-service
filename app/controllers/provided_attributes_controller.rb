@@ -13,6 +13,11 @@ class ProvidedAttributesController < ApplicationController
       .where('permitted_attributes.provider_id' => @provider.id)
   end
 
+  def select_subject
+    check_access!("providers:#{@provider.id}:attributes:create")
+    @objects = Subject.all
+  end
+
   def new
     check_access!("providers:#{@provider.id}:attributes:create")
     @object = Subject.find(params[:subject_id])
