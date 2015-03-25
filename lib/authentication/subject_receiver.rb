@@ -22,6 +22,14 @@ module Authentication
       end
     end
 
+    def finish(env)
+      if env['rack.session'].try(:delete, :invite)
+        redirect_to('/invitations/complete')
+      else
+        redirect_to('/dashboard')
+      end
+    end
+
     private
 
     def accept_invitation(session, attrs)

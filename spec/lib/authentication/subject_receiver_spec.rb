@@ -19,6 +19,28 @@ module Authentication
       end
     end
 
+    context '#finish' do
+      context 'with an invitation code' do
+        let!(:invitation) { create(:invitation) }
+        let(:env) { { 'rack.session' => { invite: invitation.identifier } } }
+
+        it 'redirects to the invitation complete page' do
+          response = [302, { 'Location' => '/invitations/complete' }, []]
+          expect(subject.finish(env)).to eq(response)
+        end
+
+        it 'clears the invite code' do
+          expect { subject.finish(env) }
+            .to change { env['rack.session'] }.to be_empty
+        end
+      end
+
+      it 'redirects to the dashboard' do
+        response = [302, { 'Location' => '/dashboard' }, []]
+        expect(subject.finish(env)).to eq(response)
+      end
+    end
+
     context '#subject' do
       let(:attrs) do
         attributes_for(:subject)

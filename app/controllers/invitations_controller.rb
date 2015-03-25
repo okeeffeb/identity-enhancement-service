@@ -43,6 +43,10 @@ class InvitationsController < ApplicationController
     redirect_to('/auth/login')
   end
 
+  def complete
+    public_action
+  end
+
   private
 
   def invitation_params

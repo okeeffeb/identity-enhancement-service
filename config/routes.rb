@@ -26,6 +26,7 @@ Rails.application.routes.draw do
 
   resources :invitations, only: [] do
     collection do
+      get 'complete' => 'invitations#complete'
       get ':identifier' => 'invitations#show', as: 'show'
       post ':identifier' => 'invitations#accept', as: 'accept'
     end

@@ -23,6 +23,11 @@ RSpec.describe InvitationsController, type: :routing do
     it { is_expected.to route_to('invitations#create', provider_id: '1') }
   end
 
+  context 'get /invitations/complete' do
+    subject { { get: '/invitations/complete' } }
+    it { is_expected.to route_to('invitations#complete') }
+  end
+
   context 'get /invitations/:identifier' do
     subject { { get: "/invitations/#{identifier}" } }
     it { is_expected.to route_to('invitations#show', identifier: identifier) }
