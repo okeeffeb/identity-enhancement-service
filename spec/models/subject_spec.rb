@@ -59,6 +59,8 @@ RSpec.describe Subject, type: :model do
   end
 
   context '#accept' do
+    subject { create(:subject, :incomplete) }
+
     let(:attrs) do
       attributes_for(:subject).slice(:name, :mail, :targeted_id, :shared_token)
     end

@@ -1,7 +1,7 @@
 FactoryGirl.define do
   factory :invitation, traits: %i(audited) do
     association :provider
-    association :subject
+    association :subject, :incomplete
 
     identifier { SecureRandom.urlsafe_base64(19) }
     name { Faker::Name.name }
