@@ -21,6 +21,8 @@ class ProvidedAttributesController < ApplicationController
   def new
     check_access!("providers:#{@provider.id}:attributes:create")
     @object = Subject.find(params[:subject_id])
+    @invitation = @object.invitations.first unless @object.complete?
+
     @provided_attributes = @object.provided_attributes.for_provider(@provider)
     ids = @provided_attributes.map(&:permitted_attribute_id)
     @permitted_attributes = @provider.permitted_attributes

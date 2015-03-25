@@ -10,4 +10,8 @@ module ApplicationHelper
   def markdown_to_html(input)
     Kramdown::Document.new(input).to_html.html_safe
   end
+
+  def date_string(timestamp)
+    timestamp.strftime('%d/%m/%Y')
+  end
 end
