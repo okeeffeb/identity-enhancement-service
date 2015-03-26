@@ -16,7 +16,7 @@ class Invitation < ActiveRecord::Base
   scope :available, -> { current.where(used: false) }
 
   def expired?
-    expires && expires < Time.now
+    !used? && expires && expires < Time.now
   end
 
   def must_not_be_preexpired

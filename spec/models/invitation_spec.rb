@@ -43,6 +43,11 @@ RSpec.describe Invitation, type: :model do
       end
 
       it { is_expected.to be_expired }
+
+      context 'when the invitation is used' do
+        subject! { create(:invitation, used: true, expires: expires) }
+        it { is_expected.not_to be_expired }
+      end
     end
   end
 end
