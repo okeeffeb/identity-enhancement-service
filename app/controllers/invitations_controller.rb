@@ -43,6 +43,15 @@ class InvitationsController < ApplicationController
     redirect_to('/auth/login')
   end
 
+  def redeliver
+    check_access!("provider:#{@provider.id}:invitations:create")
+    @invitation = @provider.invitations.find(params[:id])
+    deliver(@invitation)
+
+    flash[:success] = "Redelivered invitation to #{@invitation.mail}"
+    redirect_to [@provider, :provided_attributes]
+  end
+
   def complete
     public_action
   end

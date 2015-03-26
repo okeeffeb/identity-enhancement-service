@@ -19,7 +19,10 @@ Rails.application.routes.draw do
       get :select_subject, on: :collection
     end
 
-    resources :invitations, only: %i(new create)
+    resources :invitations, only: %i(new create) do
+      get :redeliver, on: :member
+    end
+
     resources :api_subjects do
       member do
         get 'audits' => 'api_subjects#audits', as: 'audit'

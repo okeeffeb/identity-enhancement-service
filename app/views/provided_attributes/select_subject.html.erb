@@ -31,6 +31,17 @@
           <%- end -%>
         </td>
         <td class="action-buttons right aligned">
+          <%- unless object.complete? || object.invitations.none? -%>
+            <%- invitation = object.invitations.first -%>
+            <%- if permitted?("provider:#{invitation.provider_id}:invitations:create") -%>
+              <%= button_link_to(redeliver_provider_invitation_path(invitation.provider, invitation),
+                                 class: 'tiny icon') do -%>
+                <%= icon_tag('send') %>
+                Redeliver Invitation
+              <%- end -%>
+            <%- end -%>
+          <%- end -%>
+
           <%- if permitted?("providers:#{@provider.id}:attributes:create") -%>
             <%= button_link_to(new_provider_provided_attribute_path(@provider, subject_id: object.id),
                                class: 'tiny green icon') do -%>
