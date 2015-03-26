@@ -37,7 +37,11 @@ RSpec.describe Invitation, type: :model do
     end
 
     context 'with `expires` in the past' do
-      before { Timecop.travel(1.minute.from_now) }
+      around do |spec|
+        subject
+        Timecop.travel(1.minute) { spec.run }
+      end
+
       it { is_expected.to be_expired }
     end
   end

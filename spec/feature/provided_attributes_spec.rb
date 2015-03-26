@@ -101,9 +101,9 @@ RSpec.feature 'Providing attributes to subjects', js: true do
     context 'when the invitation has expired' do
       let!(:invitation) { create(:invitation, expires: 1.second.from_now) }
 
-      scenario 'providing a new attribute' do
-        Timecop.travel(1.day)
+      around { |spec| Timecop.travel(1.day) { spec.run } }
 
+      scenario 'providing a new attribute' do
         click_link('Enhance an Identity')
 
         within('#available-subjects tr', text: object.name) do
