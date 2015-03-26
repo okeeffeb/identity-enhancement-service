@@ -33,6 +33,10 @@ RSpec.describe 'bin/remove_expired_data' do
       expect { object.reload }.to raise_error(ActiveRecord::RecordNotFound)
     end
 
+    it 'disassociates the invitation' do
+      expect { run }.to change { invitation.reload.subject_id }.to be_nil
+    end
+
     context 'when the invitation is used' do
       let(:invitation) do
         create(:invitation, used: true, expires: 1.second.from_now)

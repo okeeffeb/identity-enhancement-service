@@ -7,7 +7,6 @@ RSpec.describe Invitation, type: :model do
     subject { build(:invitation) }
 
     it { is_expected.to validate_presence_of(:provider) }
-    it { is_expected.to validate_presence_of(:subject) }
     it { is_expected.to validate_presence_of(:identifier) }
     it { is_expected.to validate_uniqueness_of(:identifier) }
     it { is_expected.to validate_presence_of(:name) }
