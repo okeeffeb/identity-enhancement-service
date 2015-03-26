@@ -9,11 +9,9 @@ class Invitation < ActiveRecord::Base
   valhammer
 
   validates :identifier, format: /\A[\w-]+\z/
-
   validate :must_not_be_preexpired
 
-  scope :current, -> { where(arel_table[:expires].gt(Time.now)) }
-  scope :available, -> { current.where(used: false) }
+  scope :available, -> { where(used: false) }
 
   def expired?
     !used? && expires && expires < Time.now
