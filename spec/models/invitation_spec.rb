@@ -12,6 +12,7 @@ RSpec.describe Invitation, type: :model do
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:mail) }
     it { is_expected.to validate_presence_of(:expires) }
+    it { is_expected.to validate_presence_of(:last_sent_at) }
 
     it { is_expected.to allow_value('abcdefg1234').for(:identifier) }
     it { is_expected.not_to allow_value('abc!').for(:identifier) }

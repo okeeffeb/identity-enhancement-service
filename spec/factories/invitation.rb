@@ -7,5 +7,6 @@ FactoryGirl.define do
     name { Faker::Name.name }
     mail { Faker::Internet.email(name) }
     expires { 1.year.from_now.to_s(:db) }
+    last_sent_at { Time.now.to_s(:db) }
   end
 end

@@ -33,7 +33,7 @@ class Provider < ActiveRecord::Base
     message = "Created invitation for #{subject.name}"
 
     attrs = { subject_id: subject.id, identifier: identifier,
-              name: subject.name, mail: subject.mail,
+              name: subject.name, mail: subject.mail, last_sent_at: Time.now,
               expires: expires, audit_comment: message }
 
     invitations.create!(attrs)

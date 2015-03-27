@@ -155,6 +155,8 @@ RSpec.describe InvitationsController, type: :controller do
 
     context 'as a permitted user' do
       before do
+        invitation.update_attributes!(last_sent_at: 4.weeks.ago,
+                                      audit_comment: 'Updated for test')
         session[:subject_id] = user.id
         run
       end
@@ -164,6 +166,10 @@ RSpec.describe InvitationsController, type: :controller do
 
       it { is_expected.to have_sent_email.to(invitation.mail) }
       it { is_expected.to have_sent_email.matching_body(/#{text}/) }
+
+      it 'updates the last_sent_at timestamp' do
+        expect(invitation.reload.last_sent_at.to_i).to eq(Time.now.to_i)
+      end
 
       it 'links to the invitation in the message' do
         expected = %r{/invitations/#{invitation.identifier}}

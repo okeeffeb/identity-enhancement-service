@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150326062749) do
+ActiveRecord::Schema.define(version: 20150327042954) do
 
   create_table "api_subject_role_assignments", force: :cascade do |t|
     t.integer  "api_subject_id", limit: 4, null: false
@@ -69,15 +69,16 @@ ActiveRecord::Schema.define(version: 20150326062749) do
   add_index "available_attributes", ["name", "value"], name: "index_available_attributes_on_name_and_value", unique: true, using: :btree
 
   create_table "invitations", force: :cascade do |t|
-    t.integer  "provider_id", limit: 4,                   null: false
-    t.integer  "subject_id",  limit: 4
-    t.string   "identifier",  limit: 255,                 null: false
-    t.string   "name",        limit: 255,                 null: false
-    t.string   "mail",        limit: 255,                 null: false
-    t.boolean  "used",        limit: 1,   default: false, null: false
-    t.datetime "expires",                                 null: false
+    t.integer  "provider_id",  limit: 4,                   null: false
+    t.integer  "subject_id",   limit: 4
+    t.string   "identifier",   limit: 255,                 null: false
+    t.string   "name",         limit: 255,                 null: false
+    t.string   "mail",         limit: 255,                 null: false
+    t.boolean  "used",         limit: 1,   default: false, null: false
+    t.datetime "expires",                                  null: false
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "last_sent_at",                             null: false
   end
 
   add_index "invitations", ["identifier"], name: "index_invitations_on_identifier", unique: true, using: :btree
