@@ -22,7 +22,7 @@ RSpec.feature 'Providing attributes to subjects', js: true do
       click_link('View')
     end
 
-    click_link('Provided Attributes')
+    click_link('Identities')
     expect(current_path).to eq("#{base_path}/provided_attributes")
   end
 
@@ -40,15 +40,17 @@ RSpec.feature 'Providing attributes to subjects', js: true do
       click_link('View')
     end
 
-    click_link('Provided Attributes')
+    click_link('Identities')
 
     expect(page).to have_no_css('#provided-attributes tr',
                                 text: attribute.value)
   end
 
   scenario 'providing a new attribute' do
+    click_link('Enhance an Identity')
+
     within('#available-subjects tr', text: object.name) do
-      click_link('Provide Attribute')
+      click_link('Enhance Identity')
     end
 
     expect(current_path).to eq("#{base_path}/provided_attributes/new")

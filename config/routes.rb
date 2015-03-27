@@ -15,7 +15,10 @@ Rails.application.routes.draw do
       resources :permissions, only: %i(index create destroy)
     end
 
-    resources :provided_attributes
+    resources :provided_attributes do
+      get :select_subject, on: :collection
+    end
+
     resources :invitations, only: %i(new create)
     resources :api_subjects do
       member do
