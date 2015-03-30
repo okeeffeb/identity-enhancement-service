@@ -38,29 +38,35 @@
                 Invitation Status
               <%- end -%>
 
-              <div class="ui hoverable popup">
-                <div class="left aligned">
-                  <p>
-                    Invited:
-                    <strong>
+              <div class="ui hoverable popup invitation-status">
+                <table class="ui left aligned definition table">
+                  <tr>
+                    <td>Invited:</td>
+                    <td>
                       <%= date_string(invitation.created_at) %>
                       (<%= time_ago_in_words(invitation.created_at) %> ago)
-                    </strong>
-                    <br/>
+                    </td>
+                  </tr>
 
-                    Last Sent:
-                    <strong>
+                  <tr>
+                    <td>Last Sent:</td>
+                    <td>
                       <%= date_string(invitation.last_sent_at) %>
                       (<%= time_ago_in_words(invitation.last_sent_at) %> ago)
-                    </strong>
-                    <br/>
+                    </td>
+                  </tr>
 
-                    Expires:
-                    <strong>
+                  <tr>
+                    <td>Expires:</td>
+                    <td>
                       <%= date_string(invitation.expires) %>
                       (in <%= time_ago_in_words(invitation.expires) %>)
-                  </p>
+                    </td>
+                  </tr>
 
+                </table>
+
+                <div class="left aligned">
                   <%= button_link_to(redeliver_provider_invitation_path(invitation.provider, invitation),
                                      class: 'tiny icon') do -%>
                     <%= icon_tag('send') %>
