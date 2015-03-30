@@ -7,12 +7,12 @@ RSpec.describe Invitation, type: :model do
     subject { build(:invitation) }
 
     it { is_expected.to validate_presence_of(:provider) }
-    it { is_expected.to validate_presence_of(:subject) }
     it { is_expected.to validate_presence_of(:identifier) }
     it { is_expected.to validate_uniqueness_of(:identifier) }
     it { is_expected.to validate_presence_of(:name) }
     it { is_expected.to validate_presence_of(:mail) }
     it { is_expected.to validate_presence_of(:expires) }
+    it { is_expected.to validate_presence_of(:last_sent_at) }
 
     it { is_expected.to allow_value('abcdefg1234').for(:identifier) }
     it { is_expected.not_to allow_value('abc!').for(:identifier) }
@@ -37,8 +37,17 @@ RSpec.describe Invitation, type: :model do
     end
 
     context 'with `expires` in the past' do
-      before { Timecop.travel(1.minute.from_now) }
+      around do |spec|
+        subject
+        Timecop.travel(1.minute) { spec.run }
+      end
+
       it { is_expected.to be_expired }
+
+      context 'when the invitation is used' do
+        subject! { create(:invitation, used: true, expires: expires) }
+        it { is_expected.not_to be_expired }
+      end
     end
   end
 end

@@ -21,10 +21,10 @@ class ProvidedAttributesController < ApplicationController
   def new
     check_access!("providers:#{@provider.id}:attributes:create")
     @object = Subject.find(params[:subject_id])
+    @invitation = @object.invitations.first unless @object.complete?
+
     @provided_attributes = @object.provided_attributes.for_provider(@provider)
-    ids = @provided_attributes.map(&:permitted_attribute_id)
-    @permitted_attributes = @provider.permitted_attributes
-                            .reject { |a| ids.include?(a.id) }
+    @permitted_attributes = available_permitted_attributes(@provided_attributes)
   end
 
   def create
@@ -94,5 +94,10 @@ class ProvidedAttributesController < ApplicationController
       provided_attribute.audit_comment = 'Revoked attribute via web interface'
       provided_attribute.destroy!
     end
+  end
+
+  def available_permitted_attributes(provided_attributes)
+    ids = provided_attributes.map(&:permitted_attribute_id)
+    @provider.permitted_attributes.reject { |a| ids.include?(a.id) }
   end
 end

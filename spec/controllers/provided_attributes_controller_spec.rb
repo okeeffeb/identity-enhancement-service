@@ -74,6 +74,15 @@ RSpec.describe ProvidedAttributesController, type: :controller do
       expect(assigns[:permitted_attributes]).not_to include(permitted_attribute)
     end
 
+    context 'for a pending subject' do
+      let(:invitation) { create(:invitation) }
+      let(:object) { invitation.subject }
+
+      it 'assigns the invitation' do
+        expect(assigns[:invitation]).to eq(invitation)
+      end
+    end
+
     context 'as a non-admin' do
       let(:user) { create(:subject) }
       it { is_expected.to have_http_status(:forbidden) }

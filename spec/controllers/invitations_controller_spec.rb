@@ -2,7 +2,7 @@ require 'rails_helper'
 
 RSpec.describe InvitationsController, type: :controller do
   let(:invitation) { create(:invitation) }
-  let!(:provider) { create(:provider) }
+  let!(:provider) { invitation.provider }
   subject { response }
 
   context 'get :index' do
@@ -144,6 +144,45 @@ RSpec.describe InvitationsController, type: :controller do
           run
           expect(flash[:error]).to be_present
         end
+      end
+    end
+  end
+
+  context 'get :redeliver' do
+    def run
+      get :redeliver, provider_id: provider.id, id: invitation.id
+    end
+
+    context 'as a permitted user' do
+      before do
+        invitation.update_attributes!(last_sent_at: 4.weeks.ago,
+                                      audit_comment: 'Updated for test')
+        session[:subject_id] = user.id
+        run
+      end
+
+      let(:user) { create(:subject, :authorized) }
+      let(:text) { 'You have been invited to AAF Identity Enhancement' }
+
+      it { is_expected.to have_sent_email.to(invitation.mail) }
+      it { is_expected.to have_sent_email.matching_body(/#{text}/) }
+
+      it 'updates the last_sent_at timestamp' do
+        expect(invitation.reload.last_sent_at.to_i).to eq(Time.now.to_i)
+      end
+
+      it 'links to the invitation in the message' do
+        expected = %r{/invitations/#{invitation.identifier}}
+        expect(subject).to have_sent_email.matching_body(expected)
+      end
+
+      it 'redirects back to the Identities page' do
+        expect(response).to redirect_to([provider, :provided_attributes])
+      end
+
+      it 'sets a flash message' do
+        expect(flash[:success])
+          .to match(/Redelivered invitation to #{invitation.mail}/)
       end
     end
   end

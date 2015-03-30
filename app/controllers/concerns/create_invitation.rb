@@ -14,8 +14,6 @@ module CreateInvitation
     end
   end
 
-  private
-
   def deliver(invitation)
     Mail.deliver(to: invitation.mail,
                  from: Rails.application.config.ide_service.mail[:from],
@@ -23,8 +21,13 @@ module CreateInvitation
                  body: email_message(invitation).render,
                  content_type: 'text/html; charset=UTF-8')
 
+    invitation.update_attributes!(last_sent_at: Time.now,
+                                  audit_comment: 'Redelivered invitation')
+
     self
   end
+
+  private
 
   def email_message(invitation)
     Lipstick::EmailMessage.new(title: 'AAF Identity Enhancement',
